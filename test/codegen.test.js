@@ -2,7 +2,7 @@ const expect = require('chai').expect
 const parser = require('../lib/parser')
 const Codegen = require('../lib/codegen')
 
-describe('Codegen', function () {
+xdescribe('Codegen', function () {
   describe('#call', function () {
     describe('DEF', function () {
       it('works with a function with no parameters')
