@@ -1,8 +1,8 @@
 const expect = require('chai').expect
-const parser = require('../lib/parser')
-const Codegen = require('../lib/codegen')
+const parser = require('../../lib/parser')
+const Codegen = require('../../lib/codegen/codegen')
 
-xdescribe('Codegen', function () {
+describe('Codegen', function () {
   describe('#call', function () {
     describe('DEF', function () {
       it('works with a function with no parameters')
@@ -14,10 +14,8 @@ def greet(name:string, person:ref:Person)
         const codegen = new Codegen()
         const result = codegen.call(ast)
 
-        expect(result).to.eq(`
-function greet(name as string, person ref as Person)
-endfunction
-        `.trim())
+        expect(result).to.contain('function greet(name as string, person ref as Person)')
+        expect(result).to.contain('endfunction')
       })
 
       it('works with an array and a ref parameter', function () {
@@ -27,10 +25,8 @@ def greet(person:ref:Person[][])
         const codegen = new Codegen()
         const result = codegen.call(ast)
 
-        expect(result).to.eq(`
-function greet(person ref as Person[][])
-endfunction
-        `.trim())
+        expect(result).to.contain('function greet(person ref as Person[][])')
+        expect(result).to.contain('endfunction')
       })
 
       it('works with an array parameter', function () {
@@ -40,10 +36,7 @@ def greet(person:Person[])
         const codegen = new Codegen()
         const result = codegen.call(ast)
 
-        expect(result).to.eq(`
-function greet(person as Person[])
-endfunction
-        `.trim())
+        expect(result).to.contain('function greet(person as Person[])')
       })
 
       it('can return a value', function () {
@@ -51,14 +44,11 @@ endfunction
 def greet(person:Person[])
   return 2
         `.trim())
-        const codegen = new Codegen()
-        const result = codegen.call(ast)
 
-        expect(result).to.eq(`
-function greet(person as Person[])
-  exitfunction 2
-endfunction 0
-        `.trim())
+        const result = new Codegen().call(ast)
+
+        expect(result).to.contain('exitfunction 2')
+        expect(result).to.contain('endfunction 0')
       })
     })
 

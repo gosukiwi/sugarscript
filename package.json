@@ -4,8 +4,8 @@
   "description": "A lispy language which compiles to AppGameKit's Tier 1",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "watch": "mocha --watch",
+    "test": "mocha **/*.test.js",
+    "watch": "mocha --watch **/*.test.js",
     "grammar": "pegjs -o lib/parser.js lib/grammar.pegjs"
   },
   "keywords": [
