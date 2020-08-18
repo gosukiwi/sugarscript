@@ -4,22 +4,36 @@ using AGK's interpreter, so they can run on any platform with minimal setup.
 
 Needless to say, you need to own AppGameKit Classic.
 
+# Philosophy
+* Expressive: If it can read like English, it's easier to understand.
+* Concise: When possible, prefer the shorter syntax.
+* Strict: Linting tools exist for a reason, consistency is a good thing. It makes code easier to read.
+* Simple: It's just Tier 1.
+
 # Syntax
 
 ```
-(def greet (name :string age :integer)
-  (print "Hello, World!"))
+# assign
+name = "Duchess"
+greeting = "Hello #{name}"!
 
-(type Person
-  (name string)
-  (age integer))
+# functions
+def greet(name:string, age:integer, person:ref:Person)
+  result = age + 2
+  return result
 
-(repeat
-  (agk:sync))
+# types
+type Person
+  name:string
 
-// arrays
-(let my-list (list 1 2.1 "foo"))
-(nth my-list 0)
+# inline types
+type Person(name: string)
+
+a = () ->
+  Log("A lambda!")
+
+# arrays
+a = [1, 2, 3]
 ```
 
 # Usage
@@ -34,6 +48,8 @@ The grammar uses [PEG.js](https://pegjs.org/). To re-generate the parser from
 the grammar, you can run:
 
     npm run grammar
+
+__IMPORTANT__: Because the indentation rules, the grammar cannot use cache.
 
 Run tests with
 
