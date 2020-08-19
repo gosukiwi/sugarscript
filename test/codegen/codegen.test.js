@@ -46,12 +46,32 @@ def greet(person:Person[])
 
       it('can return a value', function () {
         const result = generate(`
-def greet(person:Person[])
+def greet(person:Person[]): integer
   return 2
         `)
 
         expect(result).to.contain('exitfunction 2')
         expect(result).to.contain('endfunction 0')
+      })
+    })
+
+    describe('function call', function () {
+      it('calls a function with no arguments', function () {
+        const result = generate(`
+def greet()
+greet()
+        `)
+
+        expect(result).to.contain('greet()')
+      })
+
+      it('calls a function with an argument', function () {
+        const result = generate(`
+def greet(name: string)
+greet("Mike")
+        `)
+
+        expect(result).to.contain('greet("Mike")')
       })
     })
   })
