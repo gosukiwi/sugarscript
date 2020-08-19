@@ -62,5 +62,28 @@ foo()
 
       expect(definitions.calls.foo.type).to.eq('VOID')
     })
+
+    it('knows the type', function () {
+      const definitions = check(`
+def foo(): integer
+foo()
+      `)
+
+      expect(definitions.calls.foo.type).to.eq('INTEGER')
+    })
+  })
+
+  describe('assign', function () {
+    it('can assign', function () {
+      const definitions = check(`
+a = 1
+b = 3.14
+c = "Duchess"
+      `)
+
+      expect(definitions.variables.a.type).to.eq('INTEGER')
+      expect(definitions.variables.b.type).to.eq('FLOAT')
+      expect(definitions.variables.c.type).to.eq('STRING')
+    })
   })
 })
