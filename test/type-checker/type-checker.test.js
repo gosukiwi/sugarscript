@@ -18,13 +18,13 @@ describe.only('Typechecker', function () {
 
     it('checks a function definition', function () {
       const definitions = check(`
-def greet(person:Person[]): integer
+def greet(person:Person[][]): integer
   return 2
       `)
 
       expect(definitions.functions.greet.type).to.eq('INTEGER')
       expect(definitions.functions.greet.functionName).to.eq('greet')
-      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('Person')
+      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('ARRAY(Person, 2)')
       expect(definitions.functions.greet.definitions.returns[0].type).to.eq('INTEGER')
     })
 
@@ -36,7 +36,7 @@ def greet(person:Person[])
 
       expect(definitions.functions.greet.type).to.eq('VOID')
       expect(definitions.functions.greet.functionName).to.eq('greet')
-      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('Person')
+      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('ARRAY(Person, 1)')
       expect(definitions.functions.greet.definitions.variables.a.type).to.eq('INTEGER')
     })
 
@@ -49,7 +49,7 @@ def greet(person:Person[])
 
       expect(definitions.functions.greet.type).to.eq('VOID')
       expect(definitions.functions.greet.functionName).to.eq('greet')
-      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('Person')
+      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('ARRAY(Person, 1)')
     })
   })
 
@@ -84,6 +84,22 @@ c = "Duchess"
       expect(definitions.variables.a.type).to.eq('INTEGER')
       expect(definitions.variables.b.type).to.eq('FLOAT')
       expect(definitions.variables.c.type).to.eq('STRING')
+    })
+  })
+
+  describe('arrays', function () {
+    it('can assign', function () {
+      const definitions = check('a = [1, 2, 3]')
+      expect(definitions.variables.a.type).to.eq('ARRAY(INTEGER, 1)')
+    })
+
+    it('can pass to function', function () {
+      const definitions = check(`
+def foo(arr: integer[])
+foo([1, 2, 3])
+      `)
+
+      expect(definitions.functions.foo.definitions.parameters.arr.type).to.eq('ARRAY(INTEGER, 1)')
     })
   })
 })
