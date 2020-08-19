@@ -73,6 +73,15 @@ greet("Mike")
 
         expect(result).to.contain('greet("Mike")')
       })
+
+      it('calls a function with many arguments', function () {
+        const result = generate(`
+def greet(name: string, age: integer)
+greet("Mike", 18)
+        `)
+
+        expect(result).to.contain('greet("Mike", 18)')
+      })
     })
   })
 })
