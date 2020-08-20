@@ -116,5 +116,32 @@ marquetteh = names[1]
       `)
       expect(definitions.variables.marquetteh.type.type).to.eq('STRING')
     })
+
+    it('can set an element of proper type', function () {
+      expect(() => {
+        check(`
+names = ["pepe luis"]
+names[2] = "john smith junior tercero montenegro de la mancha"
+        `)
+      }).not.to.throw()
+    })
+
+    it('cannot set an element on a non-existant array', function () {
+      expect(() => {
+        check(`
+names = ["pepe luis"]
+foo[2] = "john smith junior tercero montenegro de la mancha"
+        `)
+      }).to.throw(/Could not find/)
+    })
+
+    it('cannot set an element of a different type', function () {
+      expect(() => {
+        check(`
+names = ["pepe luis"]
+names[2] = 2
+        `)
+      }).to.throw(/Cannot assign 'INTEGER' to an array of 'STRING'/)
+    })
   })
 })
