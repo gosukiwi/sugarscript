@@ -144,4 +144,24 @@ names[2] = 2
       }).to.throw(/Cannot assign 'INTEGER' to an array of 'STRING'/)
     })
   })
+
+  describe('let', function () {
+    it('can define a primitive', function () {
+      const definitions = check('let person: integer')
+      expect(definitions.variables.person.type.type).to.eq('INTEGER')
+    })
+
+    it('can define a type', function () {
+      const definitions = check('let person: tPerson')
+      expect(definitions.variables.person.type.type).to.eq('UDT')
+      expect(definitions.variables.person.type.value).to.eq('tPerson')
+    })
+
+    it('can define an array', function () {
+      const definitions = check('let person: tPerson[][]')
+      expect(definitions.variables.person.type.type).to.eq('ARRAY')
+      expect(definitions.variables.person.type.value.type).to.eq('UDT')
+      expect(definitions.variables.person.type.dimensions).to.eq(2)
+    })
+  })
 })
