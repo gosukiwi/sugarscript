@@ -58,6 +58,33 @@ def greet(person:integer[])
       expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('INTEGER')
       expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
     })
+
+    it('complains if it returns an invalid type', function () {
+      expect(() => {
+        check(`
+def greet(person: Person): integer
+  return person
+          `)
+      }).to.throw(/Function was defined as 'INTEGER'/)
+    })
+
+    it('complains if it returns an invalid UDT', function () {
+      expect(() => {
+        check(`
+def greet(person: Person): Cat
+  return person
+          `)
+      }).to.throw(/Function was defined as 'Cat'/)
+    })
+
+    it('returns a UDT', function () {
+      expect(() => {
+        check(`
+def greet(person: Person): Person
+  return person
+          `)
+      }).not.to.throw(/Function was defined as 'INTEGER'/)
+    })
   })
 
   describe('function call', function () {

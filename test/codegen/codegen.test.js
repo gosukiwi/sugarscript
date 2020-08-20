@@ -44,7 +44,27 @@ def greet(person:Person[])
         expect(result).to.contain('function greet(person as Person[])')
       })
 
-      it('can return a value', function () {
+      it('can return a primitive value', function () {
+        const result = generate(`
+def greet(person:Person[]): integer
+  return 2
+        `)
+
+        expect(result).to.contain('exitfunction 2')
+        expect(result).to.contain('endfunction 0')
+      })
+
+      it('can return a UDT', function () {
+        const result = generate(`
+def greet(person:Person[]): integer
+  return person
+        `)
+
+        expect(result).to.contain('exitfunction 2')
+        expect(result).to.contain('endfunction 0')
+      })
+
+      it('can return an array', function () {
         const result = generate(`
 def greet(person:Person[]): integer
   return 2
