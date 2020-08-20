@@ -15,7 +15,7 @@ Needless to say, you need to own AppGameKit Classic.
 ```
 # assign
 name = "Duchess"
-greeting = "Hello #{name}"!
+greeting = "Hello #{name}"! # string interpolation
 
 # functions
 def greet(name:string, age:integer, person:ref:Person)
@@ -34,6 +34,9 @@ a = () ->
 
 # arrays
 a = [1, 2, 3]
+
+# operators
+a = "hi" * 4 # => "hihihihi"
 ```
 
 # Usage

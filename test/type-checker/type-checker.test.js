@@ -13,7 +13,7 @@ describe.only('Typechecker', function () {
     it('works with an empty function', function () {
       const definitions = check('def greet()')
 
-      expect(definitions.functions.greet.type).to.eq('VOID')
+      expect(definitions.functions.greet.type.type).to.eq('VOID')
     })
 
     it('checks a function definition', function () {
@@ -22,34 +22,41 @@ def greet(person:Person[][]): integer
   return 2
       `)
 
-      expect(definitions.functions.greet.type).to.eq('INTEGER')
+      expect(definitions.functions.greet.type.type).to.eq('INTEGER')
       expect(definitions.functions.greet.functionName).to.eq('greet')
-      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('ARRAY(Person, 2)')
+      expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
+      expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('UDT')
+      expect(definitions.functions.greet.definitions.parameters.person.type.value.value).to.eq('Person')
+      expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(2)
       expect(definitions.functions.greet.definitions.returns[0].type).to.eq('INTEGER')
     })
 
     it('checks a nested assignment', function () {
       const definitions = check(`
-def greet(person:Person[])
+def greet(person: Person[])
   a = 2
       `)
 
-      expect(definitions.functions.greet.type).to.eq('VOID')
+      expect(definitions.functions.greet.type.type).to.eq('VOID')
       expect(definitions.functions.greet.functionName).to.eq('greet')
-      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('ARRAY(Person, 1)')
-      expect(definitions.functions.greet.definitions.variables.a.type).to.eq('INTEGER')
+      expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
+      expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('UDT')
+      expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
+      expect(definitions.functions.greet.definitions.variables.a.type.type).to.eq('INTEGER')
     })
 
     it('checks a nested function call', function () {
       const definitions = check(`
 def foo()
-def greet(person:Person[])
+def greet(person:integer[])
   foo()
       `)
 
-      expect(definitions.functions.greet.type).to.eq('VOID')
+      expect(definitions.functions.greet.type.type).to.eq('VOID')
       expect(definitions.functions.greet.functionName).to.eq('greet')
-      expect(definitions.functions.greet.definitions.parameters.person.type).to.eq('ARRAY(Person, 1)')
+      expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
+      expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('INTEGER')
+      expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
     })
   })
 
@@ -60,7 +67,7 @@ def foo()
 foo()
       `)
 
-      expect(definitions.calls.foo.type).to.eq('VOID')
+      expect(definitions.calls.foo.type.type).to.eq('VOID')
     })
 
     it('knows the type', function () {
@@ -69,7 +76,7 @@ def foo(): integer
 foo()
       `)
 
-      expect(definitions.calls.foo.type).to.eq('INTEGER')
+      expect(definitions.calls.foo.type.type).to.eq('INTEGER')
     })
   })
 
@@ -81,16 +88,17 @@ b = 3.14
 c = "Duchess"
       `)
 
-      expect(definitions.variables.a.type).to.eq('INTEGER')
-      expect(definitions.variables.b.type).to.eq('FLOAT')
-      expect(definitions.variables.c.type).to.eq('STRING')
+      expect(definitions.variables.a.type.type).to.eq('INTEGER')
+      expect(definitions.variables.b.type.type).to.eq('FLOAT')
+      expect(definitions.variables.c.type.type).to.eq('STRING')
     })
   })
 
   describe('arrays', function () {
     it('can assign', function () {
       const definitions = check('a = [1, 2, 3]')
-      expect(definitions.variables.a.type).to.eq('ARRAY(INTEGER, 1)')
+      expect(definitions.variables.a.type.type).to.eq('INLINE_ARRAY')
+      expect(definitions.variables.a.type.value).to.eq('INTEGER')
     })
 
     it('can pass to function', function () {
@@ -98,8 +106,16 @@ c = "Duchess"
 def foo(arr: integer[])
 foo([1, 2, 3])
       `)
+      expect(definitions.calls.foo.args[0].type).to.eq('INLINE_ARRAY')
+    })
 
-      expect(definitions.functions.foo.definitions.parameters.arr.type).to.eq('ARRAY(INTEGER, 1)')
+    it.only('can access', function () {
+      const definitions = check(`
+names = ["fede", "marquete"]
+marquetteh = array[1]
+      `)
+      console.log(definitions)
+      expect(definitions.variables.a.type).to.eq('STRING')
     })
   })
 })
