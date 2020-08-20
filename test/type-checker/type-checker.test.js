@@ -28,7 +28,7 @@ def greet(person:Person[][]): integer
       expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('UDT')
       expect(definitions.functions.greet.definitions.parameters.person.type.value.value).to.eq('Person')
       expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(2)
-      expect(definitions.functions.greet.definitions.returns[0].type).to.eq('INTEGER')
+      expect(definitions.functions.greet.definitions.returns[0].type.type).to.eq('INTEGER')
     })
 
     it('checks a nested assignment', function () {
@@ -97,7 +97,7 @@ c = "Duchess"
   describe('arrays', function () {
     it('can assign', function () {
       const definitions = check('a = [1, 2, 3]')
-      expect(definitions.variables.a.type.type).to.eq('INLINE_ARRAY')
+      expect(definitions.variables.a.type.type).to.eq('ARRAY')
       expect(definitions.variables.a.type.value).to.eq('INTEGER')
     })
 
@@ -106,16 +106,15 @@ c = "Duchess"
 def foo(arr: integer[])
 foo([1, 2, 3])
       `)
-      expect(definitions.calls.foo.args[0].type).to.eq('INLINE_ARRAY')
+      expect(definitions.calls.foo.args[0].type).to.eq('ARRAY')
     })
 
-    it.only('can access', function () {
+    it('can access', function () {
       const definitions = check(`
 names = ["fede", "marquete"]
-marquetteh = array[1]
+marquetteh = names[1]
       `)
-      console.log(definitions)
-      expect(definitions.variables.a.type).to.eq('STRING')
+      expect(definitions.variables.marquetteh.type.type).to.eq('STRING')
     })
   })
 })
