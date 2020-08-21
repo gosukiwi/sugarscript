@@ -4,7 +4,7 @@ const Codegen = require('../../lib/codegen/codegen')
 
 function generate (sourcecode) {
   const ast = parser.parse(sourcecode.trim())
-  return new Codegen().call(ast)
+  return new Codegen().generate(ast)
 }
 
 describe('Codegen', function () {
