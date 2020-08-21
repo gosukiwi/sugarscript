@@ -56,12 +56,12 @@ def greet(person:Person[]): integer
 
       it('can return a UDT', function () {
         const result = generate(`
-def greet(person:Person[]): integer
+def greet(person: Person): Person
   return person
         `)
 
-        expect(result).to.contain('exitfunction 2')
-        expect(result).to.contain('endfunction 0')
+        expect(result).to.contain('SS_INTERNAL_UNREACHABLE_RETURN_VALUE as Person')
+        expect(result).to.contain('endfunction SS_INTERNAL_UNREACHABLE_RETURN_VALUE')
       })
 
       it('can return an array', function () {
@@ -105,10 +105,8 @@ greet("Mike", 18)
     })
 
     describe('assignment', function () {
-      it('assigns an integer', function () {
-        const result = generate(`
-          a = 1
-        `)
+      it.only('assigns an integer', function () {
+        const result = generate('a = 1')
 
         expect(result).to.contain('a as integer')
         expect(result).to.contain('a = 1')

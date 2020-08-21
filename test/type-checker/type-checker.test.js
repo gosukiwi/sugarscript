@@ -8,7 +8,7 @@ function check (input) {
   return checker.check(ast)
 }
 
-describe.only('Typechecker', function () {
+describe('Typechecker', function () {
   describe('def', function () {
     it('works with an empty function', function () {
       const definitions = check('def greet()')
