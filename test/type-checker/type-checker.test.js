@@ -74,7 +74,7 @@ def greet(person: Person): integer
 def greet(person: Person): Cat
   return person
           `)
-      }).to.throw(/Function was defined as 'Cat'/)
+      }).to.throw(/Function was defined as '<UDT: Cat>'/)
     })
 
     it('returns a UDT', function () {
@@ -124,8 +124,8 @@ c = "Duchess"
   describe('arrays', function () {
     it('can assign', function () {
       const definitions = check('a = [1, 2, 3]')
-      expect(definitions.variables.a.type.type).to.eq('ARRAY')
-      expect(definitions.variables.a.type.value).to.eq('INTEGER')
+      expect(definitions.variables.a.type.is('ARRAY')).to.eq(true)
+      expect(definitions.variables.a.type.value.is('INTEGER')).to.eq(true)
     })
 
     it('can pass to function', function () {
@@ -168,7 +168,7 @@ foo[2] = "john smith junior tercero montenegro de la mancha"
 names = ["pepe luis"]
 names[2] = 2
         `)
-      }).to.throw(/Cannot assign 'INTEGER' to an array of 'STRING'/)
+      }).to.throw(/Cannot assign/)
     })
   })
 
