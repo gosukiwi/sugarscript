@@ -105,7 +105,7 @@ greet("Mike", 18)
     })
 
     describe('assignment', function () {
-      it.only('assigns an integer', function () {
+      it('assigns an integer', function () {
         const result = generate('a = 1')
 
         expect(result).to.contain('a as integer')
