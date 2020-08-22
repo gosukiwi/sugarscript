@@ -20,4 +20,22 @@ describe('codegen/generators/assignment', function () {
 
     expect(result).to.match(/a = _SSINTERNAL/)
   })
+
+  it('assigns an inline array that contains a function', function () {
+    const result = generate(`
+def foo(): integer
+a = [1, 2, foo()]
+    `)
+
+    expect(result).to.match(/a = _SSINTERNAL/)
+  })
+
+  it('assigns an element from an array', function () {
+    const result = generate(`
+a = [1, 2, 3]
+b = a[1]
+    `.trim())
+
+    expect(result).to.match(/a = _SSINTERNAL/)
+  })
 })
