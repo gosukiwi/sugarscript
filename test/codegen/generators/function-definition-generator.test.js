@@ -70,7 +70,7 @@ def greet(person: Person[]): Person[]
     `)
 
     expect(result).to.contain('exitfunction person')
-    expect(result).to.contain('SS_INTERNAL_UNREACHABLE_RETURN_VALUE as Person[]')
+    expect(result).to.contain('SS_INTERNAL_UNREACHABLE_RETURN_VALUE as Person[-1]')
     expect(result).to.contain('endfunction SS_INTERNAL_UNREACHABLE_RETURN_VALUE')
   })
 })
