@@ -34,4 +34,15 @@ greet("Mike", 18)
 
     expect(result).to.contain('greet("Mike", 18)')
   })
+
+  it.only('calls a function with an inline array', function () {
+    const result = generate(`
+def greet(people: string[])
+greet(["Thomas O'Malley", "Duchess"])
+    `)
+
+    console.log(result)
+
+    expect(result).to.contain('greet("Mike", 18)')
+  })
 })
