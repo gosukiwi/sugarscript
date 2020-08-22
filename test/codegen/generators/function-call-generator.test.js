@@ -41,10 +41,8 @@ def greet(people: string[])
 greet(["Thomas O'Malley", "Duchess"])
     `)
 
-    console.log(result)
-
-    expect(result).to.match(/_SSINTERNAL0.insert\("Thomas O'Malley"\)/)
-    expect(result).to.match(/_SSINTERNAL0.insert\("Duchess"\)/)
-    expect(result).to.match(/greet\(_SSINTERNAL0\)/)
+    expect(result).to.match(/_SSINTERNAL\d+\.insert\("Thomas O'Malley"\)/)
+    expect(result).to.match(/_SSINTERNAL\d+\.insert\("Duchess"\)/)
+    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
   })
 })
