@@ -178,13 +178,21 @@ def foo()
     })
   })
 
-  describe('LET', function () {
+  describe('let', function () {
     it('parses with integer', function () {
       const node = parseOne('let a: integer')
 
       expect(node.type).to.eq('LET')
       expect(node.name).to.eq('a')
       expect(node.typehint.name).to.eq('INTEGER')
+    })
+  })
+
+  describe('typehint', function () {
+    it('matches arrays', function () {
+      const node = parseOne('let a: integer[]')
+      expect(node.typehint.name).to.eq('ARRAY')
+      expect(node.typehint.of).to.eq('INTEGER')
     })
   })
 })
