@@ -153,21 +153,15 @@ def foo()
 
   describe('literals', function () {
     it('matches an integer number', function () {
-      const node = parseOne('a = 1')
-
-      expect(node.rhs.value).to.eq(1)
+      expect(parseOne('a = 1').rhs.value).to.eq(1)
     })
 
     it('matches a float number', function () {
-      const node = parseOne('a = 1.3')
-
-      expect(node.rhs.value).to.eq(1.3)
+      expect(parseOne('a = 1.3').rhs.value).to.eq(1.3)
     })
 
     it('matches a negative float number', function () {
-      const node = parseOne('a = -3.14')
-
-      expect(node.rhs.value).to.eq(-3.14)
+      expect(parseOne('a = -3.14').rhs.value).to.eq(-3.14)
     })
 
     it('matches a string', function () {
@@ -218,13 +212,13 @@ def foo()
     })
 
     it('can use inside calls', function () {
-      const node = parseOne('foo([1, 2])')
-
-      expect(node.args[0].type).to.eq('INLINE_ARRAY')
+      expect(parseOne('foo([1, 2])').args[0].type).to.eq('INLINE_ARRAY')
     })
   })
 
   describe('expressions', function () {
-    it('matches a parenthesized expression')
+    it('matches a parenthesized expression', function () {
+      expect(parseOne('a = (foo())').rhs.type).to.eq('FUNCTION_CALL')
+    })
   })
 })
