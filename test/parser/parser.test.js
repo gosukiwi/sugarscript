@@ -27,9 +27,9 @@ describe.only('parser/parser', function () {
   describe('function definition', function () {
     it('parses function definition', function () {
       const node = parseOne(`
-  def foo()
-    a = b
-    c = d
+def foo()
+  a = b
+  c = d
       `)
 
       expect(node.type).to.eq('FUNCTION_DEFINITION')
@@ -39,14 +39,25 @@ describe.only('parser/parser', function () {
 
     it('parses function deinition with params', function () {
       const node = parseOne(`
-  def foo(a: integer)
-    b = a
+def foo(a: integer)
+  b = a
       `)
 
       expect(node.name).to.eq('foo')
       expect(node.params.length).to.eq(1)
       expect(node.params[0].name).to.eq('a')
       expect(node.params[0].typehint.name).to.eq('INTEGER')
+    })
+
+    it('can return a value', function () {
+      const node = parseOne(`
+def foo()
+  return 2
+      `)
+
+      expect(node.body[0].type).to.eq('RETURN')
+      expect(node.body[0].value.type).to.eq('NUMBER')
+      expect(node.body[0].value.value).to.eq(2)
     })
   })
 
@@ -127,6 +138,16 @@ describe.only('parser/parser', function () {
 
       expect(node.rhs.type).to.eq('STRING')
       expect(node.rhs.value).to.eq('potato')
+    })
+  })
+
+  describe('LET', function () {
+    it('parses with integer', function () {
+      const node = parseOne('let a: integer')
+
+      expect(node.type).to.eq('LET')
+      expect(node.name).to.eq('a')
+      expect(node.typehint.name).to.eq('INTEGER')
     })
   })
 })
