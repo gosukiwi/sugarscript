@@ -1,9 +1,13 @@
 const expect = require('chai').expect
 const parse = require('../../lib/parser/parser')
 
+function parseOne (input) {
+  return parse(input)[0]
+}
+
 describe.only('parser/parser', function () {
   it('parses assignment', function () {
-    const node = parse('a = b')[0]
+    const node = parseOne('a = b')
 
     expect(node.lhs.type).to.eq('IDENTIFIER')
     expect(node.lhs.value).to.eq('a')
@@ -22,11 +26,11 @@ describe.only('parser/parser', function () {
 
   describe('function definition', function () {
     it('parses function definition', function () {
-      const node = parse(`
+      const node = parseOne(`
   def foo()
     a = b
     c = d
-      `)[0]
+      `)
 
       expect(node.type).to.eq('FUNCTION_DEFINITION')
       expect(node.name).to.eq('foo')
@@ -34,10 +38,10 @@ describe.only('parser/parser', function () {
     })
 
     it('parses function deinition with params', function () {
-      const node = parse(`
+      const node = parseOne(`
   def foo(a: integer)
     b = a
-      `)[0]
+      `)
 
       expect(node.name).to.eq('foo')
       expect(node.params.length).to.eq(1)
@@ -48,7 +52,7 @@ describe.only('parser/parser', function () {
 
   describe('function call', function () {
     it('parses a call with no parameters', function () {
-      const node = parse('foo()')[0]
+      const node = parseOne('foo()')
 
       expect(node.type).to.eq('FUNCTION_CALL')
       expect(node.name).to.eq('foo')
@@ -56,14 +60,14 @@ describe.only('parser/parser', function () {
     })
 
     it('parses a call with a single argument', function () {
-      const node = parse('foo(bar)')[0]
+      const node = parseOne('foo(bar)')
 
       expect(node.name).to.eq('foo')
       expect(node.args[0].value).to.eq('bar')
     })
 
     it('parses a call with many arguments', function () {
-      const node = parse('foo(bar, baz)')[0]
+      const node = parseOne('foo(bar, baz)')
 
       expect(node.name).to.eq('foo')
       expect(node.args[0].value).to.eq('bar')
@@ -73,7 +77,7 @@ describe.only('parser/parser', function () {
 
   describe('plugin call', function () {
     it('parses a call with no parameters', function () {
-      const node = parse('p::foo()')[0]
+      const node = parseOne('p::foo()')
 
       expect(node.type).to.eq('PLUGIN_CALL')
       expect(node.plugin).to.eq('p')
@@ -82,7 +86,7 @@ describe.only('parser/parser', function () {
     })
 
     it('parses a call with a single argument', function () {
-      const node = parse('p::foo(bar)')[0]
+      const node = parseOne('p::foo(bar)')
 
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
@@ -90,12 +94,39 @@ describe.only('parser/parser', function () {
     })
 
     it('parses a call with many arguments', function () {
-      const node = parse('p::foo(bar, baz)')[0]
+      const node = parseOne('p::foo(bar, baz)')
 
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
       expect(node.args[0].value).to.eq('bar')
       expect(node.args[1].value).to.eq('baz')
+    })
+  })
+
+  describe('literals', function () {
+    it('matches an integer number', function () {
+      const node = parseOne('a = 1')
+
+      expect(node.rhs.value).to.eq(1)
+    })
+
+    it('matches a float number', function () {
+      const node = parseOne('a = 1.3')
+
+      expect(node.rhs.value).to.eq(1.3)
+    })
+
+    it('matches a negative float number', function () {
+      const node = parseOne('a = -3.14')
+
+      expect(node.rhs.value).to.eq(-3.14)
+    })
+
+    it('matches a string', function () {
+      const node = parseOne('a = "potato"')
+
+      expect(node.rhs.type).to.eq('STRING')
+      expect(node.rhs.value).to.eq('potato')
     })
   })
 })
