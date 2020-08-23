@@ -195,4 +195,36 @@ def foo()
       expect(node.typehint.of).to.eq('INTEGER')
     })
   })
+
+  describe('inline array', function () {
+    it('matches with simple values', function () {
+      const node = parseOne('a = [1, 2, 3]')
+
+      expect(node.rhs.elements[0].value).to.eq(1)
+      expect(node.rhs.elements[1].value).to.eq(2)
+      expect(node.rhs.elements[2].value).to.eq(3)
+    })
+
+    it('matches other expressions', function () {
+      const node = parseOne('a = [foo(), bar(1), baz::taz(3, 4)]')
+
+      expect(node.rhs.elements[0].type).to.eq('FUNCTION_CALL')
+      expect(node.rhs.elements[1].type).to.eq('FUNCTION_CALL')
+      expect(node.rhs.elements[2].type).to.eq('PLUGIN_CALL')
+    })
+
+    it('cannot nest arrays', function () {
+      expect(() => parseOne('a = [1, 2, [3]]')).to.throw()
+    })
+
+    it('can use inside calls', function () {
+      const node = parseOne('foo([1, 2])')
+
+      expect(node.args[0].type).to.eq('INLINE_ARRAY')
+    })
+  })
+
+  describe('expressions', function () {
+    it('matches a parenthesized expression')
+  })
 })
