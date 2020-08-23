@@ -37,6 +37,30 @@ describe.only('parser/parser', function () {
     })
   })
 
+  describe('query', function () {
+    it('works with one-dimensional arrays', function () {
+      const node = parseOne('a[1] = b')
+
+      expect(node.lhs.parts[0].type).to.eq('ARRAY_ACCESS')
+      expect(node.lhs.parts[0].identifier).to.eq('a')
+    })
+
+    it('can mix with one-dimensional arrays', function () {
+      const node = parseOne('a.b[1].c.d[2] = b')
+
+      expect(node.lhs.parts[0].type).to.eq('IDENTIFIER')
+      expect(node.lhs.parts[0].value).to.eq('a')
+      expect(node.lhs.parts[1].type).to.eq('ARRAY_ACCESS')
+      expect(node.lhs.parts[1].identifier).to.eq('b')
+      expect(node.lhs.parts[1].index.value).to.eq(1)
+      expect(node.lhs.parts[2].type).to.eq('IDENTIFIER')
+      expect(node.lhs.parts[2].value).to.eq('c')
+      expect(node.lhs.parts[3].type).to.eq('ARRAY_ACCESS')
+      expect(node.lhs.parts[3].identifier).to.eq('d')
+      expect(node.lhs.parts[3].index.value).to.eq(2)
+    })
+  })
+
   describe('function definition', function () {
     it('parses function definition', function () {
       const node = parseOne(`
