@@ -6,22 +6,35 @@ function parseOne (input) {
 }
 
 describe.only('parser/parser', function () {
-  it('parses assignment', function () {
-    const node = parseOne('a = b')
-
-    expect(node.lhs.type).to.eq('IDENTIFIER')
-    expect(node.lhs.value).to.eq('a')
-    expect(node.rhs.type).to.eq('IDENTIFIER')
-    expect(node.rhs.value).to.eq('b')
-  })
-
   it('parses multiple statements', function () {
     const node = parse('a = b\nb = c')
 
-    expect(node[0].lhs.value).to.eq('a')
-    expect(node[0].rhs.value).to.eq('b')
-    expect(node[1].lhs.value).to.eq('b')
-    expect(node[1].rhs.value).to.eq('c')
+    expect(node[0].lhs.parts[0].value).to.eq('a')
+    expect(node[0].rhs.parts[0].value).to.eq('b')
+    expect(node[1].lhs.parts[0].value).to.eq('b')
+    expect(node[1].rhs.parts[0].value).to.eq('c')
+  })
+
+  describe('assignment', function () {
+    it('parses assignment', function () {
+      const node = parseOne('a = b')
+
+      expect(node.lhs.type).to.eq('QUERY')
+      expect(node.lhs.parts[0].value).to.eq('a')
+      expect(node.rhs.type).to.eq('QUERY')
+      expect(node.rhs.parts[0].value).to.eq('b')
+    })
+
+    it('parses a query', function () {
+      const node = parseOne('a.b.c = d')
+
+      expect(node.type).to.eq('ASSIGNMENT')
+      expect(node.lhs.type).to.eq('QUERY')
+      expect(node.lhs.parts[0].value).to.eq('a')
+      expect(node.lhs.parts[1].value).to.eq('b')
+      expect(node.lhs.parts[2].value).to.eq('c')
+      expect(node.rhs.parts[0].value).to.eq('d')
+    })
   })
 
   describe('function definition', function () {
@@ -74,15 +87,15 @@ def foo()
       const node = parseOne('foo(bar)')
 
       expect(node.name).to.eq('foo')
-      expect(node.args[0].value).to.eq('bar')
+      expect(node.args[0].parts[0].value).to.eq('bar')
     })
 
     it('parses a call with many arguments', function () {
       const node = parseOne('foo(bar, baz)')
 
       expect(node.name).to.eq('foo')
-      expect(node.args[0].value).to.eq('bar')
-      expect(node.args[1].value).to.eq('baz')
+      expect(node.args[0].parts[0].value).to.eq('bar')
+      expect(node.args[1].parts[0].value).to.eq('baz')
     })
   })
 
@@ -101,7 +114,7 @@ def foo()
 
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
-      expect(node.args[0].value).to.eq('bar')
+      expect(node.args[0].parts[0].value).to.eq('bar')
     })
 
     it('parses a call with many arguments', function () {
@@ -109,8 +122,8 @@ def foo()
 
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
-      expect(node.args[0].value).to.eq('bar')
-      expect(node.args[1].value).to.eq('baz')
+      expect(node.args[0].parts[0].value).to.eq('bar')
+      expect(node.args[1].parts[0].value).to.eq('baz')
     })
   })
 
