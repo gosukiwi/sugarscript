@@ -1,24 +1,18 @@
 const expect = require('chai').expect
-const parser = require('../../lib/parser')
+const parse = require('../../lib/parser/parser')
 const TypeChecker = require('../../lib/type-checker/type-checker')
 
 function check (input) {
   const checker = new TypeChecker()
-  const ast = parser.parse(input.trim())
+  const ast = parse(input)
   return checker.check(ast)
 }
 
 describe('Typechecker', function () {
   describe('def', function () {
-    it('works with an empty function', function () {
-      const definitions = check('def greet()')
-
-      expect(definitions.functions.greet.type.type).to.eq('VOID')
-    })
-
     it('checks a function definition', function () {
       const definitions = check(`
-def greet(person:Person[][]): integer
+def greet(person: Person[]): integer
   return 2
       `)
 
@@ -27,7 +21,7 @@ def greet(person:Person[][]): integer
       expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
       expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('UDT')
       expect(definitions.functions.greet.definitions.parameters.person.type.value.value).to.eq('Person')
-      expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(2)
+      expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
       expect(definitions.functions.greet.definitions.returns[0].type.type).to.eq('INTEGER')
     })
 
@@ -48,7 +42,9 @@ def greet(person: Person[])
     it('checks a nested function call', function () {
       const definitions = check(`
 def foo()
-def greet(person:integer[])
+  a = 1
+
+def greet(person: integer[])
   foo()
       `)
 
@@ -91,6 +87,7 @@ def greet(person: Person): Person
     it('calls a simple function', function () {
       const definitions = check(`
 def foo()
+  a = 1
 foo()
       `)
 
@@ -100,6 +97,7 @@ foo()
     it('knows the type', function () {
       const definitions = check(`
 def foo(): integer
+  return 1
 foo()
       `)
 
@@ -131,9 +129,10 @@ c = "Duchess"
     it('can pass to function', function () {
       const definitions = check(`
 def foo(arr: integer[])
+  a = 1
 foo([1, 2, 3])
       `)
-      expect(definitions.calls.foo.args[0].type).to.eq('ARRAY')
+      expect(definitions.calls.foo.args[0].is('ARRAY')).to.eq(true)
     })
 
     it('can access', function () {
@@ -141,7 +140,7 @@ foo([1, 2, 3])
 names = ["fede", "marquete"]
 marquetteh = names[1]
       `)
-      expect(definitions.variables.marquetteh.type.type).to.eq('STRING')
+      expect(definitions.variables.marquetteh.type.is('STRING')).to.eq(true)
     })
 
     it('can set an element of proper type', function () {
@@ -175,20 +174,20 @@ names[2] = 2
   describe('let', function () {
     it('can define a primitive', function () {
       const definitions = check('let person: integer')
-      expect(definitions.variables.person.type.type).to.eq('INTEGER')
+      expect(definitions.variables.person.type.is('INTEGER')).to.eq(true)
     })
 
     it('can define a type', function () {
       const definitions = check('let person: tPerson')
-      expect(definitions.variables.person.type.type).to.eq('UDT')
+      expect(definitions.variables.person.type.is('UDT')).to.eq(true)
       expect(definitions.variables.person.type.value).to.eq('tPerson')
     })
 
     it('can define an array', function () {
-      const definitions = check('let person: tPerson[][]')
-      expect(definitions.variables.person.type.type).to.eq('ARRAY')
+      const definitions = check('let person: tPerson[]')
+      expect(definitions.variables.person.type.is('ARRAY')).to.eq(true)
       expect(definitions.variables.person.type.value.type).to.eq('UDT')
-      expect(definitions.variables.person.type.dimensions).to.eq(2)
+      expect(definitions.variables.person.type.dimensions).to.eq(1)
     })
   })
 })

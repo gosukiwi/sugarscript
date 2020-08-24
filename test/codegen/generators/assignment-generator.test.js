@@ -1,10 +1,9 @@
 const expect = require('chai').expect
-const parser = require('../../../lib/parser')
+const parse = require('../../../lib/parser/parser')
 const Codegen = require('../../../lib/codegen/codegen')
 
 function generate (sourcecode) {
-  const ast = parser.parse(sourcecode.trim())
-  return new Codegen().generate(ast)
+  return new Codegen().generate(parse(sourcecode))
 }
 
 describe('codegen/generators/assignment', function () {
@@ -24,6 +23,7 @@ describe('codegen/generators/assignment', function () {
   it('assigns an inline array that contains a function', function () {
     const result = generate(`
 def foo(): integer
+  return 1
 a = [1, 2, foo()]
     `)
 

@@ -1,16 +1,16 @@
 const expect = require('chai').expect
-const parser = require('../../../lib/parser')
+const parse = require('../../../lib/parser/parser')
 const Codegen = require('../../../lib/codegen/codegen')
 
 function generate (sourcecode) {
-  const ast = parser.parse(sourcecode.trim())
-  return new Codegen().generate(ast)
+  return new Codegen().generate(parse(sourcecode))
 }
 
 describe('codegen/generators/function-definition', function () {
   it('works with a function with no parameters', function () {
     const result = generate(`
 def greet()
+  a = 1
     `)
 
     expect(result).to.contain('function greet()')
@@ -19,6 +19,7 @@ def greet()
   it('works with a simple function', function () {
     const result = generate(`
 def greet(name:string, person:ref:Person)
+  a = 1
     `)
 
     expect(result).to.contain('function greet(name as string, person ref as Person)')
@@ -28,6 +29,7 @@ def greet(name:string, person:ref:Person)
   it('works with an array and a ref parameter', function () {
     const result = generate(`
 def greet(person:ref:Person[][])
+  a = 1
     `)
 
     expect(result).to.contain('function greet(person ref as Person[][])')
@@ -37,6 +39,7 @@ def greet(person:ref:Person[][])
   it('works with an array parameter', function () {
     const result = generate(`
 def greet(person:Person[])
+  a = 1
     `)
 
     expect(result).to.contain('function greet(person as Person[])')

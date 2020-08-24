@@ -1,16 +1,16 @@
 const expect = require('chai').expect
-const parser = require('../../../lib/parser')
+const parse = require('../../../lib/parser/parser')
 const Codegen = require('../../../lib/codegen/codegen')
 
 function generate (sourcecode) {
-  const ast = parser.parse(sourcecode.trim())
-  return new Codegen().generate(ast)
+  return new Codegen().generate(parse(sourcecode))
 }
 
 describe('codegen/generators/function-call', function () {
   it('calls a function with no arguments', function () {
     const result = generate(`
 def greet()
+  a = 1
 greet()
     `)
 
@@ -20,6 +20,7 @@ greet()
   it('calls a function with an argument', function () {
     const result = generate(`
 def greet(name: string)
+  a = 1
 greet("Mike")
     `)
 
@@ -29,6 +30,7 @@ greet("Mike")
   it('calls a function with many arguments', function () {
     const result = generate(`
 def greet(name: string, age: integer)
+  a = 1
 greet("Mike", 18)
     `)
 
@@ -38,6 +40,7 @@ greet("Mike", 18)
   it('calls a function with an inline array', function () {
     const result = generate(`
 def greet(people: string[])
+  a = 1
 greet(["Thomas O'Malley", "Duchess"])
     `)
 

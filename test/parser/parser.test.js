@@ -5,7 +5,7 @@ function parseOne (input) {
   return parse(input)[0]
 }
 
-describe.only('parser/parser', function () {
+describe('parser/parser', function () {
   it('parses multiple statements', function () {
     const node = parse('a = b\nb = c')
 
@@ -62,6 +62,10 @@ describe.only('parser/parser', function () {
   })
 
   describe('function definition', function () {
+    it('fails with an empty function', function () {
+      expect(() => parseOne('def greet()')).to.throw()
+    })
+
     it('parses function definition', function () {
       const node = parseOne(`
 def foo()
@@ -83,7 +87,7 @@ def foo(a: integer)
       expect(node.name).to.eq('foo')
       expect(node.params.length).to.eq(1)
       expect(node.params[0].name).to.eq('a')
-      expect(node.params[0].typehint.name).to.eq('INTEGER')
+      expect(node.params[0].typehint.is('INTEGER')).to.eq(true)
     })
 
     it('can return a value', function () {
@@ -95,6 +99,54 @@ def foo()
       expect(node.body[0].type).to.eq('RETURN')
       expect(node.body[0].value.type).to.eq('NUMBER')
       expect(node.body[0].value.value).to.eq(2)
+    })
+
+    it('parses the return type', function () {
+      const node = parseOne(`
+def foo(): integer
+  return 2
+      `)
+
+      expect(node.returnType.is('INTEGER')).to.eq(true)
+    })
+
+    it('parses the return type when it has parameters', function () {
+      const node = parseOne(`
+def foo(a: integer): integer
+  return 2
+      `)
+
+      expect(node.returnType.is('INTEGER')).to.eq(true)
+    })
+
+    it('parses with spaces', function () {
+      expect(() => {
+        parseOne(`
+def foo(a: integer): integer
+  a = 1
+
+  return 2
+        `)}).not.to.throw()
+    })
+
+    it('parses two', function () {
+      expect(() => {
+        parseOne(`
+def foo()
+  a = 1
+
+def greet(b: integer[])
+  b = 1
+        `)}).not.to.throw()
+    })
+
+    it('parses returning a UDT', function () {
+      const node = parseOne(`
+def greet(person: Person): Person
+  return person
+      `)
+
+      expect(node.body[0].value.parts[0].value).to.eq('person')
     })
   })
 
@@ -178,15 +230,22 @@ def foo()
 
       expect(node.type).to.eq('LET')
       expect(node.name).to.eq('a')
-      expect(node.typehint.name).to.eq('INTEGER')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
     })
   })
 
   describe('typehint', function () {
     it('matches arrays', function () {
       const node = parseOne('let a: integer[]')
-      expect(node.typehint.name).to.eq('ARRAY')
-      expect(node.typehint.of).to.eq('INTEGER')
+      expect(node.typehint.is('ARRAY')).to.eq(true)
+      expect(node.typehint.value.is('INTEGER')).to.eq(true)
+    })
+
+    it('matches UDTs', function () {
+      const node = parseOne('let a: Person[]')
+      expect(node.typehint.is('ARRAY')).to.eq(true)
+      expect(node.typehint.value.is('UDT')).to.eq(true)
+      expect(node.typehint.value.value).to.eq('Person')
     })
   })
 
