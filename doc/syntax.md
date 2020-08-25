@@ -1,5 +1,16 @@
 # Syntax
 
+# Variables
+
+```
+let a: integer = 1
+let a = 1
+let a: integer
+
+a = 2 # ok
+b = 3 # error, b was not defined
+```
+
 # Tentative: Inline types
 
 ```

@@ -28,7 +28,7 @@ def greet(person: Person[]): integer
     it('checks a nested assignment', function () {
       const definitions = check(`
 def greet(person: Person[])
-  a = 2
+  let a = 2
       `)
 
       expect(definitions.functions.greet.type.type).to.eq('VOID')
@@ -42,7 +42,7 @@ def greet(person: Person[])
     it('checks a nested function call', function () {
       const definitions = check(`
 def foo()
-  a = 1
+  let a = 1
 
 def greet(person: integer[])
   foo()
@@ -87,7 +87,7 @@ def greet(person: Person): Person
     it('calls a simple function', function () {
       const definitions = check(`
 def foo()
-  a = 1
+  let a = 1
 foo()
       `)
 
@@ -105,23 +105,9 @@ foo()
     })
   })
 
-  describe('assign', function () {
-    it('can assign', function () {
-      const definitions = check(`
-a = 1
-b = 3.14
-c = "Duchess"
-      `)
-
-      expect(definitions.variables.a.type.type).to.eq('INTEGER')
-      expect(definitions.variables.b.type.type).to.eq('FLOAT')
-      expect(definitions.variables.c.type.type).to.eq('STRING')
-    })
-  })
-
   describe('arrays', function () {
     it('can assign', function () {
-      const definitions = check('a = [1, 2, 3]')
+      const definitions = check('let a = [1, 2, 3]')
       expect(definitions.variables.a.type.is('ARRAY')).to.eq(true)
       expect(definitions.variables.a.type.value.is('INTEGER')).to.eq(true)
     })
@@ -129,7 +115,7 @@ c = "Duchess"
     it('can pass to function', function () {
       const definitions = check(`
 def foo(arr: integer[])
-  a = 1
+  let a = 1
 foo([1, 2, 3])
       `)
       expect(definitions.calls.foo.args[0].is('ARRAY')).to.eq(true)
@@ -137,8 +123,8 @@ foo([1, 2, 3])
 
     it('can access', function () {
       const definitions = check(`
-names = ["fede", "marquete"]
-marquetteh = names[1]
+let names = ["fede", "marquete"]
+let marquetteh = names[1]
       `)
       expect(definitions.variables.marquetteh.type.is('STRING')).to.eq(true)
     })
@@ -146,7 +132,7 @@ marquetteh = names[1]
     it('can set an element of proper type', function () {
       expect(() => {
         check(`
-names = ["pepe luis"]
+let names = ["pepe luis"]
 names[2] = "john smith junior tercero montenegro de la mancha"
         `)
       }).not.to.throw()
@@ -155,7 +141,7 @@ names[2] = "john smith junior tercero montenegro de la mancha"
     it('cannot set an element on a non-existant array', function () {
       expect(() => {
         check(`
-names = ["pepe luis"]
+let names = ["pepe luis"]
 foo[2] = "john smith junior tercero montenegro de la mancha"
         `)
       }).to.throw(/Could not find/)
@@ -164,30 +150,10 @@ foo[2] = "john smith junior tercero montenegro de la mancha"
     it('cannot set an element of a different type', function () {
       expect(() => {
         check(`
-names = ["pepe luis"]
+let names = ["pepe luis"]
 names[2] = 2
         `)
       }).to.throw(/Cannot assign/)
-    })
-  })
-
-  describe('let', function () {
-    it('can define a primitive', function () {
-      const definitions = check('let person: integer')
-      expect(definitions.variables.person.type.is('INTEGER')).to.eq(true)
-    })
-
-    it('can define a type', function () {
-      const definitions = check('let person: tPerson')
-      expect(definitions.variables.person.type.is('UDT')).to.eq(true)
-      expect(definitions.variables.person.type.value).to.eq('tPerson')
-    })
-
-    it('can define an array', function () {
-      const definitions = check('let person: tPerson[]')
-      expect(definitions.variables.person.type.is('ARRAY')).to.eq(true)
-      expect(definitions.variables.person.type.value.type).to.eq('UDT')
-      expect(definitions.variables.person.type.dimensions).to.eq(1)
     })
   })
 })

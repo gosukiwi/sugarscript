@@ -8,15 +8,13 @@ function generate (sourcecode) {
 
 describe('codegen/generators/assignment', function () {
   it('assigns an integer', function () {
-    const result = generate('a = 1')
+    const result = generate('let a: integer\na = 1')
 
-    expect(result).to.contain('a as integer')
     expect(result).to.contain('a = 1')
   })
 
   it('assigns an inline array', function () {
-    const result = generate('a = [1, 2, 3]')
-
+    const result = generate('let a: integer[]\na = [1, 2, 3]')
     expect(result).to.match(/a = _SSINTERNAL/)
   })
 
@@ -24,6 +22,7 @@ describe('codegen/generators/assignment', function () {
     const result = generate(`
 def foo(): integer
   return 1
+let a: integer[]
 a = [1, 2, foo()]
     `)
 
@@ -32,6 +31,8 @@ a = [1, 2, foo()]
 
   it('assigns an element from an array', function () {
     const result = generate(`
+let a: integer[]
+let b: integer
 a = [1, 2, 3]
 b = a[1]
     `.trim())

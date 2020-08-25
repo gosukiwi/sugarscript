@@ -232,6 +232,24 @@ def greet(person: Person): Person
       expect(node.name).to.eq('a')
       expect(node.typehint.is('INTEGER')).to.eq(true)
     })
+
+    it('parses with integer and allows to assign value', function () {
+      const node = parseOne('let a: integer = 1')
+
+      expect(node.type).to.eq('LET')
+      expect(node.name).to.eq('a')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
+      expect(node.value.type).to.eq('NUMBER')
+    })
+
+    it('allows to guess value', function () {
+      const node = parseOne('let a = 1')
+
+      expect(node.type).to.eq('LET')
+      expect(node.name).to.eq('a')
+      expect(node.typehint).to.eq(null)
+      expect(node.value.type).to.eq('NUMBER')
+    })
   })
 
   describe('typehint', function () {
