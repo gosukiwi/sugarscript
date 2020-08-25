@@ -298,4 +298,37 @@ def greet(person: Person): Person
       expect(parseOne('a = (foo())').rhs.type).to.eq('FUNCTION_CALL')
     })
   })
+
+  describe('types', function () {
+    it('matches a multiline type', function () {
+      const node = parseOne('type Person\n  name: string\n  age: integer')
+
+      expect(node.type).to.eq('TYPE_DEFINITION')
+      expect(node.name).to.eq('Person')
+      expect(node.fields[0].name).to.eq('name')
+      expect(node.fields[0].typehint.is('STRING')).to.eq(true)
+      expect(node.fields[1].name).to.eq('age')
+      expect(node.fields[1].typehint.is('INTEGER')).to.eq(true)
+    })
+
+    it('matches a single-line type', function () {
+      const node = parseOne('type Person(name: string, age: integer)')
+
+      expect(node.type).to.eq('TYPE_DEFINITION')
+      expect(node.name).to.eq('Person')
+      expect(node.fields[0].name).to.eq('name')
+      expect(node.fields[0].typehint.is('STRING')).to.eq(true)
+      expect(node.fields[1].name).to.eq('age')
+      expect(node.fields[1].typehint.is('INTEGER')).to.eq(true)
+    })
+  })
+
+  it('if statement')
+  it('for statement')
+  it('foreach statement')
+  it('while statement')
+  it('repeat statement')
+  it('break statement')
+  it('lambda')
+  it('multidimensional arrays')
 })
