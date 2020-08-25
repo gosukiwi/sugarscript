@@ -35,4 +35,40 @@ a = 1
   it('checks the type', function () {
     expect(() => check('let a:integer = "asd"')).to.throw()
   })
+
+  it('complains when the field is invalid', function () {
+    expect(() => check(`
+type Person(name: string, age: integer)
+let a: Person
+a.name = 12
+    `)).to.throw(/Cannot assign INTEGER to STRING/)
+  })
+
+  it('checks the field', function () {
+    expect(() => check(`
+type Person(name: string, age: integer)
+let a: Person
+a.name = "Mike"
+    `)).not.to.throw()
+  })
+
+  it('checks many levels', function () {
+    expect(() => check(`
+type Baz(name: string)
+type Bar(baz: Baz)
+type Foo(bar: Bar)
+let a: Foo
+a.bar.baz.name = "Mike"
+    `)).not.to.throw()
+  })
+
+  it('checks many levels and fails', function () {
+    expect(() => check(`
+type Baz(name: string)
+type Bar(baz: Baz)
+type Foo(bar: Bar)
+let a: Foo
+a.bar.baz.name = 12
+    `)).to.throw(/Cannot assign INTEGER to STRING/)
+  })
 })

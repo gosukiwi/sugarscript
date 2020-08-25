@@ -3,27 +3,55 @@
 # Variables
 
 ```
+let a: integer
 let a: integer = 1
 let a = 1
-let a: integer
 
 a = 2 # ok
 b = 3 # error, b was not defined
 ```
 
-# Tentative: Inline types
+# Functions
 
 ```
-person = { name: "Mike" }
+def greet(name: string): string
+  return "Hello #{name}"
+
+greet("Mike")
 ```
 
-Would compile to
+# Types
 
 ```
-type tSS_INTERNAL_<SomeGUID>
-  name as string
-endtype
+type Person(name: string, age: integer)
 
-person as tSS_INTERNAL_<SomeGUID>
-person.name = "Mike"
+# or multiline
+type Person
+  name: string
+  age: integer
+
+let p: Person
+p.name = "Mike"
+p.age = 123
+```
+
+# Arrays
+
+```
+let a = [1, 2, 3]
+foo([1, 2, 3])
+# manual manipulation
+# syntax still not final
+let a = [1, 2, 3]
+a << 2
+# same as
+array_insert(a, 2)
+```
+
+# Plugins
+Still in development
+
+```
+use SomePlugin as p
+p::someMethod()
 ```
