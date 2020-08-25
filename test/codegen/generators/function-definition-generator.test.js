@@ -29,11 +29,11 @@ def greet(name:string, person:ref:Person)
 
   it('works with an array and a ref parameter', function () {
     const result = generate(`
-def greet(person:ref:integer[][])
+def greet(person:ref:integer[])
   let a = 1
     `)
 
-    expect(result).to.contain('function greet(person ref as integer[][])')
+    expect(result).to.contain('function greet(person ref as integer[])')
     expect(result).to.contain('endfunction')
   })
 

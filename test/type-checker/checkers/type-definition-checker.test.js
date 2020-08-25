@@ -31,4 +31,8 @@ describe('type-checker/checkers/type-definition', function () {
   it('typehints can be types', function () {
     expect(() => check('type Cat(name: string)\ntype Person(pet: Cat)')).not.to.throw(/Could not find type/)
   })
+
+  it('is a WIP', function () {
+    expect(() => check('type Person(names: string[][])')).to.throw(/No multidimensional arrays yet/)
+  })
 })
