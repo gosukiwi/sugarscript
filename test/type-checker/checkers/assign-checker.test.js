@@ -71,4 +71,35 @@ let a: Foo
 a.bar.baz.name = 12
     `)).to.throw(/Cannot assign INTEGER to STRING/)
   })
+
+  it('checks arrays and complain', function () {
+    expect(() => check(`
+let a: integer[]
+a[1] = "potato"
+    `)).to.throw()
+  })
+
+  it('checks arrays and works', function () {
+    expect(() => check(`
+let a: integer[]
+a[1] = 12
+    `)).not.to.throw()
+  })
+
+  it('checks an array inside a type and complains', function () {
+    expect(() => check(`
+type Person(likes: string[])
+let a: Person
+a.likes[1] = 121
+    `)).to.throw()
+  })
+
+  it('checks a type inside an array and complains', function () {
+    expect(() => check(`
+type Person(likes: string[])
+type People(list: Person[])
+let a: People
+a.list[1].likes[1] = 121
+    `)).to.throw(/Cannot assign INTEGER to STRING/)
+  })
 })
