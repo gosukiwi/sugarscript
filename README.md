@@ -47,13 +47,6 @@ That will generate a `main.agc` file as well as compile it using the privative
 compiler.
 
 # Developing
-The grammar uses [PEG.js](https://pegjs.org/). To re-generate the parser from
-the grammar, you can run:
-
-    npm run grammar
-
-__IMPORTANT__: Because the indentation rules, the grammar cannot use cache.
-
 Run tests with
 
     npm run test
