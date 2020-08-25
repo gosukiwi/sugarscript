@@ -29,13 +29,13 @@ describe('type-checker/checkers/let', function () {
   })
 
   it('can define a type', function () {
-    const definitions = check('let person: tPerson')
+    const definitions = check('type tPerson(name: string)\nlet person: tPerson')
     expect(definitions.variables.person.type.is('UDT')).to.eq(true)
     expect(definitions.variables.person.type.value).to.eq('tPerson')
   })
 
   it('can define an array', function () {
-    const definitions = check('let person: tPerson[]')
+    const definitions = check('type tPerson(name: string)\nlet person: tPerson[]')
     expect(definitions.variables.person.type.is('ARRAY')).to.eq(true)
     expect(definitions.variables.person.type.value.type).to.eq('UDT')
     expect(definitions.variables.person.type.dimensions).to.eq(1)
@@ -48,5 +48,13 @@ describe('type-checker/checkers/let', function () {
   it('works with inline arrays', function () {
     const definitions = check('let a: integer[] = [1, 2, 3]')
     expect(definitions.variables.a.type.is('ARRAY')).to.eq(true)
+  })
+
+  it('complains if the type is not defined', function () {
+    expect(() => check('let person: tPerson')).to.throw(/Could not find type/)
+  })
+
+  it('complains if the array type is not defined', function () {
+    expect(() => check('let person: tPerson[]')).to.throw(/Could not find type/)
   })
 })

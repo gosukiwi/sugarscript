@@ -18,6 +18,7 @@ def greet()
 
   it('works with a simple function', function () {
     const result = generate(`
+type Person(name: string)
 def greet(name:string, person:ref:Person)
   let a = 1
     `)
@@ -28,21 +29,21 @@ def greet(name:string, person:ref:Person)
 
   it('works with an array and a ref parameter', function () {
     const result = generate(`
-def greet(person:ref:Person[][])
+def greet(person:ref:integer[][])
   let a = 1
     `)
 
-    expect(result).to.contain('function greet(person ref as Person[][])')
+    expect(result).to.contain('function greet(person ref as integer[][])')
     expect(result).to.contain('endfunction')
   })
 
   it('works with an array parameter', function () {
     const result = generate(`
-def greet(person:Person[])
+def greet(person:integer[])
   let a = 1
     `)
 
-    expect(result).to.contain('function greet(person as Person[])')
+    expect(result).to.contain('function greet(person as integer[])')
   })
 
   it('can return a primitive value', function () {
@@ -57,6 +58,7 @@ def greet(): integer
 
   it('can return a UDT', function () {
     const result = generate(`
+type Person(name: string)
 def greet(person: Person): Person
   return person
     `)
@@ -68,6 +70,7 @@ def greet(person: Person): Person
 
   it('can return an array', function () {
     const result = generate(`
+type Person(name: string)
 def greet(person: Person[]): Person[]
   return person
     `)

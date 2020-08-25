@@ -23,4 +23,12 @@ describe('type-checker/checkers/type-definition', function () {
   it('checks typehints are valid', function () {
     expect(() => check('type Person(name: string, age: unexistant)')).to.throw(/Could not find type/)
   })
+
+  it('throws error if typehint type is not defined', function () {
+    expect(() => check('type Person(pet: Cat)')).to.throw(/Could not find type/)
+  })
+
+  it('typehints can be types', function () {
+    expect(() => check('type Cat(name: string)\ntype Person(pet: Cat)')).not.to.throw(/Could not find type/)
+  })
 })
