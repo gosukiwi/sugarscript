@@ -38,5 +38,15 @@ b = a[1]
     `.trim())
 
     expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/b = a\[1\]/)
+  })
+
+  it('assigns an element from a multidimensional array', function () {
+    const result = generate(`
+let a: integer[][]
+a[0] = [1, 2, 3]
+    `.trim())
+
+    expect(result).to.match(/a\[0\] = _SSINTERNAL/)
   })
 })
