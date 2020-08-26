@@ -22,8 +22,7 @@ describe('codegen/generators/assignment', function () {
     const result = generate(`
 def foo(): integer
   return 1
-let a: integer[]
-a = [1, 2, foo()]
+let a = [1, 2, foo()]
     `)
 
     expect(result).to.match(/a = _SSINTERNAL/)
@@ -31,10 +30,8 @@ a = [1, 2, foo()]
 
   it('assigns an element from an array', function () {
     const result = generate(`
-let a: integer[]
-let b: integer
-a = [1, 2, 3]
-b = a[1]
+let a = [1, 2, 3]
+let b = a[1]
     `.trim())
 
     expect(result).to.match(/a = _SSINTERNAL/)
