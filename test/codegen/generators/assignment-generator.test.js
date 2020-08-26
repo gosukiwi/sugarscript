@@ -41,12 +41,21 @@ b = a[1]
     expect(result).to.match(/b = a\[1\]/)
   })
 
-  it('assigns an element from a multidimensional array', function () {
+  it('assigns an array-element from a multidimensional array', function () {
     const result = generate(`
 let a: integer[][]
 a[0] = [1, 2, 3]
     `.trim())
 
     expect(result).to.match(/a\[0\] = _SSINTERNAL/)
+  })
+
+  it('assigns an element from a multidimensional array', function () {
+    const result = generate(`
+let a: integer[][]
+a[0, 0] = 1
+    `.trim())
+
+    expect(result).to.match(/a\[0, 0\] = 1/)
   })
 })
