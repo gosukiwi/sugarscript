@@ -300,8 +300,8 @@ def greet(person: Person): Person
       expect(node.rhs.elements[2].type).to.eq('PLUGIN_CALL')
     })
 
-    it('cannot nest arrays', function () {
-      expect(() => parseOne('a = [1, 2, [3]]')).to.throw()
+    it('can nest arrays', function () {
+      expect(() => parseOne('a = [1, 2, [3]]')).not.to.throw()
     })
 
     it('can use inside calls', function () {

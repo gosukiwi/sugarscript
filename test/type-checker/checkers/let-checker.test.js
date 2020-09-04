@@ -38,7 +38,6 @@ describe('type-checker/checkers/let', function () {
     const definitions = check('type tPerson(name: string)\nlet person: tPerson[]')
     expect(definitions.variables.person.type.is('ARRAY')).to.eq(true)
     expect(definitions.variables.person.type.value.type).to.eq('UDT')
-    expect(definitions.variables.person.type.dimensions).to.eq(1)
   })
 
   it('checks array types', function () {

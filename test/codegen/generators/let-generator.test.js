@@ -33,4 +33,11 @@ describe('codegen/generators/let', function () {
     const result = generate('let a: integer[] = [1, 2, 3]')
     expect(result).to.match(/a = _SSINTERNAL/)
   })
+
+  it('defines a nested array', function () {
+    const result = generate('let p = [[1], [2, 3]]')
+    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1\]/)
+    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1, -1\]/)
+    expect(result).to.match(/p = _SSINTERNAL\d+/)
+  })
 })

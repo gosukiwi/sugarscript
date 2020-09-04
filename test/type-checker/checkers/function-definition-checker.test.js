@@ -21,7 +21,6 @@ def greet(person: Person[]): integer
     expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
     expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('UDT')
     expect(definitions.functions.greet.definitions.parameters.person.type.value.value).to.eq('Person')
-    expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
     expect(definitions.functions.greet.definitions.returns[0].type.type).to.eq('INTEGER')
   })
 
@@ -35,7 +34,6 @@ def greet(person: integer[])
     expect(definitions.functions.greet.functionName).to.eq('greet')
     expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
     expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('INTEGER')
-    expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
     expect(definitions.functions.greet.definitions.variables.a.type.type).to.eq('INTEGER')
   })
 
@@ -52,7 +50,6 @@ def greet(person: integer[])
     expect(definitions.functions.greet.functionName).to.eq('greet')
     expect(definitions.functions.greet.definitions.parameters.person.type.type).to.eq('ARRAY')
     expect(definitions.functions.greet.definitions.parameters.person.type.value.type).to.eq('INTEGER')
-    expect(definitions.functions.greet.definitions.parameters.person.type.dimensions).to.eq(1)
   })
 
   it('complains if it returns an invalid type', function () {

@@ -47,4 +47,19 @@ let p: Person
 p.friends[1] = ["asd"]
       `)}).to.throw(/Cannot assign/)
   })
+
+  it('checks nested arrays', function () {
+    const definitions = check('let p = [[1], [2, 3]]')
+    expect(definitions.variables.p.type.is('ARRAY')).to.eq(true)
+    expect(definitions.variables.p.type.value.is('ARRAY')).to.eq(true)
+    expect(definitions.variables.p.type.value.value.is('INTEGER')).to.eq(true)
+  })
+
+  it('complains when invalid nested arrays', function () {
+    expect(() => check('let p = [[1], ["foo"]]')).to.throw(/All elements in an array must be the same type/)
+  })
+
+  it('complains when invalid nested arrays, more levels', function () {
+    expect(() => check('let p = [[1], [[1]]]')).to.throw(/All elements in an array must be the same type/)
+  })
 })
