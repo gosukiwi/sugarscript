@@ -40,4 +40,9 @@ describe('codegen/generators/let', function () {
     expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1, -1\]/)
     expect(result).to.match(/p = _SSINTERNAL\d+/)
   })
+
+  it('defines a global', function () {
+    const result = generate('let global a = 1')
+    expect(result).to.eq('global a as integer\na = 1\n')
+  })
 })

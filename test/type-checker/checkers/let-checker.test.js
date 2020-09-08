@@ -56,4 +56,12 @@ describe('type-checker/checkers/let', function () {
   it('complains if the array type is not defined', function () {
     expect(() => check('let person: tPerson[]')).to.throw(/Could not find type/)
   })
+
+  it('cannot override global', function () {
+    expect(() => check(`
+let global a = 1
+def foo()
+  let global a = 1
+    `)).to.throw(/Already defined "a" in global scope/)
+  })
 })

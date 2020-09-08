@@ -82,4 +82,26 @@ names[2] = 2
       }).to.throw(/Cannot assign/)
     })
   })
+
+  describe('scope', function () {
+    it('cannot access outside function', function () {
+      expect(() => {
+        check(`
+let a = 1
+def foo()
+  let b = a
+        `)
+      }).to.throw(/Could not find variable 'a'/)
+    })
+
+    it('can access outside if global', function () {
+      expect(() => {
+        check(`
+let global a = 1
+def foo()
+  let b = a
+        `)
+      }).not.to.throw()
+    })
+  })
 })

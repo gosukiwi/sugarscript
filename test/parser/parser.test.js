@@ -266,6 +266,16 @@ def greet(person: Person): Person
       expect(node.typehint).to.eq(null)
       expect(node.value.type).to.eq('NUMBER')
     })
+
+    it('parses globals', function () {
+      const node = parseOne('let global a = 1')
+
+      expect(node.type).to.eq('LET')
+      expect(node.name).to.eq('a')
+      expect(node.global).to.eq(true)
+      expect(node.typehint).to.eq(null)
+      expect(node.value.type).to.eq('NUMBER')
+    })
   })
 
   describe('typehint', function () {
