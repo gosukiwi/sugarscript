@@ -99,4 +99,25 @@ def greet(person: Person)
         `)
     }).to.throw(/Could not find type/)
   })
+
+  it('complains if the a param name is repeated', function () {
+    expect(() => {
+      check(`
+def foo(bar: string, bar: integer)
+  let a = 1
+        `)
+    }).to.throw(/Parameter 'bar' already specified/)
+  })
+
+  it('cannot define a function with the same name', function () {
+    expect(() => {
+      check(`
+def foo()
+  let a = 1
+
+def foo()
+  let a = 1
+        `)
+    }).to.throw(/Function 'foo' already exists/)
+  })
 })
