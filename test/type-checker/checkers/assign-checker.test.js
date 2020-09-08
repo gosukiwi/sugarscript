@@ -102,4 +102,12 @@ let a: People
 a.list[1].likes[1] = 121
     `)).to.throw(/Cannot assign INTEGER to STRING/)
   })
+
+  it('cannot reassign a variable to a value of a different type', function () {
+    expect(() => check(`
+let a: integer
+a = 1
+a = "foo"
+    `)).to.throw(/Cannot assign STRING to INTEGER/)
+  })
 })
