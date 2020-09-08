@@ -17,6 +17,16 @@ greet()
     expect(result).to.contain('greet()')
   })
 
+  it('can define the function afterwards', function () {
+    const result = generate(`
+greet()
+def greet()
+  let a = 1
+    `)
+
+    expect(result).to.contain('greet()')
+  })
+
   it('calls a function with an argument', function () {
     const result = generate(`
 def greet(name: string)

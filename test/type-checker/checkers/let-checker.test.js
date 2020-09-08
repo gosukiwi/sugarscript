@@ -57,9 +57,25 @@ describe('type-checker/checkers/let', function () {
     expect(() => check('let person: tPerson[]')).to.throw(/Could not find type/)
   })
 
-  it('cannot override global', function () {
+  it('cannot override global inside a function', function () {
     expect(() => check(`
 let global a = 1
+def foo()
+  let global a = 1
+    `)).to.throw(/Already defined "a" in global scope/)
+  })
+
+  it('cannot override defined inside function', function () {
+    expect(() => check(`
+def foo()
+  let global a = 1
+let global a = 1
+    `)).to.throw(/Already defined "a" in global scope/)
+  })
+
+  it('cannot override non-global', function () {
+    expect(() => check(`
+let a = 1
 def foo()
   let global a = 1
     `)).to.throw(/Already defined "a" in global scope/)
