@@ -106,6 +106,19 @@ def foo(a: integer)
       expect(node.params[0].typehint.is('INTEGER')).to.eq(true)
     })
 
+    it('parses by reference params', function () {
+      const node = parseOne(`
+def foo(a: *integer)
+  b = a
+      `)
+
+      expect(node.name).to.eq('foo')
+      expect(node.params.length).to.eq(1)
+      expect(node.params[0].name).to.eq('a')
+      expect(node.params[0].ref).to.eq(true)
+      expect(node.params[0].typehint.is('INTEGER')).to.eq(true)
+    })
+
     it('can return a value', function () {
       const node = parseOne(`
 def foo()
