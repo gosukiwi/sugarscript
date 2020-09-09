@@ -362,7 +362,108 @@ def greet(person: Person): Person
     })
   })
 
-  it('if statement')
+  describe('if statement', function () {
+    it('parses a simple if', function () {
+      const node = parseOne(`
+if 1
+  let a = 1
+      `)
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body.type).to.eq('LET')
+    })
+
+    it('parses a one-line if')
+
+    it('parses a if-else', function () {
+      const node = parseOne(`
+if 1
+  let a = 1
+else
+  let a = 2
+      `)
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body.type).to.eq('LET')
+      expect(node.tail.condition).to.eq(null)
+      expect(node.tail.body.type).to.eq('LET')
+    })
+
+    it('parses a one-line if-else')
+
+    it('parses a if-elseif', function () {
+      const node = parseOne(`
+if 1
+  let a = 1
+elif 2
+  let a = 2
+      `)
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body.type).to.eq('LET')
+      expect(node.tail.condition.value).to.eq(2)
+      expect(node.tail.body.type).to.eq('LET')
+    })
+
+    it('parses a if-elseif-else', function () {
+      const node = parseOne(`
+if 1
+  let a = 1
+elif 2
+  let a = 2
+else
+  let a = 3
+      `)
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body.type).to.eq('LET')
+      expect(node.tail.condition.value).to.eq(2)
+      expect(node.tail.body.type).to.eq('LET')
+      expect(node.tail.tail.condition).to.eq(null)
+      expect(node.tail.tail.body.type).to.eq('LET')
+    })
+
+    it('parses a if-elseif-elseif', function () {
+      const node = parseOne(`
+if 1
+  let a = 1
+elif 2
+  let a = 2
+elif 3
+  let a = 3
+      `)
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body.type).to.eq('LET')
+      expect(node.tail.condition.value).to.eq(2)
+      expect(node.tail.body.type).to.eq('LET')
+      expect(node.tail.tail.condition.value).to.eq(3)
+      expect(node.tail.tail.body.type).to.eq('LET')
+    })
+
+    it('parses a if-elseif-elseif-else', function () {
+      const node = parseOne(`
+if 1
+  let a = 1
+elif 2
+  let a = 2
+elif 3
+  let a = 3
+else
+  let a = 4
+      `)
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body.type).to.eq('LET')
+    })
+  })
+
   it('for statement')
   it('foreach statement')
   it('while statement')
