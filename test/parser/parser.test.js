@@ -371,7 +371,7 @@ if 1
 
       expect(node.type).to.eq('IF')
       expect(node.condition.value).to.eq(1)
-      expect(node.body.type).to.eq('LET')
+      expect(node.body[0].type).to.eq('LET')
     })
 
     it('parses a one-line if')
@@ -386,9 +386,9 @@ else
 
       expect(node.type).to.eq('IF')
       expect(node.condition.value).to.eq(1)
-      expect(node.body.type).to.eq('LET')
+      expect(node.body[0].type).to.eq('LET')
       expect(node.tail.condition).to.eq(null)
-      expect(node.tail.body.type).to.eq('LET')
+      expect(node.tail.body[0].type).to.eq('LET')
     })
 
     it('parses a one-line if-else')
@@ -403,9 +403,9 @@ elif 2
 
       expect(node.type).to.eq('IF')
       expect(node.condition.value).to.eq(1)
-      expect(node.body.type).to.eq('LET')
+      expect(node.body[0].type).to.eq('LET')
       expect(node.tail.condition.value).to.eq(2)
-      expect(node.tail.body.type).to.eq('LET')
+      expect(node.tail.body[0].type).to.eq('LET')
     })
 
     it('parses a if-elseif-else', function () {
@@ -420,11 +420,11 @@ else
 
       expect(node.type).to.eq('IF')
       expect(node.condition.value).to.eq(1)
-      expect(node.body.type).to.eq('LET')
+      expect(node.body[0].type).to.eq('LET')
       expect(node.tail.condition.value).to.eq(2)
-      expect(node.tail.body.type).to.eq('LET')
+      expect(node.tail.body[0].type).to.eq('LET')
       expect(node.tail.tail.condition).to.eq(null)
-      expect(node.tail.tail.body.type).to.eq('LET')
+      expect(node.tail.tail.body[0].type).to.eq('LET')
     })
 
     it('parses a if-elseif-elseif', function () {
@@ -439,11 +439,11 @@ elif 3
 
       expect(node.type).to.eq('IF')
       expect(node.condition.value).to.eq(1)
-      expect(node.body.type).to.eq('LET')
+      expect(node.body[0].type).to.eq('LET')
       expect(node.tail.condition.value).to.eq(2)
-      expect(node.tail.body.type).to.eq('LET')
+      expect(node.tail.body[0].type).to.eq('LET')
       expect(node.tail.tail.condition.value).to.eq(3)
-      expect(node.tail.tail.body.type).to.eq('LET')
+      expect(node.tail.tail.body[0].type).to.eq('LET')
     })
 
     it('parses a if-elseif-elseif-else', function () {
@@ -460,7 +460,7 @@ else
 
       expect(node.type).to.eq('IF')
       expect(node.condition.value).to.eq(1)
-      expect(node.body.type).to.eq('LET')
+      expect(node.body[0].type).to.eq('LET')
     })
   })
 
