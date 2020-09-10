@@ -6,14 +6,14 @@ function generate (sourcecode) {
   return new Codegen().generate(parse(sourcecode))
 }
 
-describe('codegen/generators/assignment', function () {
+describe('codegen/generators/binop', function () {
   it('generates binops', function () {
     expect(generate('let a = 1 > 1')).to.eq('a as integer\na = 1 > 1\n')
     expect(generate('let a = 1 >= 1')).to.eq('a as integer\na = 1 >= 1\n')
     expect(generate('let a = 1 < 1')).to.eq('a as integer\na = 1 < 1\n')
     expect(generate('let a = 1 <= 1')).to.eq('a as integer\na = 1 <= 1\n')
-    expect(generate('let a = 1 == 1')).to.eq('a as integer\na = 1 == 1\n')
-    expect(generate('let a = 1 != 1')).to.eq('a as integer\na = 1 != 1\n')
+    expect(generate('let a = 1 == 1')).to.eq('a as integer\na = 1 = 1\n')
+    expect(generate('let a = 1 != 1')).to.eq('a as integer\na = 1 <> 1\n')
     expect(generate('let a = 1 + 1')).to.eq('a as integer\na = 1 + 1\n')
     expect(generate('let a = 1 - 1')).to.eq('a as integer\na = 1 - 1\n')
     expect(generate('let a = 1 * 1')).to.eq('a as integer\na = 1 * 1\n')

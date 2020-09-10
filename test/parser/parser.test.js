@@ -575,4 +575,21 @@ let a = @
       expect(binop.rhs.type).to.eq('NUMBER')
     })
   })
+
+  describe('unary operator', function () {
+    it('works with not', function () {
+      const node = parseOne('a = not 1').rhs
+      expect(node.type).to.eq('UNOP')
+    })
+
+    it('has proper precedence', function () {
+      const node = parseOne('a = not 1 > 2').rhs
+      expect(node.type).to.eq('BINOP')
+    })
+
+    it('can use parens to customize precedence', function () {
+      const node = parseOne('a = not (1 > 2)').rhs
+      expect(node.type).to.eq('UNOP')
+    })
+  })
 })
