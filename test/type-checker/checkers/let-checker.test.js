@@ -80,4 +80,12 @@ def foo()
   let global a = 1
     `)).to.throw(/Already defined "a" in global scope/)
   })
+
+  it('cannot guess void', function () {
+    expect(() => check(`
+def foo()
+  let a = 1
+let a = foo()
+    `)).to.throw('Cannot assign to void')
+  })
 })
