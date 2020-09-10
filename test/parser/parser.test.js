@@ -334,7 +334,7 @@ def greet(person: Person): Person
 
   describe('expressions', function () {
     it('matches a parenthesized expression', function () {
-      expect(parseOne('a = (foo())').rhs.type).to.eq('FUNCTION_CALL')
+      expect(parseOne('a = (foo())').rhs.type).to.eq('PARENTHESIZED_EXPRESSION')
     })
   })
 
@@ -480,7 +480,7 @@ let a = 1 # this is a comment
 # baz
     `)
 
-    console.log(node)
+    expect(node.type).to.eq('LET')
   })
 
   it('shows line info in errors', function () {
