@@ -471,4 +471,17 @@ else
   it('break statement')
   it('lambda')
   it('multidimensional arrays')
+
+  it('shows line info in errors', function () {
+    expect(() => parseOne(`
+let a = 1
+let b = let
+    `)).to.throw(/Syntax error in line 2, column 11/)
+  })
+
+  it('shows tokenizer errors', function () {
+    expect(() => parseOne(`
+let a = @
+    `)).to.throw(/Invalid token '@' in line 1, column 9/)
+  })
 })

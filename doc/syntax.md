@@ -11,6 +11,17 @@ a = 2 # ok
 b = 3 # error, b was not defined
 ```
 
+# If Statement
+
+```
+if true
+  do_something()
+elif a == 1
+  do_something_else()
+else
+  another_function()
+```
+
 # Functions
 
 ```
