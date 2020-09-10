@@ -25,8 +25,8 @@ else
 # Functions
 
 ```
-def greet(name: string): string
-  return "Hello #{name}"
+def greet(name: string, age: integer = 18): string
+  return "Hello #{name}, you are #{age} years old"
 
 greet("Mike")
 ```

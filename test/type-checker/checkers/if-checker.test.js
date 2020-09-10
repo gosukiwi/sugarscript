@@ -56,4 +56,11 @@ else
     expect(definitions.variables.b.type.is('INTEGER')).to.eq(true)
     expect(definitions.variables.c.type.is('INTEGER')).to.eq(true)
   })
+
+  it('can only have integers as condition', function () {
+    expect(() => { check(`
+if "asd"
+  let a = 1
+    `) }).to.throw(/can only be INTEGER/)
+  })
 })

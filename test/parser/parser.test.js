@@ -506,4 +506,73 @@ let b = let
 let a = @
     `)).to.throw(/Invalid token '@' in line 1, column 9/)
   })
+
+  describe('binary operations', function () {
+    it('works simple', function () {
+      const binop = parseOne('a = 1 + b').rhs
+      expect(binop.lhs.type).to.eq('NUMBER')
+      expect(binop.rhs.type).to.eq('QUERY')
+    })
+
+    it('defines == operator', function () {
+      const binop = parseOne('a = 1 == b').rhs
+      expect(binop.name).to.eq('EQ')
+    })
+
+    it('defines != operator', function () {
+      const binop = parseOne('a = 1 != b').rhs
+      expect(binop.name).to.eq('NEQ')
+    })
+
+    it('defines > operator', function () {
+      const binop = parseOne('a = 1 > b').rhs
+      expect(binop.name).to.eq('GT')
+    })
+
+    it('defines >= operator', function () {
+      const binop = parseOne('a = 1 >= b').rhs
+      expect(binop.name).to.eq('GTEQ')
+    })
+
+    it('defines < operator', function () {
+      const binop = parseOne('a = 1 < b').rhs
+      expect(binop.name).to.eq('LT')
+    })
+
+    it('defines <= operator', function () {
+      const binop = parseOne('a = 1 <= b').rhs
+      expect(binop.name).to.eq('LTEQ')
+    })
+
+    it('defines + operator', function () {
+      const binop = parseOne('a = 1 + b').rhs
+      expect(binop.name).to.eq('PLUS')
+    })
+
+    it('defines - operator', function () {
+      const binop = parseOne('a = 1 - b').rhs
+      expect(binop.name).to.eq('MINUS')
+    })
+
+    it('defines * operator', function () {
+      const binop = parseOne('a = 1 * b').rhs
+      expect(binop.name).to.eq('TIMES')
+    })
+
+    it('defines / operator', function () {
+      const binop = parseOne('a = 1 / b').rhs
+      expect(binop.name).to.eq('DIVISION')
+    })
+
+    it('defines % operator', function () {
+      const binop = parseOne('a = 1 % b').rhs
+      expect(binop.name).to.eq('MODULO')
+    })
+
+    it('works with precedence', function () {
+      const binop = parseOne('a = 1 * 2 + 3').rhs
+      expect(binop.lhs.type).to.eq('BINOP')
+      expect(binop.rhs.type).to.eq('NUMBER')
+    })
+  })
 })
