@@ -177,6 +177,17 @@ def greet(person: Person): Person
 
       expect(node.body[0].value.parts[0].value).to.eq('person')
     })
+
+    it('parses default arguments', function () {
+      const node = parseOne(`
+def greet(person: integer = 1): Person
+  return person
+      `)
+
+      expect(node.params[0].default.value).to.eq(1)
+    })
+
+    it('parses default arguments - short way')
   })
 
   describe('function call', function () {

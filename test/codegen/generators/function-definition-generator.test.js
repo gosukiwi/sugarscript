@@ -79,4 +79,38 @@ def greet(person: Person[]): Person[]
     expect(result).to.contain('SS_INTERNAL_UNREACHABLE_RETURN_VALUE as Person[-1]')
     expect(result).to.contain('endfunction SS_INTERNAL_UNREACHABLE_RETURN_VALUE')
   })
+
+  it('can define default parameters', function () {
+    const result = generate(`
+def greet(name: string = "Potatomike"): string
+  return name
+greet()
+    `)
+
+    expect(result).to.match(/SSINTERNAL\d+ as string = "Potatomike"/)
+    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
+  })
+
+  it('can use an array default parameters', function () {
+    const result = generate(`
+def greet(name: integer[] = [1, 2, 3]): string
+  return "hi"
+greet()
+    `)
+
+    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1\] = _SSINTERNAL\d+/)
+    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
+  })
+
+  it('can mix non-defaults and defaults', function () {
+    const result = generate(`
+def greet(name: string, age: integer = 18): string
+  return "hi"
+greet("Mike")
+    `)
+
+    expect(result).to.match(/_SSINTERNAL\d+ as string = "Mike"/)
+    expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+  })
 })

@@ -9,28 +9,6 @@ function check (input) {
 }
 
 describe('Typechecker', function () {
-  describe('function call', function () {
-    it('calls a simple function', function () {
-      const definitions = check(`
-def foo()
-  let a = 1
-foo()
-      `)
-
-      expect(definitions.calls.foo.type.type).to.eq('VOID')
-    })
-
-    it('knows the type', function () {
-      const definitions = check(`
-def foo(): integer
-  return 1
-foo()
-      `)
-
-      expect(definitions.calls.foo.type.type).to.eq('INTEGER')
-    })
-  })
-
   describe('arrays', function () {
     it('can assign', function () {
       const definitions = check('let a = [1, 2, 3]')

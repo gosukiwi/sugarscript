@@ -120,4 +120,21 @@ def foo()
         `)
     }).to.throw(/Function 'foo' already exists/)
   })
+
+  it('checks default arguments', function () {
+    expect(() => {
+      check(`
+def foo(a: integer = "asd")
+  let b = 1
+        `)
+    }).to.throw(/defined as INTEGER.+cannot.+STRING/)
+  })
+
+  it('complains if it tries to use a non-default parameter after a default one', function () {
+    expect(() => {
+      check(`
+def greet(name: string = "Mike", age: integer)
+  let a = 1
+    `) }).to.throw(/provide a default value for 'age'/)
+  })
 })
