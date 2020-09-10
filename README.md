@@ -44,7 +44,8 @@ another_function(greeter, "Marie")
 
 # arrays
 let my_array = [1, 2, 3]
-let my_nested_array = [[1], [2, 3], [4]]
+let empty_array = []: integer
+let nested_array = [[1], [2, 3], []: integer]
 ```
 
 # Usage
