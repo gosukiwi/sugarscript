@@ -33,11 +33,12 @@ type Person
 # inline types
 type Person(name: string)
 
-a = () ->
-  Log("A lambda!")
+let greeter = (name): string ->
+  return "Hello #{name}!"
 
 # arrays
-a = [1, 2, 3]
+let my_array = [1, 2, 3]
+let my_nested_array = [[1], [2, 3], [4]]
 ```
 
 # Usage

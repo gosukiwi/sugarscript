@@ -81,6 +81,14 @@ names[2] = 2
         `)
       }).to.throw(/Cannot assign/)
     })
+
+    it('can set nested array', function () {
+      expect(() => {
+        check(`
+let names = [[1], [2, 3], [4]]
+        `)
+      }).not.to.throw()
+    })
   })
 
   describe('scope', function () {
