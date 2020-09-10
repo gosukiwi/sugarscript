@@ -1,6 +1,9 @@
 # SugarScript
-A language that compiles to AppGameKit's Tier 1. It enables you to write games
-using AGK's interpreter, so they can run on any platform with minimal setup.
+AppGameKit's Tier 1 on steroids, inspired by CoffeeScript and Python.
+
+SugarScript is a language that compiles to AppGameKit's Tier 1. It enables you
+to write games using AGK's interpreter, so they can run on any platform with
+minimal setup.
 
 Needless to say, you need to own AppGameKit Classic.
 
@@ -8,23 +11,24 @@ Needless to say, you need to own AppGameKit Classic.
 * Expressive: If it can read like English, it's easier to understand.
 * Concise: When possible, prefer the shorter syntax.
 * Strict: Linting tools exist for a reason, consistency is a good thing. It makes code easier to read.
-* Simple: It's just Tier 1.
+* Powerful: [Lambdas](https://en.wikipedia.org/wiki/Higher-order_function), together with lots of syntactic sugar give you enough power as to not miss mainstream languages
+* Simple: It's just Tier 1 under the hood
 
 # Syntax
 
 ```
 # assign
 name = "Duchess"
-greeting = "Hello #{name}"! # string interpolation
+greeting = "Hello #{name}!" # string interpolation
 
 # functions
-def greet(name:string, age:integer, person:ref:Person)
-  result = age + 2
+def greet(name: string, age: integer, person: *Person) # pass Person by reference
+  let result = age + 2
   return result
 
 # types
 type Person
-  name:string
+  name: string
 
 # inline types
 type Person(name: string)
@@ -34,9 +38,6 @@ a = () ->
 
 # arrays
 a = [1, 2, 3]
-
-# operators
-a = "hi" * 4 # => "hihihihi"
 ```
 
 # Usage

@@ -51,6 +51,10 @@ p.age = 123
 ```
 let a = [1, 2, 3]
 foo([1, 2, 3])
+
+# nested arrays work too, they must be consistent with the types though
+let a = [[1], [2, 3], [4]]
+
 # manual manipulation
 # syntax still not final
 let a = [1, 2, 3]
