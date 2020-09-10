@@ -85,9 +85,36 @@ names[2] = 2
     it('can set nested array', function () {
       expect(() => {
         check(`
-let names = [[1], [2, 3], [4]]
+let names = [[1], [2, 3], []: integer]
         `)
       }).not.to.throw()
+    })
+
+    it('cannot set nested array if invalid type', function () {
+      expect(() => {
+        check(`
+let names = [[1], [2, 3], []: float]
+        `)
+      }).to.throw(/All elements in an array must be the same type/)
+    })
+
+    it('can create an empty array', function () {
+      const definitions = check(`
+let numbers = []: integer
+      `)
+
+      expect(definitions.variables.numbers.type.is('ARRAY')).to.eq(true)
+      expect(definitions.variables.numbers.type.value.is('INTEGER')).to.eq(true)
+    })
+
+    it('can create an empty multidimensional array', function () {
+      const definitions = check(`
+let numbers = []: integer[]
+      `)
+
+      expect(definitions.variables.numbers.type.is('ARRAY')).to.eq(true)
+      expect(definitions.variables.numbers.type.value.is('ARRAY')).to.eq(true)
+      expect(definitions.variables.numbers.type.value.value.is('INTEGER')).to.eq(true)
     })
   })
 

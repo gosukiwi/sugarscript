@@ -55,4 +55,19 @@ a[0, 0] = 1
 
     expect(result).to.match(/a\[0, 0\] = 1/)
   })
+
+  it('assigns an empty array', function () {
+    const result = generate('let a = []: integer')
+    expect(result).to.match(/a = _SSINTERNAL/)
+  })
+
+  it('assigns an empty array in a nested array', function () {
+    const result = generate('let a = [[1], []: integer]')
+    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1\]/)
+    expect(result).to.match(/_SSINTERNAL\d+\.insert\(1\)/)
+    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1, -1\]/)
+    expect(result).to.match(/_SSINTERNAL\d+\.insert\(_SSINTERNAL\d+\)/)
+    expect(result).to.match(/a as integer\[-1, -1\]/)
+    expect(result).to.match(/a = _SSINTERNAL\d+/)
+  })
 })

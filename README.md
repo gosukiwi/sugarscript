@@ -33,8 +33,14 @@ type Person
 # inline types
 type Person(name: string)
 
+# lambdas (anonymous functions)
 let greeter = (name): string ->
   return "Hello #{name}!"
+greeter("Federico")
+
+def another_function(greeter, name)
+  greeter(name)
+another_function(greeter, "Marie")
 
 # arrays
 let my_array = [1, 2, 3]
