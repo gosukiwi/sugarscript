@@ -569,10 +569,24 @@ let a = @
       expect(binop.name).to.eq('MODULO')
     })
 
+    it('defines and operator', function () {
+      const binop = parseOne('a = 1 and b').rhs
+      expect(binop.name).to.eq('AND')
+    })
+
+    it('defines or operator', function () {
+      const binop = parseOne('a = 1 or b').rhs
+      expect(binop.name).to.eq('OR')
+    })
+
     it('works with precedence', function () {
       const binop = parseOne('a = 1 * 2 + 3').rhs
       expect(binop.lhs.type).to.eq('BINOP')
       expect(binop.rhs.type).to.eq('NUMBER')
+
+      const and = parseOne('a = 1 and 1 > 1 * 2 + 3').rhs
+      expect(and.name).to.eq('AND')
+      expect(and.rhs.name).to.eq('GT')
     })
   })
 

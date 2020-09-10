@@ -8,6 +8,8 @@ function generate (sourcecode) {
 
 describe('codegen/generators/binop', function () {
   it('generates binops', function () {
+    expect(generate('let a = 1 and 1')).to.eq('a as integer\na = 1 and 1\n')
+    expect(generate('let a = 1 or 1')).to.eq('a as integer\na = 1 or 1\n')
     expect(generate('let a = 1 > 1')).to.eq('a as integer\na = 1 > 1\n')
     expect(generate('let a = 1 >= 1')).to.eq('a as integer\na = 1 >= 1\n')
     expect(generate('let a = 1 < 1')).to.eq('a as integer\na = 1 < 1\n')

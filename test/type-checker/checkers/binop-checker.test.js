@@ -10,6 +10,8 @@ function check (input) {
 
 describe('type-checker/checkers/binop', function () {
   it('works for boolean operators', function () {
+    expect(check('let a = 1 and 1').variables.a.type.is('INTEGER')).to.eq(true)
+    expect(check('let a = 1 or 1').variables.a.type.is('INTEGER')).to.eq(true)
     expect(check('let a = 1 > 1').variables.a.type.is('INTEGER')).to.eq(true)
     expect(check('let a = 1 >= 1').variables.a.type.is('INTEGER')).to.eq(true)
     expect(check('let a = 1 < 1').variables.a.type.is('INTEGER')).to.eq(true)
@@ -24,6 +26,8 @@ describe('type-checker/checkers/binop', function () {
   })
 
   it('cannot compare >, >=, < or <= with something other than floats and integers', function () {
+    expect(() => check('let a = "asd" and 1')).to.throw(/Incompatible types/)
+    expect(() => check('let a = "asd" or 1')).to.throw(/Incompatible types/)
     expect(() => check('let a = "asd" > 1')).to.throw(/Incompatible types/)
     expect(() => check('let a = "asd" >= 1')).to.throw(/Incompatible types/)
     expect(() => check('let a = "asd" < 1')).to.throw(/Incompatible types/)
