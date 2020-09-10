@@ -472,6 +472,17 @@ else
   it('lambda')
   it('multidimensional arrays')
 
+  it('parses comments', function () {
+    const node = parseOne(`
+# foo
+# bar
+let a = 1 # this is a comment
+# baz
+    `)
+
+    console.log(node)
+  })
+
   it('shows line info in errors', function () {
     expect(() => parseOne(`
 let a = 1
