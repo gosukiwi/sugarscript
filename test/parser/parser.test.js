@@ -262,6 +262,11 @@ def greet(person: integer = 1): Person
       expect(node.rhs.type).to.eq('STRING')
       expect(node.rhs.value).to.eq('potato')
     })
+
+    it('interpolates a string', function () {
+      const node = parseOne('a = "potato #{2 + 2}"')
+      expect(node.rhs.interpolations[0]).to.eq('2 + 2')
+    })
   })
 
   describe('let', function () {
