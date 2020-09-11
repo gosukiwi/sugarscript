@@ -267,6 +267,13 @@ def greet(person: integer = 1): Person
       const node = parseOne('a = "potato #{2 + 2}"')
       expect(node.rhs.interpolations[0]).to.eq('2 + 2')
     })
+
+    it('matches a single-quoted string', function () {
+      const node = parseOne("a = 'potato'")
+
+      expect(node.rhs.type).to.eq('SQSTRING')
+      expect(node.rhs.value).to.eq('potato')
+    })
   })
 
   describe('let', function () {

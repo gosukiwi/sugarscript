@@ -18,8 +18,8 @@ Needless to say, you need to own AppGameKit Classic.
 
 ```
 # assign
-name = "Duchess"
-greeting = "Hello #{name}!" # string interpolation
+name = 'Duchess'
+greeting = "Hello #{name}!" # string interpolation, only when using double-quoted strings
 
 # functions
 def greet(name: string, age: integer, person: *Person) # pass Person by reference

@@ -87,7 +87,7 @@ def greet(name: string = "Potatomike"): string
 greet()
     `)
 
-    expect(result).to.match(/SSINTERNAL\d+ as string = "Potatomike"/)
+    expect(result).to.match(/SSINTERNAL\d+ as string = 'Potatomike'/)
     expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
   })
 
@@ -109,7 +109,7 @@ def greet(name: string, age: integer = 18): string
 greet("Mike")
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = "Mike"/)
+    expect(result).to.match(/_SSINTERNAL\d+ as string = 'Mike'/)
     expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
     expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
   })

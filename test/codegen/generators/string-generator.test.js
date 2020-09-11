@@ -9,12 +9,12 @@ function generate (sourcecode) {
 describe('codegen/generators/string', function () {
   it('can interpolate simple', function () {
     const result = generate('let a = "foo #{2 + 2}!"')
-    expect(result).to.include('a = "foo " + Str(2 + 2) + "!"')
+    expect(result).to.include("a = 'foo ' + Str(2 + 2) + '!'")
   })
 
   it('can interpolate using variables', function () {
     const result = generate('let a = 1\nlet b = "foo #{a + 2}!"')
-    expect(result).to.include('b = "foo " + Str(a + 2) + "!"')
+    expect(result).to.include("b = 'foo ' + Str(a + 2) + '!'")
   })
 
   it('complains when interpolating invalid variables', function () {
@@ -23,5 +23,15 @@ describe('codegen/generators/string', function () {
 
   it('complains when interpolating UDTs', function () {
     expect(() => generate('type Person(name: string)\nlet person: Person\nlet a = "foo #{person}!"')).to.throw(/Can only interpolate/)
+  })
+
+  it('works with double quotes', function () {
+    const result = generate('let a = "fo\\"o!"')
+    expect(result).to.include(`a = 'fo"o!'`)
+  })
+
+  it('works with single quotes', function () {
+    const result = generate(`let a = "fo'o!"`)
+    expect(result).to.include("a = 'fo\\'o!'")
   })
 })
