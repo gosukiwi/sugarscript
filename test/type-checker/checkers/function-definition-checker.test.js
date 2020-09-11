@@ -137,4 +137,36 @@ def greet(name: string = "Mike", age: integer)
   let a = 1
     `) }).to.throw(/provide a default value for 'age'/)
   })
+
+  it('can return empty', function () {
+    expect(() => {
+      check(`
+def foo()
+  return
+        `)
+    }).not.to.throw()
+  })
+
+  it('cannot return empty if it should return something', function () {
+    expect(() => {
+      check(`
+def foo(): string
+  return
+        `)
+    }).to.throw(/cannot return 'VOID'/)
+  })
+
+  it('can return inside a while', function () {
+    expect(() => {
+      check(`
+def foo()
+  while 1
+    return
+        `)
+    }).not.to.throw()
+  })
+
+  it('cannot return outside a function', function () {
+    expect(() => check('return')).to.throw(/can only be called inside functions/)
+  })
 })
