@@ -618,4 +618,13 @@ let a = @
       expect(node.type).to.eq('UNOP')
     })
   })
+
+  describe('while', function () {
+    it('parses while', function () {
+      const node = parseOne('while foo()\n  bar()')
+      expect(node.type).to.eq('WHILE')
+      expect(node.condition.type).to.eq('FUNCTION_CALL')
+      expect(node.body.length).to.eq(1)
+    })
+  })
 })
