@@ -698,4 +698,105 @@ for i in [1, 2, 3]
       expect(parseOne('a = off').rhs.value).to.eq(0)
     })
   })
+
+  describe('lambdas', function () {
+    it('can parse a simple lambda', function () {
+      const node = parseOne(`
+let a = () ->
+  return
+      `).value
+
+      expect(node.type).to.eq('LAMBDA')
+      expect(node.typehint.is('VOID')).to.eq(true)
+      expect(node.parameters).to.eql([])
+      expect(node.body.length).to.eq(1)
+    })
+
+    it('can parse a simple lambda with typehint', function () {
+      const node = parseOne(`
+let a = (): string ->
+  return
+      `).value
+
+      expect(node.type).to.eq('LAMBDA')
+      expect(node.typehint.is('STRING')).to.eq(true)
+      expect(node.parameters).to.eql([])
+      expect(node.body.length).to.eq(1)
+    })
+
+    it('can parse a lambda with params', function () {
+      const node = parseOne(`
+let a = (a: *integer, b: string = 2): string ->
+  return
+      `).value
+
+      expect(node.type).to.eq('LAMBDA')
+      expect(node.typehint.is('STRING')).to.eq(true)
+      expect(node.parameters.length).to.eq(2)
+      expect(node.parameters[0].name).to.eq('a')
+      expect(node.parameters[0].ref).to.eq(true)
+      expect(node.parameters[0].typehint.is('INTEGER')).to.eq(true)
+      expect(node.parameters[1].name).to.eq('b')
+      expect(node.parameters[1].ref).to.eq(false)
+      expect(node.parameters[1].default.value).to.eq(2)
+      expect(node.parameters[1].typehint.is('STRING')).to.eq(true)
+      expect(node.body.length).to.eq(1)
+    })
+
+    it('can use it in assign', function () {
+      const node = parseOne(`
+a = () ->
+  return
+      `).rhs
+
+      expect(node.type).to.eq('LAMBDA')
+    })
+
+    it('can use it in function call', function () {
+      const node = parseOne(`
+foo(() ->
+    return
+)
+      `)
+
+      expect(node.args[0].type).to.eq('LAMBDA')
+    })
+
+    it('can use a single-line lambda', function () {
+      const node = parseOne('a = (): integer -> 1')
+      expect(node.rhs.type).to.eq('LAMBDA')
+    })
+
+    it('can use a single-line with params', function () {
+      const node = parseOne('a = (foo: integer): integer -> 1')
+      expect(node.rhs.type).to.eq('LAMBDA')
+    })
+
+    it('can use a single-line with params inside function call', function () {
+      const node = parseOne('foo((bar: integer): integer -> bar)')
+      expect(node.args[0].type).to.eq('LAMBDA')
+    })
+  })
+
+  describe('lambda-call', function () {
+    it('can call simple as statement', function () {
+      const node = parseOne('foo(): integer')
+      expect(node.type).to.eq('LAMBDA_CALL')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
+    })
+
+    it('can call with params as statement', function () {
+      const node = parseOne('foo(1, 2): integer')
+      expect(node.type).to.eq('LAMBDA_CALL')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
+      expect(node.args.length).to.eq(2)
+    })
+
+    it('can call simple as expression', function () {
+      const node = parseOne('a = foo(1, 2): integer').rhs
+      expect(node.type).to.eq('LAMBDA_CALL')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
+      expect(node.args.length).to.eq(2)
+    })
+  })
 })
