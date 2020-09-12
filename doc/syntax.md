@@ -1,20 +1,61 @@
 # Syntax
 
-# Variables
+# Variables and Types
 
 ```
-let a: integer
-let a: integer = 1
-let a = 1
+# integers
+let a: integer        # use `let` to define a variable
+let a: integer = 1    # you can also give it a value
+let a = 1             # if you do, then the type can be guessed
+a = 2                 # you can then re-assign it's value
+b = 3                 # ERROR, you need to define before you assign
 
-a = 2 # ok
-b = 3 # error, b was not defined
+# floats
+let PI = 3.14
+let number: float
+number = PI / 2
+
+# booleans - aliases for 1 and 0
+let a = true    # same as `let a = 1`
+a = yes         # same as above
+a = on          # same as above
+a = false       # same as `a = 0`
+a = no          # same as above
+a = off         # same as above
+
+# strings
+let name = 'Mike'                # single-quoted
+let foo = "Bar"                  # double-quoted
+let greeting = "Hello, #{name}!" # interpolation, only works with double-quoted strings
+```
+
+# binary operations
+
+```
+# booleans
+result = true and true
+result = true or false
+
+# comparison
+result = some_variable is "hello"     # equality comparison
+result = some_variable == "hello"     # same as above
+result = some_variable isnt "hello"   # not equal comparison
+result = some_variable != "hello"     # same as above
+result = other_variable > 1           # you can use `>`, `>=`, `<` and `<=` as usual
+
+# arithmetics
+result = 2 + 2
+result = 2 - 2
+result = 2 * 2
+result = 2 / 2
+result = 2 % 2  # modulo
+result = 2 ** 2 # exponentiation, TODO
 ```
 
 # if Statement
 
 ```
-if true
+if some_flag is on
   do_something()
 elif a == 1
   do_something_else()
