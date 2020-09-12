@@ -527,13 +527,13 @@ let a = @
     })
 
     it('defines == operator', function () {
-      const binop = parseOne('a = 1 == b').rhs
-      expect(binop.name).to.eq('EQ')
+      expect(parseOne('a = 1 == b').rhs.name).to.eq('EQ')
+      expect(parseOne('a = 1 is b').rhs.name).to.eq('EQ')
     })
 
     it('defines != operator', function () {
-      const binop = parseOne('a = 1 != b').rhs
-      expect(binop.name).to.eq('NEQ')
+      expect(parseOne('a = 1 != b').rhs.name).to.eq('NEQ')
+      expect(parseOne('a = 1 isnt b').rhs.name).to.eq('NEQ')
     })
 
     it('defines > operator', function () {
