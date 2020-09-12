@@ -11,7 +11,7 @@ a = 2 # ok
 b = 3 # error, b was not defined
 ```
 
-# If Statement
+# if Statement
 
 ```
 if true
@@ -20,6 +20,40 @@ elif a == 1
   do_something_else()
 else
   another_function()
+
+# TODO
+# inline if
+if true then foo()
+
+# inline if-else
+if true then foo() else bar()
+```
+
+# while Statement
+
+```
+while true
+  if foo() then break # exit loop
+  if bar() then continue # skip this iteration
+  do_something()
+```
+
+# for Statement
+
+```
+for i = 1 to 100 step 2
+  print("#{i}")
+
+# without step
+for i = 1 to 100
+  do_something_with(i)
+```
+
+# for..in Statement
+
+```
+for num in [1, 2, 3]
+  print("#{num}")
 ```
 
 # Functions

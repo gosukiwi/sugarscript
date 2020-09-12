@@ -673,4 +673,18 @@ while 1
       expect(node.body[1].type).to.eq('CONTINUE')
     })
   })
+
+  describe('foreach', function () {
+    it('works', function () {
+      const node = parseOne(`
+for i in [1, 2, 3]
+  bar(i)
+      `)
+
+      expect(node.type).to.eq('FOREACH')
+      expect(node.variable).to.eq('i')
+      expect(node.expression.type).to.eq('INLINE_ARRAY')
+      expect(node.body.length).to.eq(1)
+    })
+  })
 })
