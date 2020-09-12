@@ -687,4 +687,15 @@ for i in [1, 2, 3]
       expect(node.body.length).to.eq(1)
     })
   })
+
+  describe('booleans', function () {
+    it('can parse booleans', function () {
+      expect(parseOne('a = true').rhs.value).to.eq(1)
+      expect(parseOne('a = yes').rhs.value).to.eq(1)
+      expect(parseOne('a = on').rhs.value).to.eq(1)
+      expect(parseOne('a = false').rhs.value).to.eq(0)
+      expect(parseOne('a = no').rhs.value).to.eq(0)
+      expect(parseOne('a = off').rhs.value).to.eq(0)
+    })
+  })
 })
