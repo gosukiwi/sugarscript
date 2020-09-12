@@ -627,4 +627,26 @@ let a = @
       expect(node.body.length).to.eq(1)
     })
   })
+
+  describe('for', function () {
+    it('parses a full for', function () {
+      const node = parseOne('for i = 1 to 10 step 2\n  bar()')
+      expect(node.type).to.eq('FOR')
+      expect(node.variable).to.eq('i')
+      expect(node.from.type).to.eq('NUMBER')
+      expect(node.to.type).to.eq('NUMBER')
+      expect(node.step.type).to.eq('NUMBER')
+      expect(node.body.length).to.eq(1)
+    })
+
+    it('parses a short for', function () {
+      const node = parseOne('for i = 1 to 10\n  bar()')
+      expect(node.type).to.eq('FOR')
+      expect(node.variable).to.eq('i')
+      expect(node.from.type).to.eq('NUMBER')
+      expect(node.to.type).to.eq('NUMBER')
+      expect(node.step).to.eq(null)
+      expect(node.body.length).to.eq(1)
+    })
+  })
 })

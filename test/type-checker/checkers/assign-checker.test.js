@@ -110,4 +110,13 @@ a = 1
 a = "foo"
     `)).to.throw(/Cannot assign STRING to INTEGER/)
   })
+
+  it('checks multidimensional array', function () {
+    expect(() => check(`
+type Person(likes: string[])
+type People(list: Person[][])
+let a: People
+a.list[1, 2].likes[1] = 121
+    `)).to.throw(/Cannot assign INTEGER to STRING/)
+  })
 })
