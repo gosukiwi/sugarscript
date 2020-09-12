@@ -649,4 +649,28 @@ let a = @
       expect(node.body.length).to.eq(1)
     })
   })
+
+  describe('break and continue', function () {
+    it('can use break inside a loop', function () {
+      const node = parseOne(`
+for i = 1 to 10
+  bar()
+  break
+      `)
+
+      expect(node.type).to.eq('FOR')
+      expect(node.body[1].type).to.eq('BREAK')
+    })
+
+    it('can use continue inside a loop', function () {
+      const node = parseOne(`
+while 1
+  bar()
+  continue
+      `)
+
+      expect(node.type).to.eq('WHILE')
+      expect(node.body[1].type).to.eq('CONTINUE')
+    })
+  })
 })
