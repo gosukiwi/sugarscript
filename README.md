@@ -23,7 +23,7 @@ else
   do_this_other_thing()
 
 # functions
-def greet(name: string, age: integer, person: *Person) # pass Person by reference
+def greet(name: string = 'Federico', age: integer, person: *Person) # pass Person by reference
   let result = age + 2
   return result
 

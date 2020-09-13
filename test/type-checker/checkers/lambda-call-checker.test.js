@@ -27,4 +27,12 @@ foo("foo"): integer
       `)
     }).not.to.throw()
   })
+
+  it('cannot assing to wrong type', function () {
+    expect(() => check('let foo = 1\nlet a: string = foo(): integer')).to.throw(/Cannot assign INTEGER to STRING/)
+  })
+
+  it('cannot call a non-integer', function () {
+    expect(() => check('let foo = "hi"\nlet a = foo(): integer')).to.throw(/Tried to call/)
+  })
 })
