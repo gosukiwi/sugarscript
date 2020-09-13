@@ -153,17 +153,62 @@ greeter(): string
 
 Note that the syntax for calling lambdas is different than regular function
 calls. Lambdas need an additional _type hint_. This is because `greeter` is just
-an integer, it works differently than with functions. So to type-check it, the
-compiler needs a little help.
+an integer, so to type-check it, the compiler needs a little help.
 
-You can use the `lambda call` the same way you'd use a regular call:
+You can use the `lambda call` the same way you'd use a regular call. Lambdas can
+also take default values:
 
 ```
 let greeter = (name: string = 'Federico'): string ->
   return "Hello, #{name}!"
 
 let greeting = greeter(): string
-print(greeting) # the compiler knows `greeting` is a string and won't complain
+```
+
+Because lambdas are just integers, you can treat it just like any other integer.
+You can re-assign it:
+
+```
+let get_name = (): string -> 'Federico'
+let demo = 22
+# ... some more code here ...
+# because `get_name` is an integer, we can assign it to demo
+demo = name
+# we can even call demo now
+let name = demo(): string # name is now 'Federico'
+```
+
+Pass it to a function:
+
+```
+let get_name = (): string -> 'Federico'
+
+def example(get_name: integer)
+  print("Hello #{get_name(): string}")
+
+example(get_name)
+```
+
+And return it from a function:
+
+```
+let get_name = (): string -> 'Federico'
+
+def identity(lambda: integer): integer
+  return lambda
+
+let itself = identity(get_name)
+let name = itself(): string
+```
+
+It can also be defined inside a function, if needed:
+
+```
+def get_name_getter(): integer
+  return (): string -> 'Federico'
+
+let name_getter = get_name_getter()
+let name = name_getter(): string
 ```
 
 ## Inline-Lambdas
