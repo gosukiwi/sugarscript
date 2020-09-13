@@ -29,7 +29,7 @@ let foo = "Bar"                  # double-quoted
 let greeting = "Hello, #{name}!" # interpolation, only works with double-quoted strings
 ```
 
-# binary operations
+# Binary Operations
 
 ```
 # booleans
@@ -52,7 +52,7 @@ result = 2 % 2  # modulo
 result = 2 ** 2 # exponentiation, TODO
 ```
 
-# if Statement
+# If Statement
 
 ```
 if some_flag is on
@@ -70,7 +70,7 @@ if true then foo()
 if true then foo() else bar()
 ```
 
-# while Statement
+# While Statement
 
 ```
 while true
@@ -79,7 +79,7 @@ while true
   do_something()
 ```
 
-# for Statement
+# For Statement
 
 ```
 for i = 1 to 100 step 2
@@ -90,7 +90,7 @@ for i = 1 to 100
   do_something_with(i)
 ```
 
-# for..in Statement
+# For..In Statement
 
 ```
 for num in [1, 2, 3]
