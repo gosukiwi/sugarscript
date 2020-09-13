@@ -158,11 +158,11 @@ compiler needs a little help.
 You can use the `lambda call` the same way you'd use a regular call:
 
 ```
-let greeter = (name: string): string ->
+let greeter = (name: string = 'Federico'): string ->
   return "Hello, #{name}!"
 
 let greeting = greeter(): string
-print(greeting) # the compiler knows greeting is a string and won't complain
+print(greeting) # the compiler knows `greeting` is a string and won't complain
 ```
 
 ## Inline-Lambdas

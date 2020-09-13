@@ -26,19 +26,19 @@ describe('codegen/generators/let', function () {
 
   it('defines an inline array', function () {
     const result = generate('let a = [1, 2, 3]')
-    expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/a = __SSINTERNAL/)
   })
 
   it('defines an inline array with typehint', function () {
     const result = generate('let a: integer[] = [1, 2, 3]')
-    expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/a = __SSINTERNAL/)
   })
 
   it('defines a nested array', function () {
     const result = generate('let p = [[1], [2, 3]]')
-    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1\]/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1, -1\]/)
-    expect(result).to.match(/p = _SSINTERNAL\d+/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1\]/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1, -1\]/)
+    expect(result).to.match(/p = __SSINTERNAL\d+/)
   })
 
   it('defines a global', function () {

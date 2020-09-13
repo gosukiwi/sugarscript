@@ -20,7 +20,7 @@ let result = foo(1, 2): integer
     expect(result).to.contain('__LAMBDA_STACK_INTEGER.insert(2)')
     expect(result).to.contain('__SSINTERNAL_CALL_LAMBDA(foo)')
     expect(result).to.contain('__LAMBDA_STACK_INTEGER.insert(a + b)')
-    expect(result).to.match(/result = _SSINTERNAL\d+/)
+    expect(result).to.match(/result = __SSINTERNAL\d+/)
   })
 
   it('can be passed to a function', function () {
@@ -31,7 +31,7 @@ def greet_manager(greeter: integer, name: string): string
 let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
     `)
 
-    expect(result).to.match(/result = greet_manager\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/result = greet_manager\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 
   it('works with default arguments', function () {

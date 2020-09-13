@@ -15,7 +15,7 @@ describe('codegen/generators/assignment', function () {
 
   it('assigns an inline array', function () {
     const result = generate('let a: integer[]\na = [1, 2, 3]')
-    expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/a = __SSINTERNAL/)
   })
 
   it('assigns an inline array that contains a function', function () {
@@ -25,7 +25,7 @@ def foo(): integer
 let a = [1, 2, foo()]
     `)
 
-    expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/a = __SSINTERNAL/)
   })
 
   it('assigns an element from an array', function () {
@@ -34,7 +34,7 @@ let a = [1, 2, 3]
 let b = a[1]
     `.trim())
 
-    expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/a = __SSINTERNAL/)
     expect(result).to.match(/b = a\[1\]/)
   })
 
@@ -44,7 +44,7 @@ let a: integer[][]
 a[0] = [1, 2, 3]
     `.trim())
 
-    expect(result).to.match(/a\[0\] = _SSINTERNAL/)
+    expect(result).to.match(/a\[0\] = __SSINTERNAL/)
   })
 
   it('assigns an element from a multidimensional array', function () {
@@ -58,16 +58,16 @@ a[0, 0] = 1
 
   it('assigns an empty array', function () {
     const result = generate('let a = []: integer')
-    expect(result).to.match(/a = _SSINTERNAL/)
+    expect(result).to.match(/a = __SSINTERNAL/)
   })
 
   it('assigns an empty array in a nested array', function () {
     const result = generate('let a = [[1], []: integer]')
-    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1\]/)
-    expect(result).to.match(/_SSINTERNAL\d+\.insert\(1\)/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1, -1\]/)
-    expect(result).to.match(/_SSINTERNAL\d+\.insert\(_SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1\]/)
+    expect(result).to.match(/__SSINTERNAL\d+\.insert\(1\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1, -1\]/)
+    expect(result).to.match(/__SSINTERNAL\d+\.insert\(__SSINTERNAL\d+\)/)
     expect(result).to.match(/a as integer\[-1, -1\]/)
-    expect(result).to.match(/a = _SSINTERNAL\d+/)
+    expect(result).to.match(/a = __SSINTERNAL\d+/)
   })
 })

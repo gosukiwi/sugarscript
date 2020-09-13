@@ -13,7 +13,7 @@ for i in [1, 2, 3]
   let a = i
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+\[_SSINTERNAL\d+\]/)
+    expect(result).to.match(/__SSINTERNAL\d+\[__SSINTERNAL\d+\]/)
     expect(result).to.match(/SSINTERNAL\d+ as integer\[-1\]/)
     expect(result).to.match(/for.+= 0 to .+\.length/)
     expect(result).to.match(/i as integer/)

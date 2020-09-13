@@ -34,8 +34,8 @@ def greet(name: string)
 greet("Mike")
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'Mike'/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'Mike'/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
   it('calls a function with many arguments', function () {
@@ -45,9 +45,9 @@ def greet(name: string, age: integer)
 greet("Mike", 18)
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'Mike'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'Mike'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with a default inline array', function () {
@@ -57,9 +57,9 @@ def greet(people: string[])
 greet(["Thomas O'Malley", "Duchess"])
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+\.insert\('Thomas O\\'Malley'\)/)
-    expect(result).to.match(/_SSINTERNAL\d+\.insert\('Duchess'\)/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+\.insert\('Thomas O\\'Malley'\)/)
+    expect(result).to.match(/__SSINTERNAL\d+\.insert\('Duchess'\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
   it('calls a function with many default values', function () {
@@ -69,10 +69,10 @@ def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
 greet()
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'Mike'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'bar'/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'Mike'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'bar'/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with many default parameters setting one', function () {
@@ -82,10 +82,10 @@ def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
 greet("fombo")
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'fombo'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'bar'/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'fombo'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'bar'/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with overriding all default parameters', function () {
@@ -95,10 +95,10 @@ def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
 greet("fombo", 22, "potato")
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'fombo'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer = 22/)
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'potato'/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'fombo'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer = 22/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'potato'/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with a non-default parameter many default parameters', function () {
@@ -108,10 +108,10 @@ def greet(gender: string, name: string = "Mike", age: integer = 18, foo: string 
 greet("fombo")
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'fombo'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'Mike'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'bar'/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+, _SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'fombo'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'Mike'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'bar'/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 })

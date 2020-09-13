@@ -88,7 +88,7 @@ greet()
     `)
 
     expect(result).to.match(/SSINTERNAL\d+ as string = 'Potatomike'/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
   it('can use an array default parameters', function () {
@@ -98,8 +98,8 @@ def greet(name: integer[] = [1, 2, 3]): string
 greet()
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as integer\[-1\] = _SSINTERNAL\d+/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1\] = __SSINTERNAL\d+/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
   it('can mix non-defaults and defaults', function () {
@@ -109,8 +109,8 @@ def greet(name: string, age: integer = 18): string
 greet("Mike")
     `)
 
-    expect(result).to.match(/_SSINTERNAL\d+ as string = 'Mike'/)
-    expect(result).to.match(/_SSINTERNAL\d+ as integer = 18/)
-    expect(result).to.match(/greet\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string = 'Mike'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 })
