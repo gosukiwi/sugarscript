@@ -23,7 +23,7 @@ let result = foo(1, 2): integer
     expect(result).to.match(/result = _SSINTERNAL\d+/)
   })
 
-  it.only('can be passed to a function', function () {
+  it('can be passed to a function', function () {
     const result = generate(`
 def greet_manager(greeter: integer, name: string): string
   return greeter("Mike"): string
@@ -31,6 +31,6 @@ def greet_manager(greeter: integer, name: string): string
 let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
     `)
 
-    console.log(result)
+    expect(result).to.match(/result = greet_manager\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
   })
 })
