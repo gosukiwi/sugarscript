@@ -28,6 +28,7 @@
     "pegjs": "^0.10.0"
   },
   "dependencies": {
+    "event-kit": "^2.5.3",
     "jison": "^0.4.18"
   }
 }

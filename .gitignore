@@ -1,2 +1,4 @@
 node_modules/
 tags
+test/fixtures/*.exe
+test/fixtures/media/
