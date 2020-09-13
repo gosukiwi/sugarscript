@@ -7,7 +7,7 @@ function generate (sourcecode) {
 }
 
 describe('codegen/generators/lambda', function () {
-  it.only('can call a lambda', function () {
+  it('can call a lambda', function () {
     const result = generate(`
 let foo = (a: integer, b: integer): integer ->
   return a + b
@@ -15,6 +15,11 @@ let foo = (a: integer, b: integer): integer ->
 let result = foo(1, 2): integer
     `)
 
-    console.log(result)
+    expect(result).to.contain('global __LAMBDA_STACK_INTEGER as integer[-1]')
+    expect(result).to.contain('__LAMBDA_STACK_INTEGER.insert(1)')
+    expect(result).to.contain('__LAMBDA_STACK_INTEGER.insert(2)')
+    expect(result).to.contain('__SSINTERNAL_CALL_LAMBDA(foo)')
+    expect(result).to.contain('__LAMBDA_STACK_INTEGER.insert(a + b)')
+    expect(result).to.match(/result = _SSINTERNAL\d+/)
   })
 })

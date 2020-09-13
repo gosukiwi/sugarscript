@@ -14,8 +14,8 @@ let func = (a: integer, b: *Person): integer ->
   return a
     `)
 
-    expect(result).to.match(/function __SSINTERNAL_LAMBDA\d+\(a as integer, b ref as Person\)/)
-    expect(result).to.match(/exitfunction a/)
+    expect(result).to.match(/function __SSINTERNAL_LAMBDA\d+\(\)/)
+    expect(result).to.match(/__LAMBDA_STACK_INTEGER.insert\(a\)/)
     expect(result).to.match(/func = \d+/)
   })
 })
