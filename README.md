@@ -14,6 +14,14 @@ Needless to say, you need to own AppGameKit Classic.
 name = 'Duchess'
 greeting = "Hello #{name}!" # string interpolation, only when using double-quoted strings
 
+# booleans
+if my_variable is on # alias for true
+  do_something()
+elif something_else() isnt "hello"
+  do_something_else()
+else
+  do_this_other_thing()
+
 # functions
 def greet(name: string, age: integer, person: *Person) # pass Person by reference
   let result = age + 2
@@ -27,13 +35,15 @@ type Person
 type Person(name: string)
 
 # lambdas (anonymous functions)
-let greeter = (name): string ->
+let greeter = (name: string): string ->
   return "Hello #{name}!"
-greeter("Federico")
 
-def another_function(greeter, name)
-  greeter(name)
-another_function(greeter, "Marie")
+greeter("Federico"): string
+
+def another_function(greeter: integer, name: string): string
+  return greeter(name): string
+
+another_function(greeter, 'Marie')
 
 # arrays
 let my_array = [1, 2, 3]
