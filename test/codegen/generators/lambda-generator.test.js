@@ -18,4 +18,15 @@ let func = (a: integer, b: *Person): integer ->
     expect(result).to.match(/__LAMBDA_STACK_INTEGER.insert\(a\)/)
     expect(result).to.match(/func = \d+/)
   })
+
+  it('generates lambda ids properly when in nested scope', function () {
+    const result = generate(`
+let l1 = (): integer -> 1
+def func()
+  let l2 = (): integer -> 1
+    `)
+
+    expect(result).to.contain('__SSINTERNAL_LAMBDA0')
+    expect(result).to.contain('__SSINTERNAL_LAMBDA1')
+  })
 })

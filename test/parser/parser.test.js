@@ -487,14 +487,6 @@ else
     })
   })
 
-  it('for statement')
-  it('foreach statement')
-  it('while statement')
-  it('repeat statement')
-  it('break statement')
-  it('lambda')
-  it('multidimensional arrays')
-
   it('parses comments', function () {
     const node = parseOne(`
 # foo

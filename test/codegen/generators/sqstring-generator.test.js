@@ -14,7 +14,6 @@ describe('codegen/generators/sqstring', function () {
 
   it('escapes single quotes', function () {
     const result = generate("let a = 'fo\\'o!'")
-    console.log(result)
     expect(result).to.include("a = 'fo\\'o!'")
   })
 })
