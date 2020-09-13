@@ -791,4 +791,13 @@ foo(() ->
       expect(node.args.length).to.eq(2)
     })
   })
+
+  describe('require', function () {
+    it('parses a require', function () {
+      const result = parseOne("require 'foo'")
+
+      expect(result.type).to.eq('REQUIRE')
+      expect(result.file).to.eq('foo')
+    })
+  })
 })
