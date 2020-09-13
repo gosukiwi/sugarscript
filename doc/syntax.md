@@ -138,6 +138,59 @@ a << 2
 array_insert(a, 2)
 ```
 
+# Lambdas
+Lambdas are also known as "Anonymous Functions", that is, functions without a
+name. They work mostly like regular functions, but because of array limitations,
+they can only pass _by value_.
+
+```
+let greeter = (name: string): string ->
+  return "Hello, #{name}!"
+
+greeter(): string
+```
+
+Note that the syntax for calling lambdas is different than regular function
+calls. Lambdas need an additional _type hint_. This is because `greeter` is just
+an integer, it works differently than with functions. So to type-check it, the
+compiler needs a little help.
+
+You can use the `lambda call` the same way you'd use a regular call:
+
+```
+let greeter = (name: string): string ->
+  return "Hello, #{name}!"
+
+let greeting = greeter(): string
+print(greeting) # the compiler knows greeting is a string and won't complain
+```
+
+## Inline-Lambdas
+You can also define lambdas in a single line. These lambdas always return a
+value, which is the result of the expression:
+
+```
+let greeter = (name: string): string -> "Hello, #{name}!"
+```
+
+These lambdas can only take a single expression. For more lines, you need to
+swap to a regular lambda, and use a `return` statement.
+
+These lambdas are particularly useful for passing them to other functions:
+
+```
+def greet_manager(greeter: integer, name: string): string
+  return greeter("Mike"): string
+
+let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
+```
+
+In the example above, inside `greet_manager`, `greeter` is defined simply as
+integer. It is then called using the special syntax.
+
+Note that the type checker doesn't know what parameters `greeter` expects, so
+it cannot check those for you.
+
 # Plugins
 Still in development
 

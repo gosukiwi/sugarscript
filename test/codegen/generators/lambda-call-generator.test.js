@@ -22,4 +22,15 @@ let result = foo(1, 2): integer
     expect(result).to.contain('__LAMBDA_STACK_INTEGER.insert(a + b)')
     expect(result).to.match(/result = _SSINTERNAL\d+/)
   })
+
+  it.only('can be passed to a function', function () {
+    const result = generate(`
+def greet_manager(greeter: integer, name: string): string
+  return greeter("Mike"): string
+
+let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
+    `)
+
+    console.log(result)
+  })
 })
