@@ -33,4 +33,14 @@ let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
 
     expect(result).to.match(/result = greet_manager\(_SSINTERNAL\d+, _SSINTERNAL\d+\)/)
   })
+
+  it('works with default arguments', function () {
+    const result = generate(`
+let greeter = (name: string = "Fede"): string -> "Hello, #{name}!"
+let result = greeter(): string
+    `)
+
+    expect(result).to.contain('if __LAMBDA_STACK_STRING.length = -1')
+    expect(result).to.contain("name = 'Fede'")
+  })
 })
