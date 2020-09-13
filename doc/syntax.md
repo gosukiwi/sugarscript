@@ -124,24 +124,25 @@ p.age = 123
 # Arrays
 
 ```
-let a = [1, 2, 3]
-foo([1, 2, 3])
+let empty = []: integer # empty array of integers
+let a = [1, 2, 3]       # non-empty array of integers
+let b = [1, "foo"]      # ERROR, all elements must be of the same type
+foo([1, 2, 3])          # it can be passed to a function too, it's just an expression
 
 # nested arrays work too, they must be consistent with the types though
-let a = [[1], [2, 3], [4]]
+let a = [[1], [2, 3], [4]]      # OK
+let a = [[1], []: integer, [4]] # OK
+let a = [[1], ["hi"], [4]]      # ERROR
+let a = [[1], 4]                # ERROR
 
-# manual manipulation
-# syntax still not final
-let a = [1, 2, 3]
-a << 2
-# same as
+# manipulation
 array_insert(a, 2)
+array_delete(a, 0)
 ```
 
 # Lambdas
 Lambdas are also known as "Anonymous Functions", that is, functions without a
-name. They work mostly like regular functions, but because of array limitations,
-they can only pass _by value_.
+name. They work mostly like regular functions.
 
 ```
 let greeter = (name: string): string ->
@@ -190,6 +191,12 @@ integer. It is then called using the special syntax.
 
 Note that the type checker doesn't know what parameters `greeter` expects, so
 it cannot check those for you.
+
+## Limitations of Lambdas
+
+* Because of array limitations in Tier 1, they can only receive arguments _by value_
+* The type-checker can't validate arguments are valid when calling a lambda
+* They are slower than regular functions, so when possible, prefer using a regular function
 
 # Plugins
 Still in development
