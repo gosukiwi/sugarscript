@@ -87,7 +87,8 @@ def greet(name: string = "Potatomike"): string
 greet()
     `)
 
-    expect(result).to.match(/SSINTERNAL\d+ as string = 'Potatomike'/)
+    expect(result).to.match(/SSINTERNAL\d+ as string/)
+    expect(result).to.match(/SSINTERNAL\d+ = 'Potatomike'/)
     expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
@@ -98,7 +99,8 @@ def greet(name: integer[] = [1, 2, 3]): string
 greet()
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1\] = __SSINTERNAL\d+/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer\[-1\]/)
+    expect(result).to.match(/__SSINTERNAL\d+ = __SSINTERNAL\d+/)
     expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
@@ -109,8 +111,10 @@ def greet(name: string, age: integer = 18): string
 greet("Mike")
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer = 18/)
+    expect(result).to.match(/__SSINTERNAL\d+ as string/)
+    expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
+    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
+    expect(result).to.match(/__SSINTERNAL\d+ = 18/)
     expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
 })

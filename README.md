@@ -100,3 +100,7 @@ Run tests with
 You can watch tests as you write them with
 
     npm run watch
+
+To run integration tests (slow) use
+
+    npm run integration
