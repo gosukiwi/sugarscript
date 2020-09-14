@@ -14,7 +14,7 @@ file = OpenToWrite(__SSINTERNAL0, __SSINTERNAL1)
 __SSINTERNAL2 as integer
 __SSINTERNAL2 = file
 __SSINTERNAL3 as string
-__SSINTERNAL3 = 'Person name is ' + p.name + ', age is #{p.age}'
+__SSINTERNAL3 = 'Person name is ' + p.name + ', age is ' + Str(p.age) + ''
 WriteString(__SSINTERNAL2, __SSINTERNAL3)
 __SSINTERNAL4 as integer
 __SSINTERNAL4 = file
