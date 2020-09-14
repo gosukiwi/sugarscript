@@ -27,6 +27,9 @@ def greet(name: string = 'Federico', age: integer, person: *Person) # pass Perso
   let result = age + 2
   return result
 
+# built-in functions, as usual
+let sprite = CreateSprite(LoadImage('hello.png'))
+
 # types
 type Person
   name: string
