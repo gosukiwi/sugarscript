@@ -46,4 +46,12 @@ def foo(name: integer): integer
 foo("foo")
       `) }).to.throw(/expects to receive an argument/)
   })
+
+  it('can use built-in functions', function () {
+    const definitions = check('let a = CreateSprite(1)')
+    expect(definitions.variables.a.type.is('INTEGER')).to.eq(true)
+
+    expect(() => check('let a = CreateSprite(1, 1)')).to.throw(/Cannot assign to void/)
+    expect(() => check('let a = CreateSprite("foo")')).to.throw(/Invalid arguments/)
+  })
 })

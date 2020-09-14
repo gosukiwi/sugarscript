@@ -4,8 +4,8 @@
   "description": "A lispy language which compiles to AppGameKit's Tier 1",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --timeout 15000 test/**/*.test.js",
-    "watch": "mocha --timeout 15000 --watch test/**/*.test.js"
+    "test": "mocha --timeout 15000 --require test/mocha.env.js test/**/*.test.js",
+    "watch": "mocha --timeout 15000 --require test/mocha.env.js --watch test/**/*.test.js"
   },
   "keywords": [
     "lisp",
