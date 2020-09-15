@@ -94,6 +94,13 @@ let numbers = []: integer[]
       expect(definitions.variables.numbers.type.value.is('ARRAY')).to.eq(true)
       expect(definitions.variables.numbers.type.value.value.is('INTEGER')).to.eq(true)
     })
+
+    it('can only use numbers', function () {
+      expect(() => check(`
+let numbers = [1, 2, 3]
+let number = numbers['foo']
+      `)).to.throw(/access must be INTEGER/)
+    })
   })
 
   describe('scope', function () {
