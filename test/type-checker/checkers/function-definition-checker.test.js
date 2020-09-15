@@ -169,4 +169,11 @@ def foo()
   it('cannot return outside a function', function () {
     expect(() => check('return')).to.throw(/can only be called inside functions/)
   })
+
+  it('allows returning int instead of float', function () {
+    expect(() => check(`
+def foo(name: float): float
+  return 1
+    `)).not.to.throw()
+  })
 })

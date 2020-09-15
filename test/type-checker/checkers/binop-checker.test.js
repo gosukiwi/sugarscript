@@ -40,4 +40,8 @@ describe('type-checker/checkers/binop', function () {
     expect(() => check('let a = "asd" / 1')).to.throw(/Incompatible types/)
     expect(() => check('let a = "asd" % 1')).to.throw(/Incompatible types/)
   })
+
+  it('does not allow floats', function () {
+    expect(() => check('let a = 1 and 1.1')).to.throw(/Incompatible types/)
+  })
 })

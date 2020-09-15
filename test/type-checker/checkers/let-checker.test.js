@@ -88,4 +88,11 @@ def foo()
 let a = foo()
     `)).to.throw('Cannot assign to void')
   })
+
+  it('allows assigning ints to floats', function () {
+    expect(() => check(`
+let a: float
+a = 1
+    `)).not.to.throw()
+  })
 })

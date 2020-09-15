@@ -49,6 +49,14 @@ foo("foo")
     }).to.throw(/expects to receive an argument/)
   })
 
+  it('allows passing int instead of float', function () {
+    expect(() => check(`
+def foo(name: float): integer
+  return 1
+foo(1)
+    `)).not.to.throw()
+  })
+
   it('can use built-in functions', function () {
     expect(check('let a = CreateSprite(1)').variables.a.type.is('INTEGER')).to.eq(true)
     expect(() => check('let a = CreateSprite(1, 1)')).to.throw(/Cannot assign to void/)
