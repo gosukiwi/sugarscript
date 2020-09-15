@@ -5,17 +5,24 @@ SugarScript is a **functional**, statically typed language that compiles to
 AppGameKit's Tier 1. It enables you to write games using AGK's interpreter, so
 they can run on any platform with minimal setup.
 
-Needless to say, you need to own AppGameKit Classic.
+Needless to say, you need to own AppGameKit Classic or Studio. Note that the
+compiler generates an `.agc` file, but to automatically compile it up for you,
+it needs  access to the compiler, which is only exposed in the Classic version.
+So Studio  users need to manually load up and compiler the generated `.agc`
+file.
 
 # Syntax
 
 ```
 # assign
-name = 'Duchess'
-greeting = "Hello #{name}!" # string interpolation, only when using double-quoted strings
+let name = 'Duchess'
+let greeting = "Hello #{name}!" # string interpolation, only when using double-quoted strings
+
+# names are case-insensitive
+let greeting2 = GREETING # this works
 
 # booleans
-if my_variable is on # alias for true
+if my_variable is true # `true` alias for 1, other aliases are `yes` and `on`
   do_something()
 elif something_else() isnt "hello"
   do_something_else()
