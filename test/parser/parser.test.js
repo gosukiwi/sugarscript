@@ -772,20 +772,26 @@ foo(() ->
 
   describe('lambda-call', function () {
     it('can call simple as statement', function () {
-      const node = parseOne('foo(): integer')
+      const node = parseOne('call(foo): integer')
+      expect(node.type).to.eq('LAMBDA_CALL')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
+    })
+
+    it('can call simple as statement with short syntax', function () {
+      const node = parseOne('->(foo): integer')
       expect(node.type).to.eq('LAMBDA_CALL')
       expect(node.typehint.is('INTEGER')).to.eq(true)
     })
 
     it('can call with params as statement', function () {
-      const node = parseOne('foo(1, 2): integer')
+      const node = parseOne('call(foo, 1, 2): integer')
       expect(node.type).to.eq('LAMBDA_CALL')
       expect(node.typehint.is('INTEGER')).to.eq(true)
       expect(node.args.length).to.eq(2)
     })
 
     it('can call simple as expression', function () {
-      const node = parseOne('a = foo(1, 2): integer').rhs
+      const node = parseOne('a = ->(foo, 1, 2): integer').rhs
       expect(node.type).to.eq('LAMBDA_CALL')
       expect(node.typehint.is('INTEGER')).to.eq(true)
       expect(node.args.length).to.eq(2)

@@ -12,7 +12,7 @@ describe('codegen/generators/lambda', function () {
 let foo = (a: integer, b: integer): integer ->
   return a + b
 
-let result = foo(1, 2): integer
+let result = ->(foo, 1, 2): integer
     `)
 
     expect(result).to.contain('global __LAMBDA_STACK_INTEGER as integer[-1]')
@@ -26,7 +26,7 @@ let result = foo(1, 2): integer
   it('can be passed to a function', function () {
     const result = generate(`
 def greet_manager(greeter: integer, name: string): string
-  return greeter("Mike"): string
+  return call(greeter, "Mike"): string
 
 let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
     `)
@@ -37,10 +37,21 @@ let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
   it('works with default arguments', function () {
     const result = generate(`
 let greeter = (name: string = "Fede"): string -> "Hello, #{name}!"
-let result = greeter(): string
+let result = call(greeter): string
     `)
 
     expect(result).to.contain('if __LAMBDA_STACK_STRING.length = -1')
     expect(result).to.contain("name = 'Fede'")
+  })
+
+  it('can call a lambda in a type', function () {
+    const result = generate(`
+type Person(greet: integer)
+let p: Person
+p.greet = (): integer -> 1
+->(p.greet): integer
+    `)
+
+    expect(result).to.contain('__SSINTERNAL_CALL_LAMBDA(p.greet)')
   })
 })

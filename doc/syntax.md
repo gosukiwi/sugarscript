@@ -148,21 +148,30 @@ name. They work mostly like regular functions.
 let greeter = (name: string): string ->
   return "Hello, #{name}!"
 
-greeter(): string
+call(greeter): string
 ```
 
 Note that the syntax for calling lambdas is different than regular function
-calls. Lambdas need an additional _type hint_. This is because `greeter` is just
-an integer, so to type-check it, the compiler needs a little help.
+calls. Lambdas are called using `call` and need an additional _type hint_. This
+is because `greeter` is just an integer, so to type-check it, the compiler needs
+a little help.
 
-You can use the `lambda call` the same way you'd use a regular call. Lambdas can
-also take default values:
+An alternative syntax for `call` is `->`:
+
+```
+call(greeter)
+# same as
+->(greeter)
+```
+
+You can use `call` and `->` the same way you'd use regular function calls.
+Lambdas can also take default values:
 
 ```
 let greeter = (name: string = 'Federico'): string ->
   return "Hello, #{name}!"
 
-let greeting = greeter(): string
+let greeting = call(greeter): string
 ```
 
 Because lambdas are just integers, you can treat it just like any other integer.
@@ -175,7 +184,7 @@ let demo = 22
 # because `get_name` is an integer, we can assign it to demo
 demo = name
 # we can even call demo now
-let name = demo(): string # name is now 'Federico'
+let name = call(demo): string # name is now 'Federico'
 ```
 
 Pass it to a function:
@@ -184,7 +193,7 @@ Pass it to a function:
 let get_name = (): string -> 'Federico'
 
 def example(get_name: integer)
-  print("Hello #{get_name(): string}")
+  print("Hello #{call(get_name): string}")
 
 example(get_name)
 ```
@@ -198,7 +207,7 @@ def identity(lambda: integer): integer
   return lambda
 
 let itself = identity(get_name)
-let name = itself(): string
+let name = ->(itself): string
 ```
 
 It can also be defined inside a function, if needed:
@@ -208,7 +217,7 @@ def get_name_getter(): integer
   return (): string -> 'Federico'
 
 let name_getter = get_name_getter()
-let name = name_getter(): string
+let name = call(name_getter): string
 ```
 
 ## Inline-Lambdas
@@ -226,7 +235,7 @@ These lambdas are particularly useful for passing them to other functions:
 
 ```
 def greet_manager(greeter: integer, name: string): string
-  return greeter("Mike"): string
+  return call(greeter, "Mike"): string
 
 let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
 ```

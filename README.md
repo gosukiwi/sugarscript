@@ -41,12 +41,13 @@ type Person(name: string)
 let greeter = (name: string): string ->
   return "Hello #{name}!"
 
-greeter("Federico"): string
+call(greeter, "Federico"): string
 
 def another_function(greeter: integer, name: string): string
   return greeter(name): string
 
-another_function(greeter, 'Marie')
+# you can use `->` instead of `call` if preferred
+->(another_function, greeter, 'Marie'): string
 
 # arrays
 let my_array = [1, 2, 3]

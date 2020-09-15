@@ -12,7 +12,7 @@ describe('type-checker/checkers/lambda-call', function () {
   it('calls a simple function', function () {
     const definitions = check(`
 let foo = (): integer -> 1
-let a = foo(): integer
+let a = call(foo): integer
     `)
 
     expect(definitions.variables.a.type.is('INTEGER')).to.eq(true)
@@ -23,16 +23,16 @@ let a = foo(): integer
       check(`
 let foo = (name: integer): integer ->
   return 1
-foo("foo"): integer
+->(foo, "foo"): integer
       `)
     }).not.to.throw()
   })
 
   it('cannot assing to wrong type', function () {
-    expect(() => check('let foo = 1\nlet a: string = foo(): integer')).to.throw(/Cannot assign INTEGER to STRING/)
+    expect(() => check('let foo = 1\nlet a: string = call(foo): integer')).to.throw(/Cannot assign INTEGER to STRING/)
   })
 
   it('cannot call a non-integer', function () {
-    expect(() => check('let foo = "hi"\nlet a = foo(): integer')).to.throw(/Tried to call/)
+    expect(() => check('let foo = "hi"\nlet a = ->(foo): integer')).to.throw(/Tried to call/)
   })
 })

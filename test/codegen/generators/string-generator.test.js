@@ -12,7 +12,7 @@ describe('codegen/generators/string', function () {
     expect(result).to.include("a = 'foo ' + Str(2 + 2) + '!'")
   })
 
-  it.only('can interpolate two', function () {
+  it('can interpolate two', function () {
     const result = generate('let a = "foo #{1} #{2}!"')
     expect(result).to.include("a = 'foo ' + Str(1) + ' ' + Str(2) + '!'")
   })
