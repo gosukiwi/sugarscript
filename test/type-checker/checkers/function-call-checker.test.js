@@ -57,9 +57,10 @@ foo(1)
     `)).not.to.throw()
   })
 
-  it('can use built-in functions', function () {
-    expect(check('let a = CreateSprite(1)').variables.a.type.is('INTEGER')).to.eq(true)
-    expect(() => check('let a = CreateSprite(1, 1)')).to.throw(/Cannot assign to void/)
+  it('can use built-in functions in a case-insensitive way', function () {
+    expect(check('let a = CreateSprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
+    expect(check('let a = createsprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
+    expect(() => check('let a = CREATESPRITE(1, 1)')).to.throw(/Cannot assign to void/)
     expect(() => check('let a = CreateSprite("foo")')).to.throw(/Invalid arguments/)
   })
 })

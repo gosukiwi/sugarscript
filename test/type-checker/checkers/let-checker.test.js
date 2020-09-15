@@ -95,4 +95,11 @@ let a: float
 a = 1
     `)).not.to.throw()
   })
+
+  it('is case insensitive with variables', function () {
+    expect(() => check(`
+let a: float
+let A: integer
+    `)).to.throw(/Already defined/)
+  })
 })

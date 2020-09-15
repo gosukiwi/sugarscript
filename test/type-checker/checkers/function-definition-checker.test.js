@@ -176,4 +176,19 @@ def foo(name: float): float
   return 1
     `)).not.to.throw()
   })
+
+  it('can call a function in a case-insensitive way', function () {
+    expect(() => check(`
+def foo(name: float): float
+  return 1
+Foo(123)
+    `)).not.to.throw()
+  })
+
+  it('can access a parameter in a case-insensitive way', function () {
+    expect(() => check(`
+def foo(name: float): float
+  return NAME
+    `)).not.to.throw()
+  })
 })

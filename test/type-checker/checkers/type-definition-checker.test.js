@@ -12,12 +12,16 @@ describe('type-checker/checkers/type-definition', function () {
   it('adds type to definitions', function () {
     const definitions = check('type Person(name: string, age: integer)')
 
-    expect(definitions.types.Person.fields.name.is('STRING')).to.eq(true)
-    expect(definitions.types.Person.fields.age.is('INTEGER')).to.eq(true)
+    expect(definitions.getType('Person').fields.name.is('STRING')).to.eq(true)
+    expect(definitions.getType('Person').fields.age.is('INTEGER')).to.eq(true)
   })
 
   it('throws error when repeating field names', function () {
     expect(() => check('type Person(name: string, name: integer)')).to.throw(/already set/)
+  })
+
+  it('throws error when repeating field names (case insensitive)', function () {
+    expect(() => check('type Person(name: string, Name: integer)')).to.throw(/already set/)
   })
 
   it('checks typehints are valid', function () {
@@ -29,6 +33,15 @@ describe('type-checker/checkers/type-definition', function () {
   })
 
   it('typehints can be types', function () {
-    expect(() => check('type Cat(name: string)\ntype Person(pet: Cat)')).not.to.throw(/Could not find type/)
+    expect(() => check('type Cat(name: string)\ntype Person(pet: Cat)')).not.to.throw()
+  })
+
+  it('is case insensitive when setting', function () {
+    expect(() => check('type Cat(name: string)\nlet cat: cat')).not.to.throw()
+    expect(() => check('type cat(name: string)\nlet cat: CAT')).not.to.throw()
+  })
+
+  it('is case insensitive when accessing fields', function () {
+    expect(() => check('type Cat(name: string)\nlet cat: cat\ncat.NAME = "Snowball III"')).not.to.throw()
   })
 })
