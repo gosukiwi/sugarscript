@@ -30,4 +30,14 @@ for i = 1 to 10 step 2
     expect(result).to.contain('a = i')
     expect(result).to.contain('next i')
   })
+
+  it('can use an expresion in "to"', function () {
+    const result = generate(`
+let limit = 10
+for i = 1 to limit step 2
+  let a = i
+    `)
+
+    expect(result).to.contain('for i = 1 to limit step 2')
+  })
 })
