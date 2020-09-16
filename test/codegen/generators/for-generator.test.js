@@ -31,13 +31,15 @@ for i = 1 to 10 step 2
     expect(result).to.contain('next i')
   })
 
-  it('can use an expresion in "to"', function () {
+  it('can use an expresion in "to", "from" and "step"', function () {
     const result = generate(`
+let start = 1
 let limit = 10
-for i = 1 to limit step 2
+let by = 2
+for i = start to limit step by
   let a = i
     `)
 
-    expect(result).to.contain('for i = 1 to limit step 2')
+    expect(result).to.contain('for i = start to limit step by')
   })
 })
