@@ -78,7 +78,6 @@ def foo(): integer
 let bar = 10
     `)
 
-    console.log(result)
     expect(result).to.contain('// in-memory://, line 3')
   })
 })
