@@ -3,3 +3,4 @@ tags
 test/fixtures/**/media/
 test/fixtures/**/*.exe
 test/fixtures/**/*.byc
+test/fixtures/**/*.agc
