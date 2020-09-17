@@ -25,9 +25,21 @@ describe('codegen/generators/type-definition', function () {
   it('adds a line comment', function () {
     const result = generate(`
 let a = 1
-type Poo
+type Foo
   a: string
     `)
-    expect(result).to.contain('// in-memory://, line 2')
+    expect(result).to.contain('// in-memory://, line ~3')
+  })
+
+  it('adds a line comment when inline', function () {
+    const result = generate(`
+let a = 1
+type Foo(a: string)
+
+
+let b  = 2
+    `)
+    console.log(result)
+    expect(result).to.contain('// in-memory://, line ~4')
   })
 })
