@@ -117,4 +117,15 @@ greet("Mike")
     expect(result).to.match(/__SSINTERNAL\d+ = 18/)
     expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let a = 1
+let b = 2
+def foo()
+  let a = 1
+    `)
+
+    expect(result).to.contain('// in-memory://, line 3')
+  })
 })

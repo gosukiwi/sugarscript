@@ -43,6 +43,11 @@ describe('codegen/generators/let', function () {
 
   it('defines a global', function () {
     const result = generate('let global a = 1')
-    expect(result).to.eq('global a as integer\na = 1\n')
+    expect(result).to.contain('global a as integer\na = 1\n')
+  })
+
+  it('adds a line comment', function () {
+    const result = generate('let a = 1')
+    expect(result).to.contain('// in-memory://, line 1')
   })
 })

@@ -42,4 +42,16 @@ for i = start to limit step by
 
     expect(result).to.contain('for i = start to limit step by')
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let start = 1
+let limit = 10
+let by = 2
+for i = start to limit step by
+  let a = i
+    `)
+
+    expect(result).to.contain('// in-memory://, line 4')
+  })
 })

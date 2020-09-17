@@ -18,4 +18,13 @@ while 1 == 1
     expect(result).to.contain('a = 1')
     expect(result).to.contain('endwhile')
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let a = 1
+while a < 10
+  a = a - 1
+    `)
+    expect(result).to.contain('// in-memory://, line 2')
+  })
 })

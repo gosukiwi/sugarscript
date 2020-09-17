@@ -70,4 +70,15 @@ a[0, 0] = 1
     expect(result).to.match(/a as integer\[-1, -1\]/)
     expect(result).to.match(/a = __SSINTERNAL\d+/)
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+def foo(): integer
+  return 1
+let bar = 10
+    `)
+
+    console.log(result)
+    expect(result).to.contain('// in-memory://, line 3')
+  })
 })

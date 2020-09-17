@@ -54,4 +54,15 @@ p.greet = (): integer -> 1
 
     expect(result).to.contain('__SSINTERNAL_CALL_LAMBDA(p.greet)')
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let foo = (a: integer, b: integer): integer ->
+  return a + b
+
+->(foo, 1, 2): integer
+    `)
+
+    expect(result).to.contain('// in-memory://, line 4')
+  })
 })

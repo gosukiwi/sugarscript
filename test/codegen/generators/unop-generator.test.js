@@ -8,6 +8,7 @@ function generate (sourcecode) {
 
 describe('codegen/generators/unop', function () {
   it('generates binops', function () {
-    expect(generate('let a = not 1')).to.eq('a as integer\na = not 1\n')
+    expect(generate('let a = not 1')).to.contain('a as integer')
+    expect(generate('let a = not 1')).to.contain('a = not 1')
   })
 })

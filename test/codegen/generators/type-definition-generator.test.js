@@ -21,4 +21,13 @@ describe('codegen/generators/type-definition', function () {
     expect(result).to.contain('name as string[-1]')
     expect(result).to.contain('endtype')
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let a = 1
+type Poo
+  a: string
+    `)
+    expect(result).to.contain('// in-memory://, line 2')
+  })
 })

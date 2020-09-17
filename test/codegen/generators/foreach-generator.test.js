@@ -28,4 +28,16 @@ for i in [[1, 2], [3]]
 
     expect(result).to.match(/i as integer\[-1\]/)
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let start = 1
+let limit = 10
+let by = 2
+for i in [[1, 2], [3]]
+  let a = i
+    `)
+
+    expect(result).to.contain('// in-memory://, line 4')
+  })
 })

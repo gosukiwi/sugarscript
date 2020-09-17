@@ -130,4 +130,14 @@ greet("fombo")
     expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
     expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
   })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+def greet(gender: string, name: string = "Mike", age: integer = 18, foo: string = "bar")
+  let a = 1
+greet("fombo")
+    `)
+
+    expect(result).to.contain('// in-memory://, line 3')
+  })
 })

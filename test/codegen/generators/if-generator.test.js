@@ -9,7 +9,10 @@ function generate (sourcecode) {
 describe('codegen/generators/if', function () {
   it('generates a single if', function () {
     const result = generate('if 1\n  let a = 1')
-    expect(result).to.contain('if 1\na as integer\na = 1\nendif')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('a = 1')
+    expect(result).to.contain('endif')
   })
 
   it('generates an if-else', function () {
@@ -21,14 +24,12 @@ else
   a = 2
     `)
 
-    expect(result).to.contain(`
-a as integer
-if 1
-a = 1
-else
-a = 2
-endif
-    `.trim())
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('a = 1')
+    expect(result).to.contain('else')
+    expect(result).to.contain('a = 2')
+    expect(result).to.contain('endif')
   })
 
   it('generates an if-elif', function () {
@@ -40,14 +41,12 @@ elif 2
   a = 2
     `)
 
-    expect(result).to.contain(`
-a as integer
-if 1
-a = 1
-elseif 2
-a = 2
-endif
-    `.trim())
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('a = 1')
+    expect(result).to.contain('elseif 2')
+    expect(result).to.contain('a = 2')
+    expect(result).to.contain('endif')
   })
 
   it('generates an if-elif-else', function () {
@@ -61,16 +60,14 @@ else
   a = 3
     `)
 
-    expect(result).to.contain(`
-a as integer
-if 1
-a = 1
-elseif 2
-a = 2
-else
-a = 3
-endif
-    `.trim())
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('a = 1')
+    expect(result).to.contain('elseif 2')
+    expect(result).to.contain('a = 2')
+    expect(result).to.contain('else')
+    expect(result).to.contain('a = 3')
+    expect(result).to.contain('endif')
   })
 
   it('generates a nested if', function () {
@@ -82,14 +79,23 @@ if 1
   a = 2
     `)
 
-    expect(result).to.contain(`
-a as integer
-if 1
-if 1
-a = 1
-endif
-a = 2
-endif
-    `.trim())
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('a = 1')
+    expect(result).to.contain('endif')
+    expect(result).to.contain('a = 2')
+    expect(result).to.contain('endif')
+  })
+
+  it('adds a line comment', function () {
+    const result = generate(`
+let a = 1
+let b = 2
+if a == 1
+  let c = 1
+    `)
+
+    expect(result).to.contain('// in-memory://, line 3')
   })
 })
