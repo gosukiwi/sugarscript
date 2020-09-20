@@ -137,7 +137,13 @@ let a = [[1], 4]                # ERROR
 
 # manipulation
 array_insert(a, 2)
+array_insert_at(a, 3, 0) # array, value, index
 array_delete(a, 0)
+
+# IMPORTANT: On array length
+# For the array `[1, 2, 3]`, Tier 1 returns `2` for length. SugarScript will
+# return `3` instead, normalizing the language with the rest of the world:
+let len = array_length([1, 2, 3]) # len will now equal `3`
 ```
 
 # Lambdas
