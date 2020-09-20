@@ -140,4 +140,22 @@ greet("fombo")
 
     expect(result).to.contain('// in-memory://, line 3')
   })
+
+  describe('primitives', function () {
+    it('works for array_length', function () {
+      const result = generate(`
+let len = array_length([1, 2, 3])
+      `)
+
+      expect(result).to.match(/len = __SSINTERNAL\d+\.length \+ 1/)
+    })
+
+    it('works for array_find', function () {
+      const result = generate(`
+let index = array_find([1, 2, 3], 1)
+      `)
+
+      expect(result).to.match(/index = __SSINTERNAL\d+\.find\(__SSINTERNAL\d+\)/)
+    })
+  })
 })

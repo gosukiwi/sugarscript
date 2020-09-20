@@ -63,4 +63,30 @@ foo(1)
     expect(() => check('let a = CREATESPRITE(1, 1)')).to.throw(/Cannot assign to void/)
     expect(() => check('let a = CreateSprite("foo")')).to.throw(/Invalid arguments/)
   })
+
+  describe('primitives', function () {
+    it('complains for UDTs', function () {
+      expect(() => check(`
+type Person(name: string)
+let p: Person
+let index = array_find([p], 1)
+      `)).to.throw(/Expected STRING as second argument/)
+    })
+
+    it('works for UDTs', function () {
+      expect(() => check(`
+type Person(name: string)
+let p: Person
+let index = array_find([p], 'mike')
+  `)).not.to.throw()
+    })
+
+    it('complains about the number of arguments', function () {
+      expect(() => check('let a = array_find([1, 2, 3])')).to.throw(/Invalid number of arguments/)
+    })
+
+    it('throws cannot be called as statement', function () {
+      expect(() => check('array_find([1, 2, 3])')).to.throw(/cannot be called as statement/)
+    })
+  })
 })

@@ -39,7 +39,6 @@ type Foo(a: string)
 
 let b  = 2
     `)
-    console.log(result)
     expect(result).to.contain('// in-memory://, line ~4')
   })
 })
