@@ -43,6 +43,7 @@ type Person
 
 # inline types
 type Person(name: string)
+let p = { name: "Federico" }: Person
 
 # lambdas (anonymous functions)
 let greeter = (name: string): string ->

@@ -119,6 +119,9 @@ type Person
 let p: Person
 p.name = "Mike"
 p.age = 123
+
+# short-syntax
+let p = { name: "Mike", age: 123 }: Person
 ```
 
 # Arrays
