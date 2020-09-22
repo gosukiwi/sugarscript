@@ -806,4 +806,16 @@ foo(() ->
       expect(result.file).to.eq('foo')
     })
   })
+
+  describe('inline types', function () {
+    it('works', function () {
+      const result = parseOne('a = { name: "Foo", age: 128 }: Person').rhs
+
+      expect(result.type).to.eq('INLINE_TYPE')
+      expect(result.fields[0].name.value).to.eq('name')
+      expect(result.fields[0].value.value).to.eq('Foo')
+      expect(result.fields[1].name.value).to.eq('age')
+      expect(result.fields[1].value.value).to.eq(128)
+    })
+  })
 })
