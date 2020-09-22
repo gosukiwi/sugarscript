@@ -14,4 +14,20 @@ describe('compiler/compiler', function () {
     expect(output).to.contain('baz()')
     expect(fs.existsSync(path.join(__dirname, '..', 'fixtures', 'media', 'bytecode.byc'))).to.eq(true)
   })
+
+  it('can handle circular dependencies', async function () {
+    const compiler = new Compiler()
+    await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'a.ss') })
+
+    const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
+    expect(output).to.contain('b()')
+  })
+
+  it('does not include itself', async function () {
+    const compiler = new Compiler()
+    await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'c.ss') })
+
+    const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
+    expect(output).to.contain('c()')
+  })
 })
