@@ -818,4 +818,18 @@ foo(() ->
       expect(result.fields[1].value.value).to.eq(128)
     })
   })
+
+  describe('non-decimal numeric bases', function () {
+    it('works with binaries', function () {
+      expect(parseOne('a = 0b1001').rhs.type).to.eq('BINARY_INTEGER')
+    })
+
+    it('works with octals', function () {
+      expect(parseOne('a = 0c70112').rhs.type).to.eq('OCTAL_INTEGER')
+    })
+
+    it('works with hex', function () {
+      expect(parseOne('a = 0xF11A90').rhs.type).to.eq('HEX_INTEGER')
+    })
+  })
 })

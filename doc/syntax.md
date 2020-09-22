@@ -261,6 +261,15 @@ it cannot check those for you.
 * The type-checker can't validate arguments are valid when calling a lambda
 * They are slower than regular functions, so when possible, prefer using a regular function
 
+# Numerical Bases
+You can use binary, octal and hexadecimal bases as such:
+
+```
+let binary = 0b1001
+let octal = 0c1732
+let hex = 0xFF1A9
+```
+
 # Plugins
 Still in development
 
