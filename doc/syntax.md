@@ -261,6 +261,39 @@ it cannot check those for you.
 * The type-checker can't validate arguments are valid when calling a lambda
 * They are slower than regular functions, so when possible, prefer using a regular function
 
+# Unions
+Unions represent a value that can be of one of many possible types:
+
+```
+type Rectangle(x: float, y: float, width: float, height: float)
+type Circle(x: float, y: float, radius: float)
+type Shape(Rectangle, Circle)
+
+# a shape can hold either a Rectangle, or a Circle
+let shape: Shape(Rectangle, Circle)
+shape = { x: 100, y: 100, width: 200, height: 200 } Rectangle
+shape = { x: 100, y: 100, radius: 100 } Circle
+
+# to access unions, you must use the `with` statement
+def area(shape: Shape(Rectangle, Circle)): float
+  with shape
+    when rect: Rectangle
+      return rect.width * rect.height
+    when circle: Circle
+      return 3.14 * circle.radius * circle.radius
+
+# a rectangle's area
+shape = { x: 100, y: 100, width: 200, height: 200 } Rectangle
+let result = area(shape)
+
+# a circle's area
+shape = { x: 100, y: 100, radius: 100 } Circle
+let result = area(shape)
+
+# trying to access a property directly will raise an error
+shape.x # ERROR
+```
+
 # Numerical Bases
 You can use binary, octal and hexadecimal bases as such:
 

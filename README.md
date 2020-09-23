@@ -12,6 +12,8 @@ So Studio  users need to manually load up and compiler the generated `.agc`
 file.
 
 # Syntax
+For detailed information on SugarScript's syntax, check out [the syntax
+documentation](doc/syntax.md). Below is a quick cheatsheet:
 
 ```
 # assign
@@ -61,6 +63,24 @@ def another_function(greeter: integer, name: string): string
 let my_array = [1, 2, 3]
 let empty_array = []: integer
 let nested_array = [[1], [2, 3], []: integer]
+
+# unions
+type Rectangle(x: float, y: float, width: float, height: float)
+type Circle(x: float, y: float, radius: float)
+type Shape(Rectangle, Circle)
+
+# a shape can hold either a Rectangle, or a Circle
+let shape: Shape(Rectangle, Circle)
+shape = { x: 100, y: 100, width: 200, height: 200 } Rectangle
+shape = { x: 100, y: 100, radius: 100 } Circle
+
+# to access unions, you must use the `with` statement
+def area(shape: Shape(Rectangle, Circle)): float
+  with shape
+    when rect: Rectangle
+      return rect.width * rect.height
+    when circle: Circle
+      return 3.14 * circle.radius * circle.radius
 ```
 
 # Usage

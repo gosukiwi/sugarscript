@@ -383,6 +383,40 @@ def greet(person: integer = 1): Person
       expect(node.fields[1].name).to.eq('age')
       expect(node.fields[1].typehint.is('INTEGER')).to.eq(true)
     })
+
+    it('matches an union type', function () {
+      const node = parseOne('type Shape(Rectangle, Circle)')
+      expect(node.type).to.eq('UNION_DEFINITION')
+      expect(node.types[0].value).to.eq('Rectangle')
+      expect(node.types[1].value).to.eq('Circle')
+    })
+
+    it('can use with', function () {
+      const node = parseOne(`
+with shape
+  when rect: Rectangle
+    return rect.foo
+  when cir: Circle
+    return cir.bar
+      `)
+
+      expect(node.type).to.eq('WITH')
+      expect(node.name.type).to.eq('QUERY')
+      expect(node.clauses.length).to.eq(2)
+      expect(node.clauses[0].type).to.eq('WITH_CLAUSE')
+      expect(node.clauses[0].name.value).to.eq('rect')
+      expect(node.clauses[0].typehint.is('UDT')).to.eq(true)
+      expect(node.clauses[0].body[0].type).to.eq('RETURN')
+      expect(node.clauses[1].type).to.eq('WITH_CLAUSE')
+      expect(node.clauses[1].name.value).to.eq('cir')
+      expect(node.clauses[1].typehint.is('UDT')).to.eq(true)
+      expect(node.clauses[1].body[0].type).to.eq('RETURN')
+    })
+
+    it('can define an union-type variable', function () {
+      const node = parseOne('let a: Shape(Rectangle, Circle)')
+      expect(node.typehint.is('UNION')).to.eq(true)
+    })
   })
 
   describe('if statement', function () {
