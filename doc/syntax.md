@@ -271,8 +271,8 @@ type Shape(Rectangle, Circle)
 
 # a shape can hold either a Rectangle, or a Circle
 let shape: Shape(Rectangle, Circle)
-shape = { x: 100, y: 100, width: 200, height: 200 } Rectangle
-shape = { x: 100, y: 100, radius: 100 } Circle
+shape = { x: 100, y: 100, width: 200, height: 200 }: Rectangle
+shape = { x: 100, y: 100, radius: 100 }: Circle
 
 # to access unions, you must use the `with` statement
 def area(shape: Shape(Rectangle, Circle)): float
@@ -283,11 +283,11 @@ def area(shape: Shape(Rectangle, Circle)): float
       return 3.14 * circle.radius * circle.radius
 
 # a rectangle's area
-shape = { x: 100, y: 100, width: 200, height: 200 } Rectangle
+shape = { x: 100, y: 100, width: 200, height: 200 }: Rectangle
 let result = area(shape)
 
 # a circle's area
-shape = { x: 100, y: 100, radius: 100 } Circle
+shape = { x: 100, y: 100, radius: 100 }: Circle
 let result = area(shape)
 
 # trying to access a property directly will raise an error
