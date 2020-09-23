@@ -107,4 +107,18 @@ a = { radius: 2 }: Circle
 let b = a.foo
     `)).to.throw(/Cannot access field 'foo'/)
   })
+
+  it('can be nested in a type', function () {
+    const definitions = check(`
+type Circle(radius: integer)
+type Square(sides: integer)
+type Shape(Circle, Square)
+type Geom(shape: Shape(Circle, Square))
+
+let g: Geom
+let shape = g.shape
+    `)
+
+    expect(definitions.getVariable('shape').type.is('UNION')).to.eq(true)
+  })
 })

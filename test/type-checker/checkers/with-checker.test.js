@@ -100,4 +100,19 @@ with shape
     size = circle.radius
     `)).not.to.throw()
   })
+
+  it('complains when type is non-udt', function () {
+    expect(() => check(`
+type Circle(radius: integer)
+type Square(sides: integer)
+type Shape(Circle, Square)
+let shape: Shape(Circle, Square)
+
+with shape
+  when square: integer
+    square.foo = 2
+  when circle: Circle
+    circle.radius = 2
+    `)).to.throw(/Only UDT/)
+  })
 })

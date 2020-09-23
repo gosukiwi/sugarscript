@@ -31,26 +31,22 @@ Log("#{size}")
     expect(result).to.match(/if __SSINTERNAL\d+\.__type = 'Circle'/)
   })
 
-//   it.only('can prepend', function () {
-//     const result = generate(`
-// type Circle(radius: integer)
-// type Square(sides: integer)
-// type Shape(Circle, Square)
-//
-// def area(shape: Shape(Circle, Square)): integer
-//   with shape
-//     when square: Square
-//       return square.sides * square.sides
-//     when circle: Circle
-//       return 3.14 * circle.radius * circle.radius
-//
-// let shape: Shape(Circle, Square)
-// shape = { sides: 2 }: Square
-// let file = OpenToWrite('output.txt', 0)
-// WriteString(file, "Area is #{area(shape)}")
-// CloseFile(file)
-//     `)
-//
-//     console.log(result)
-//   })
+  it('can use an union inside a type', function () {
+    const result = generate(`
+type Circle(radius: integer)
+type Square(sides: integer)
+type Shape(Circle, Square)
+type Geom(shape: Shape(Circle, Square))
+
+let g: Geom
+let a: integer
+with g.shape
+  when c: Circle
+    a = 1
+  when s: Square
+    a = 2
+    `)
+
+    expect(result).to.match(/__SSINTERNAL\d+ = g\.shape/)
+  })
 })
