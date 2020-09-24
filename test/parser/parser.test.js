@@ -398,11 +398,13 @@ with shape
     return rect.foo
   when cir: Circle
     return cir.bar
+  else
+    return 0
       `)
 
       expect(node.type).to.eq('WITH')
       expect(node.name.type).to.eq('QUERY')
-      expect(node.clauses.length).to.eq(2)
+      expect(node.clauses.length).to.eq(3)
       expect(node.clauses[0].type).to.eq('WITH_CLAUSE')
       expect(node.clauses[0].name.value).to.eq('rect')
       expect(node.clauses[0].typehint.is('UDT')).to.eq(true)

@@ -21,6 +21,8 @@ with shape
     square.sides = 2
   when circle: Circle
     circle.radius = 2
+  else
+    let a = 1
     `)).not.to.throw()
   })
 
@@ -36,10 +38,12 @@ with shape
     square.foo = 2
   when circle: Circle
     circle.radius = 2
+  else
+    let a = 1
     `)).to.throw("Could not find field 'foo' for type 'Square'")
   })
 
-  it('complains when not all types are checked', function () {
+  it('does not need to cover all types', function () {
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
@@ -49,7 +53,9 @@ let shape: Shape(Circle, Square)
 with shape
   when circle: Circle
     circle.radius = 2
-    `)).to.throw(/must cover all types/)
+  else
+    let a = 1
+    `)).not.to.throw()
   })
 
   it('complains when it tries to check an invalid type', function () {
@@ -65,6 +71,8 @@ with shape
     foo.name = "asd"
   when circle: Circle
     circle.radius = 2
+  else
+    let a = 1
     `)).to.throw(/does not include type 'Foo'/)
   })
 
@@ -80,6 +88,8 @@ with shape
     foo.name = "asd"
   when circle: Circle
     circle.radius = 2
+  else
+    let a = 1
     `)).to.throw(/does not include type 'Foo'/)
   })
 
@@ -98,6 +108,8 @@ with shape
     size = square.sides
   when circle: Circle
     size = circle.radius
+  else
+    size = 0
     `)).not.to.throw()
   })
 
@@ -113,6 +125,8 @@ with shape
     square.foo = 2
   when circle: Circle
     circle.radius = 2
+  else
+    let a = 1
     `)).to.throw(/Only UDT/)
   })
 })

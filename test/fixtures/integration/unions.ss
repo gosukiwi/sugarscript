@@ -8,6 +8,8 @@ def area(shape: Shape(Circle, Square)): integer
       return square.sides * square.sides
     when circle: Circle
       return 3.14 * circle.radius * circle.radius
+    else
+      return 0
 
 let shape: Shape(Circle, Square)
 shape = { sides: 2 }: Square

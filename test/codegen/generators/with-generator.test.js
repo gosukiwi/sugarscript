@@ -21,14 +21,16 @@ with shape
     size = square.sides
   when circle: Circle
     size = circle.radius
+  else
+    size = 0
 
 Log("#{size}")
     `)
 
     expect(result).to.match(/shape.__Square = __SSINTERNAL\d+/)
     expect(result).to.match(/shape.__type = 'Square'/)
-    expect(result).to.match(/if __SSINTERNAL\d+\.__type = 'Square'/)
-    expect(result).to.match(/if __SSINTERNAL\d+\.__type = 'Circle'/)
+    expect(result).to.match(/case 'Square':/)
+    expect(result).to.match(/case 'Circle':/)
   })
 
   it('can use an union inside a type', function () {
@@ -45,6 +47,8 @@ with g.shape
     a = 1
   when s: Square
     a = 2
+  else
+    a = 3
     `)
 
     expect(result).to.match(/__SSINTERNAL\d+ = g\.shape/)
