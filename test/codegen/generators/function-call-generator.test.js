@@ -157,6 +157,24 @@ let index = array_find([1, 2, 3], 1)
 
       expect(result).to.match(/index = __SSINTERNAL\d+\.find\(1\)/)
     })
+
+    it('works for to_json', function () {
+      const result = generate(`
+let json = to_json([1, 2, 3])
+      `)
+
+      expect(result).to.match(/__SSINTERNAL\d+\.toJSON\(\)/)
+    })
+
+    it('works for from_json', function () {
+      const result = generate(`
+type Person(name: string)
+let p: Person
+from_json(p, '{ "name": "Federico" }')
+      `)
+
+      expect(result).to.match(/p.fromJSON\('.*?'\)/)
+    })
   })
 
   it('optimizes function call when using an identifier', function () {
