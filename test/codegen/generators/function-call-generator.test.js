@@ -150,7 +150,7 @@ let len = array_length([1, 2, 3])
       expect(result).to.match(/len = __SSINTERNAL\d+\.length \+ 1/)
     })
 
-    it('works for array_find', function () {
+    it.only('works for array_find', function () {
       const result = generate(`
 let index = array_find([1, 2, 3], 1)
       `)
