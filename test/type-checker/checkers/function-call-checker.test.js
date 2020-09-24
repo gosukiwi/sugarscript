@@ -64,6 +64,10 @@ foo(1)
     expect(() => check('let a = CreateSprite("foo")')).to.throw(/Invalid arguments/)
   })
 
+  it('can use integers instead of floats', function () {
+    expect(() => check('ceil(2)')).not.to.throw()
+  })
+
   describe('primitives', function () {
     it('complains for UDTs', function () {
       expect(() => check(`
