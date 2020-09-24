@@ -53,4 +53,23 @@ with g.shape
 
     expect(result).to.match(/__SSINTERNAL\d+ = g\.shape/)
   })
+
+  it('can use multiple clause', function () {
+    const result = generate(`
+type Circle(size: integer)
+type Square(size: integer)
+type Shape(Circle, Square)
+type Geom(shape: Shape(Circle, Square))
+
+let g: Geom
+let a: integer
+with g.shape
+  when shape: (Circle, Square)
+    a = shape.size
+  else
+    a = 3
+    `)
+
+    expect(result).to.match(/a = __SSINTERNAL\d+.size/)
+  })
 })

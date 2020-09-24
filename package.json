@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --timeout 15000 --require test/mocha.env.js test/**/*.test.js",
     "watch": "mocha --timeout 15000 --require test/mocha.env.js --watch test/**/*.test.js",
-    "integration": "mocha --require test/mocha.env.js test/**/*.integration.js"
+    "integration": "mocha --require test/mocha.env.js test/integration/integration.js"
   },
   "keywords": [
     "lisp",

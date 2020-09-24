@@ -43,6 +43,23 @@ with shape
     `)).to.throw("Could not find field 'foo' for type 'Square'")
   })
 
+  it('complains when clause variable is already taken', function () {
+    expect(() => check(`
+type Circle(radius: integer)
+type Square(sides: integer)
+type Shape(Circle, Square)
+let shape: Shape(Circle, Square)
+
+with shape
+  when shape: Square
+    shape.sides = 2
+  when circle: Circle
+    circle.radius = 2
+  else
+    let a = 1
+    `)).to.throw("Variable 'shape' already exists")
+  })
+
   it('does not need to cover all types', function () {
     expect(() => check(`
 type Circle(radius: integer)
@@ -128,5 +145,22 @@ with shape
   else
     let a = 1
     `)).to.throw(/Only UDT/)
+  })
+
+  it('validates when in multiple clause', function () {
+    expect(() => check(`
+type Circle(radius: integer)
+type Square(sides: integer)
+type Shape(Circle, Square)
+type Geom(shape: Shape(Circle, Square))
+
+let g: Geom
+let a: integer
+with g.shape
+  when shape: (Circle, Square)
+    a = shape.sides
+  else
+    a = 3
+    `)).to.throw("Could not find field 'sides' for type 'Circle'")
   })
 })

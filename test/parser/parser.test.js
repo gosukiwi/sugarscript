@@ -415,6 +415,20 @@ with shape
       expect(node.clauses[1].body[0].type).to.eq('RETURN')
     })
 
+    it('can use with multiple clause', function () {
+      const node = parseOne(`
+with shape
+  when s: (Rectangle, Circle)
+    return s.foo
+  else
+    return 0
+      `)
+
+      expect(node.type).to.eq('WITH')
+      expect(node.name.type).to.eq('QUERY')
+      expect(node.clauses.length).to.eq(3)
+    })
+
     it('can define an union-type variable', function () {
       const node = parseOne('let a: Shape(Rectangle, Circle)')
       expect(node.typehint.is('UNION')).to.eq(true)
