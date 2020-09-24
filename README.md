@@ -81,6 +81,8 @@ def area(shape: Shape(Rectangle, Circle)): float
       return rect.width * rect.height
     when circle: Circle
       return 3.14 * circle.radius * circle.radius
+    else
+      return 0
 ```
 
 # Usage

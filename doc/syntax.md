@@ -275,12 +275,16 @@ shape = { x: 100, y: 100, width: 200, height: 200 }: Rectangle
 shape = { x: 100, y: 100, radius: 100 }: Circle
 
 # to access unions, you must use the `with` statement
+# it's mandatory to provide an `else` branch, as unions
+# can be initialized without a type
 def area(shape: Shape(Rectangle, Circle)): float
   with shape
     when rect: Rectangle
       return rect.width * rect.height
     when circle: Circle
       return 3.14 * circle.radius * circle.radius
+    else
+      return 0
 
 # a rectangle's area
 shape = { x: 100, y: 100, width: 200, height: 200 }: Rectangle
@@ -292,6 +296,20 @@ let result = area(shape)
 
 # trying to access a property directly will raise an error
 shape.x # ERROR
+
+# when types share common properties, you can group them as such:
+type Car(wheels: integer)
+type Bike(wheels: integer)
+type Vehicle(Car, Bike)
+
+let vehicle: Vehicle(Car, Bike)
+vehicle = { wheels: 2 }: Bike
+
+with vehicle
+  when v: (Bike, Car)
+    print("I have #{v.wheels} wheels")
+  else
+    print("I haven't been initialized yet")
 ```
 
 # Numerical Bases
