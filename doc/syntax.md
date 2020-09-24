@@ -325,18 +325,18 @@ let hex = 0xFF1A9
 Because SugarScript is purely functional, it needs to add new functions to replace
 existing oop-like calls in Tier 1. Those functions are:
 
- * array_length(arr): integer
- * array_insert(arr, value)
- * array_insert_at(arr, value, index)
- * array_insert_sorted(arr, value)
- * array_remove(arr)
- * array_remove_at(arr, index)
- * array_sort(arr)
- * array_find(arr, value): integer
- * array_save(arr, filename)
- * array_load(arr, filename)
- * to_json(arr_or_udt): string
- * from_json(arr_or_udt, json_string)
+ * `array_length(arr): integer`
+ * `array_insert(arr, value)`
+ * `array_insert_at(arr, value, index)`
+ * `array_insert_sorted(arr, value)`
+ * `array_remove(arr)`
+ * `array_remove_at(arr, index)`
+ * `array_sort(arr)`
+ * `array_find(arr, value): integer`
+ * `array_save(arr, filename)`
+ * `array_load(arr, filename)`
+ * `to_json(arr_or_udt): string`
+ * `from_json(arr_or_udt, json_string)`
 
 __IMPORTANT__ `array_length` will behave like it does in most programming
 languages. That is, it will report the actual numbers of elements inside the
