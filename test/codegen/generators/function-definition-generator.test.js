@@ -113,9 +113,7 @@ greet("Mike")
 
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 18/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18\)/)
   })
 
   it('adds a line comment', function () {

@@ -39,6 +39,16 @@ greet("Mike")
     expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
   })
 
+  it('calls a function with an argument (sqstring)', function () {
+    const result = generate(`
+def greet(name: string)
+  let a = 1
+greet('Mike')
+    `)
+
+    expect(result).to.match(/greet\('Mike'\)/)
+  })
+
   it('calls a function with many arguments', function () {
     const result = generate(`
 def greet(name: string, age: integer)
@@ -48,9 +58,7 @@ greet("Mike", 18)
 
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 18/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18\)/)
   })
 
   it('calls a function with a default inline array', function () {
@@ -74,11 +82,9 @@ greet()
 
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 18/)
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with many default parameters setting one', function () {
@@ -90,11 +96,9 @@ greet("fombo")
 
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'fombo'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 18/)
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with overriding all default parameters', function () {
@@ -106,11 +110,9 @@ greet("fombo", 22, "potato")
 
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'fombo'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 22/)
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'potato'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, 22, __SSINTERNAL\d+\)/)
   })
 
   it('calls a function with a non-default parameter many default parameters', function () {
@@ -124,11 +126,9 @@ greet("fombo")
     expect(result).to.match(/__SSINTERNAL\d+ = 'fombo'/)
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as integer/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 18/)
     expect(result).to.match(/__SSINTERNAL\d+ as string/)
     expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, 18, __SSINTERNAL\d+\)/)
   })
 
   it('adds a line comment', function () {
@@ -155,7 +155,17 @@ let len = array_length([1, 2, 3])
 let index = array_find([1, 2, 3], 1)
       `)
 
-      expect(result).to.match(/index = __SSINTERNAL\d+\.find\(__SSINTERNAL\d+\)/)
+      expect(result).to.match(/index = __SSINTERNAL\d+\.find\(1\)/)
     })
+  })
+
+  it('optimizes function call when using an identifier', function () {
+    const result = generate(`
+def greet(name: string): string
+  return "Hello #{name}!"
+let name = 'potato'
+greet(name)
+    `)
+    expect(result).to.contain('greet(name)')
   })
 })
