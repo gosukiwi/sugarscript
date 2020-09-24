@@ -150,12 +150,30 @@ let len = array_length([1, 2, 3])
       expect(result).to.match(/len = __SSINTERNAL\d+\.length \+ 1/)
     })
 
-    it.only('works for array_find', function () {
+    it('works for array_find', function () {
       const result = generate(`
 let index = array_find([1, 2, 3], 1)
       `)
 
       expect(result).to.match(/index = __SSINTERNAL\d+\.find\(1\)/)
+    })
+
+    it('works for to_json', function () {
+      const result = generate(`
+let json = to_json([1, 2, 3])
+      `)
+
+      expect(result).to.match(/__SSINTERNAL\d+\.toJSON\(\)/)
+    })
+
+    it('works for from_json', function () {
+      const result = generate(`
+type Person(name: string)
+let p: Person
+from_json(p, '{ "name": "Federico" }')
+      `)
+
+      expect(result).to.match(/p.fromJSON\('.*?'\)/)
     })
   })
 
