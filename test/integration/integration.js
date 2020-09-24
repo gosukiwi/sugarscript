@@ -23,4 +23,8 @@ describe('integration', function () {
   it('works for unions', async function () {
     await run('unions')
   })
+
+  it('works for unions (multiple clause)', async function () {
+    await run('unions-multiple')
+  })
 })
