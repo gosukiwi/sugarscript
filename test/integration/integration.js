@@ -31,4 +31,8 @@ describe('integration', function () {
   it('works for unions (nested)', async function () {
     await run('unions-nested')
   })
+  
+  it.only('works for list comprehensions', async function () {
+    await run('list-comprehension')
+  })
 })

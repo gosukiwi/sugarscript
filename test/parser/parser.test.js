@@ -877,4 +877,11 @@ foo(() ->
       expect(parseOne('a = 0xF11A90').rhs.type).to.eq('HEX_INTEGER')
     })
   })
+
+  describe('list comprehension', function () {
+    it('works full', function () {
+      const result = parseOne('a = (print(i) for i in [1, 2, 3] when i % 2 == 0)').rhs
+      expect(result.type).to.eq('LIST_COMPREHENSION')
+    })
+  })
 })
