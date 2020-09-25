@@ -685,6 +685,23 @@ let a = @
       expect(node.step).to.eq(null)
       expect(node.body.length).to.eq(1)
     })
+
+    it('parses a single-line for..to', function () {
+      const node = parseOne('for i = 1 to 10 do bar()')
+      expect(node.type).to.eq('FOR')
+      expect(node.variable).to.eq('i')
+      expect(node.from.type).to.eq('NUMBER')
+      expect(node.to.type).to.eq('NUMBER')
+      expect(node.step).to.eq(null)
+      expect(node.body.length).to.eq(1)
+    })
+
+    it('parses a single-line for..in', function () {
+      const node = parseOne('for i in [1, 2, 3] do bar(i)')
+      expect(node.type).to.eq('FOREACH')
+      expect(node.variable).to.eq('i')
+      expect(node.body.length).to.eq(1)
+    })
   })
 
   describe('break and continue', function () {

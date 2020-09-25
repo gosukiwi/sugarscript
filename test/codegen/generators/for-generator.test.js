@@ -19,10 +19,32 @@ for i = 1 to 10
     expect(result).to.contain('next i')
   })
 
-  it('works with a log for', function () {
+  it('works with a short for (one-line)', function () {
+    const result = generate(`
+for i = 1 to 10 do let a = i
+    `)
+
+    expect(result).to.contain('for i = 1 to 10 step 1')
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('a = i')
+    expect(result).to.contain('next i')
+  })
+
+  it('works with a long for', function () {
     const result = generate(`
 for i = 1 to 10 step 2
   let a = i
+    `)
+
+    expect(result).to.contain('for i = 1 to 10 step 2')
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('a = i')
+    expect(result).to.contain('next i')
+  })
+
+  it('works with a long for (one-line)', function () {
+    const result = generate(`
+for i = 1 to 10 step 2 do let a = i
     `)
 
     expect(result).to.contain('for i = 1 to 10 step 2')
