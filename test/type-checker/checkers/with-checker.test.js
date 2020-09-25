@@ -152,7 +152,7 @@ with shape
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-type Geom(shape: Shape(Circle, Square))
+type Geom(shape: Shape)
 
 let g: Geom
 let a: integer

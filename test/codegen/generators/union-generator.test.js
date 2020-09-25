@@ -25,7 +25,7 @@ type Shape(Circle, Square)
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let a: Shape(Circle, Square)
+let a: Shape
     `)
 
     expect(result).to.contain('a as Shape')

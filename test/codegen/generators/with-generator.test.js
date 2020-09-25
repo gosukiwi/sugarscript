@@ -12,7 +12,7 @@ describe('codegen/generators/with', function () {
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 shape = { sides: 2 }: Square
 let size: integer
 
@@ -38,7 +38,7 @@ Log("#{size}")
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-type Geom(shape: Shape(Circle, Square))
+type Geom(shape: Shape)
 
 let g: Geom
 let a: integer
@@ -59,7 +59,7 @@ with g.shape
 type Circle(size: integer)
 type Square(size: integer)
 type Shape(Circle, Square)
-type Geom(shape: Shape(Circle, Square))
+type Geom(shape: Shape)
 
 let g: Geom
 let a: integer
