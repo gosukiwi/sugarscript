@@ -270,14 +270,14 @@ type Circle(x: float, y: float, radius: float)
 type Shape(Rectangle, Circle)
 
 # a shape can hold either a Rectangle, or a Circle
-let shape: Shape(Rectangle, Circle)
+let shape: Shape
 shape = { x: 100, y: 100, width: 200, height: 200 }: Rectangle
 shape = { x: 100, y: 100, radius: 100 }: Circle
 
 # to access unions, you must use the `with` statement
 # it's mandatory to provide an `else` branch, as unions
 # can be initialized without a type
-def area(shape: Shape(Rectangle, Circle)): float
+def area(shape: Shape): float
   with shape
     when rect: Rectangle
       return rect.width * rect.height
@@ -302,7 +302,7 @@ type Car(wheels: integer)
 type Bike(wheels: integer)
 type Vehicle(Car, Bike)
 
-let vehicle: Vehicle(Car, Bike)
+let vehicle: Vehicle
 vehicle = { wheels: 2 }: Bike
 
 with vehicle
