@@ -347,7 +347,7 @@ would return `2`.
 
 ```
 let pairs = [i for i in [0, 1, 2, 3, 4] when i % 2 is 0]
-let doubles = [i * i for i in [0, 1, 2, 3, 4]]
+let doubles = [i * 2 for i in [0, 1, 2, 3, 4]]
 ```
 
 # Plugins
