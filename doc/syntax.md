@@ -343,6 +343,13 @@ languages. That is, it will report the actual numbers of elements inside the
 array. So for `array_lengt([1, 2, 3])`, it will return 3, unlike Tier 1, that
 would return `2`.
 
+# List Comprehensions
+
+```
+let pairs = [i for i in [0, 1, 2, 3, 4] when i % 2 is 0]
+let doubles = [i * i for i in [0, 1, 2, 3, 4]]
+```
+
 # Plugins
 Still in development
 

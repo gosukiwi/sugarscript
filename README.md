@@ -83,6 +83,10 @@ def area(shape: Shape): float
       return 3.14 * circle.radius * circle.radius
     else
       return 0
+
+# list comprehensions
+let pairs = [i for i in [0, 1, 2, 3, 4] when i % 2 is 0]
+let doubles = [i * i for i in [0, 1, 2, 3, 4]]
 ```
 
 # Usage
