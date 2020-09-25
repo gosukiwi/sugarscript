@@ -122,10 +122,10 @@ This opens up a whole new level of abstraction, much needed in Tier 1.
 
 # Philosophy
 * Expressive: If it can read like English, it's easier to understand.
-* Concise: When possible, prefer the shorter syntax.
+* Concise: Indentation-based, compact syntax. Do more things with less code. Less code, less bugs.
 * Strict: Linting tools exist for a reason, consistency is a good thing. It makes code easier to read.
-* Powerful: [Lambdas](https://en.wikipedia.org/wiki/Higher-order_function), together with lots of syntactic sugar give you enough power as to not miss mainstream languages
-* Simple: It's just Tier 1 under the hood
+* Powerful: [Lambdas](doc/syntax.md#lambdas), [Unions](doc/syntax.md#unions), [List Comprehensions](doc/syntax.md#list-comprehensions), and lots of syntactic sugar give you enough power to not miss mainstream languages
+* Simple: It's just Tier 1 under the hood.
 
 # Developing
 Run tests with
