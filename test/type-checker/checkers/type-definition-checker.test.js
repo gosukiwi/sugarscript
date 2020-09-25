@@ -17,7 +17,7 @@ describe('type-checker/checkers/type-definition', function () {
   })
 
   it('throws error when repeating field names', function () {
-    expect(() => check('type Person(name: string, name: integer)')).to.throw(/already set/)
+    expect(() => check('type Person(name: string, Name: integer)')).to.throw(/already set/)
   })
 
   it('throws error when repeating field names (case insensitive)', function () {

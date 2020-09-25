@@ -191,4 +191,22 @@ def foo(name: float): float
   return NAME
     `)).not.to.throw()
   })
+
+  it('cannot re-define a primitive function', function () {
+    expect(() => {
+      check(`
+def array_find(): integer
+  return 1
+        `)
+    }).to.throw(/already exists/)
+  })
+
+  it('cannot re-define a built-in function', function () {
+    expect(() => {
+      check(`
+def print(): integer
+  return 1
+        `)
+    }).to.throw(/already exists/)
+  })
 })
