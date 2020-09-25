@@ -22,4 +22,12 @@ describe('codegen/generators/list-comprehension', function () {
     expect(result).not.to.contain('if')
     expect(result).to.match(/__SSINTERNAL\d+\.insert\(ceil\(i\)\)/)
   })
+
+  it('works with strings', function () {
+    const result = generate('let numbers = ["#{i}" for i in [1, 2, 3, 4]]')
+
+    expect(result).to.match(/for __SSINTERNAL\d+ = 0 to __SSINTERNAL\d+\.length/)
+    expect(result).not.to.contain('if')
+    expect(result).to.match(/__SSINTERNAL\d+\.insert\('' \+ __SSINTERNAL\d+ \+ ''\)/)
+  })
 })
