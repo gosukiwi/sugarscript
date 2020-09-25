@@ -1,8 +1,8 @@
 type Circle(area: integer)
 type Square(area: integer)
 type Triangle(area: integer)
-type Polygon(Triangle, Square)
-type Shape(Circle, Polygon)
+type Polygon(Triangle | Square)
+type Shape(Circle | Polygon)
 
 let shape: Shape
 let triangle: Polygon = { area: 3 }: Triangle

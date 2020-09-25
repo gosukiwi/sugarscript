@@ -13,7 +13,7 @@ describe('type-checker/checkers/union', function () {
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
     `)
 
     const union = definitions.getType('shape')
@@ -26,7 +26,7 @@ type Shape(Circle, Square)
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
     `)
 
@@ -36,7 +36,7 @@ let a: Shape
   it('complains if cant find udts', function () {
     expect(() => check(`
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
     `)).to.throw(/Could not find UDT 'Circle'/)
   })
@@ -45,7 +45,7 @@ let a: Shape
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
 a = { sides: 2 }: Square
     `)
@@ -57,7 +57,7 @@ a = { sides: 2 }: Square
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
 a = { radius: 2 }: Circle
     `)
@@ -79,7 +79,7 @@ a = { radius: 2 }: Circle
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
 a = { radius: 2 }: Circle
 a = { sides: 2 }: Square
@@ -92,7 +92,7 @@ a = { sides: 2 }: Square
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
 a = { radius: 2 }: Circle
 let b = a.foo
@@ -103,7 +103,7 @@ let b = a.foo
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 type Geom(shape: Shape)
 
 let g: Geom
@@ -117,8 +117,8 @@ let shape = g.shape
     const definitions = check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
-type AnotherShape(Shape, Square)
+type Shape(Circle | Square)
+type AnotherShape(Shape | Square)
 
 let another: AnotherShape
 let circle: Circle

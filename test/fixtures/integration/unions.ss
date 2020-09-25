@@ -1,6 +1,6 @@
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 
 def area(shape: Shape): integer
   with shape

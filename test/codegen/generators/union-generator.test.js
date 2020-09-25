@@ -11,7 +11,7 @@ describe('codegen/generators/union', function () {
     const result = generate(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
     `)
 
     expect(result).to.contain('type Shape')
@@ -24,7 +24,7 @@ type Shape(Circle, Square)
     const result = generate(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
     `)
 
@@ -35,7 +35,7 @@ let a: Shape
     const result = generate(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
 a = { sides: 2 }: Square
     `)
@@ -48,7 +48,7 @@ a = { sides: 2 }: Square
     const result = generate(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let a: Shape
 a = { radius: 2 }: Circle
     `)

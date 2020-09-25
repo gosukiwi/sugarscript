@@ -267,7 +267,7 @@ Unions represent a value that can be of one of many possible types:
 ```
 type Rectangle(x: float, y: float, width: float, height: float)
 type Circle(x: float, y: float, radius: float)
-type Shape(Rectangle, Circle)
+type Shape(Rectangle | Circle)
 
 # a shape can hold either a Rectangle, or a Circle
 let shape: Shape
@@ -300,13 +300,13 @@ shape.x # ERROR
 # when types share common properties, you can group them as such:
 type Car(wheels: integer)
 type Bike(wheels: integer)
-type Vehicle(Car, Bike)
+type Vehicle(Car | Bike)
 
 let vehicle: Vehicle
 vehicle = { wheels: 2 }: Bike
 
 with vehicle
-  when v: (Bike, Car)
+  when v: (Bike | Car)
     print("I have #{v.wheels} wheels")
   else
     print("I haven't been initialized yet")

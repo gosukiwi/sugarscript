@@ -67,7 +67,7 @@ let nested_array = [[1], [2, 3], []: integer]
 # unions
 type Rectangle(x: float, y: float, width: float, height: float)
 type Circle(x: float, y: float, radius: float)
-type Shape(Rectangle, Circle)
+type Shape(Rectangle | Circle)
 
 # a shape can hold either a Rectangle, or a Circle
 let shape: Shape

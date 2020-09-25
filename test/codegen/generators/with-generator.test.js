@@ -11,7 +11,7 @@ describe('codegen/generators/with', function () {
     const result = generate(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 shape = { sides: 2 }: Square
 let size: integer
@@ -37,7 +37,7 @@ Log("#{size}")
     const result = generate(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 type Geom(shape: Shape)
 
 let g: Geom
@@ -58,13 +58,13 @@ with g.shape
     const result = generate(`
 type Circle(size: integer)
 type Square(size: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 type Geom(shape: Shape)
 
 let g: Geom
 let a: integer
 with g.shape
-  when shape: (Circle, Square)
+  when shape: (Circle | Square)
     a = shape.size
   else
     a = 3

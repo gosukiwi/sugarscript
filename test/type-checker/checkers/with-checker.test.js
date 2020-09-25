@@ -13,7 +13,7 @@ describe('type-checker/checkers/with', function () {
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -30,7 +30,7 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -47,7 +47,7 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -64,7 +64,7 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -80,7 +80,7 @@ with shape
 type Foo(name: string)
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -97,7 +97,7 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -114,7 +114,7 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 
 let shape: Shape
 shape = { sides: 2 }: Square
@@ -134,7 +134,7 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 let shape: Shape
 
 with shape
@@ -151,13 +151,13 @@ with shape
     expect(() => check(`
 type Circle(radius: integer)
 type Square(sides: integer)
-type Shape(Circle, Square)
+type Shape(Circle | Square)
 type Geom(shape: Shape)
 
 let g: Geom
 let a: integer
 with g.shape
-  when shape: (Circle, Square)
+  when shape: (Circle | Square)
     a = shape.sides
   else
     a = 3

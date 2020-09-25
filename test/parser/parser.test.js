@@ -385,7 +385,7 @@ def greet(person: integer = 1): Person
     })
 
     it('matches an union type', function () {
-      const node = parseOne('type Shape(Rectangle, Circle)')
+      const node = parseOne('type Shape(Rectangle | Circle)')
       expect(node.type).to.eq('UNION_DEFINITION')
       expect(node.types[0].value).to.eq('Rectangle')
       expect(node.types[1].value).to.eq('Circle')
@@ -418,7 +418,7 @@ with shape
     it('can use with multiple clause', function () {
       const node = parseOne(`
 with shape
-  when s: (Rectangle, Circle)
+  when s: (Rectangle | Circle)
     return s.foo
   else
     return 0
