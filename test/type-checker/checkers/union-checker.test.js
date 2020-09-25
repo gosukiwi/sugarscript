@@ -136,29 +136,4 @@ with another
     expect(definitions.getVariable('another').type.is('UDT')).to.eq(true)
     expect(definitions.getVariable('circle').type.is('UDT')).to.eq(true)
   })
-
-  it.only('works with let', function () {
-    check(`
-type Circle(area: integer)
-type Square(area: integer)
-type Triangle(area: integer)
-type Polygon(Triangle, Square)
-type Shape(Circle, Polygon)
-
-let shape: Shape
-let triangle: Polygon = { area: 3 }: Triangle
-shape = triangle
-let file = OpenToWrite('output.txt', 0)
-with shape
-  when polygon: Polygon
-    with polygon
-      when t: Triangle
-        WriteString(file, "Area is #{t.area}")
-      else
-        WriteString(file, "Invalid")
-  else
-    WriteString(file, "Invalid")
-CloseFile(file)
-    `)
-  })
 })
