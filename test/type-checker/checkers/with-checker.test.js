@@ -14,7 +14,7 @@ describe('type-checker/checkers/with', function () {
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when square: Square
@@ -31,7 +31,7 @@ with shape
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when square: Square
@@ -48,7 +48,7 @@ with shape
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when shape: Square
@@ -65,7 +65,7 @@ with shape
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when circle: Circle
@@ -81,7 +81,7 @@ type Foo(name: string)
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when foo: Foo
@@ -98,7 +98,7 @@ with shape
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when foo: Foo
@@ -116,7 +116,7 @@ type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
 
-let shape: Shape(Circle, Square)
+let shape: Shape
 shape = { sides: 2 }: Square
 let size: integer
 
@@ -135,7 +135,7 @@ with shape
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let shape: Shape(Circle, Square)
+let shape: Shape
 
 with shape
   when square: integer

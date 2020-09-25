@@ -2,7 +2,7 @@ type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
 
-def area(shape: Shape(Circle, Square)): integer
+def area(shape: Shape): integer
   with shape
     when square: Square
       return square.sides * square.sides
@@ -11,7 +11,7 @@ def area(shape: Shape(Circle, Square)): integer
     else
       return 0
 
-let shape: Shape(Circle, Square)
+let shape: Shape
 shape = { sides: 2 }: Square
 let file = OpenToWrite('output.txt', 0)
 WriteString(file, "Area is #{area(shape)}")

@@ -36,7 +36,7 @@ let a: Shape(Circle, Square)
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let a: Shape(Circle, Square)
+let a: Shape
 a = { sides: 2 }: Square
     `)
 
@@ -49,7 +49,7 @@ a = { sides: 2 }: Square
 type Circle(radius: integer)
 type Square(sides: integer)
 type Shape(Circle, Square)
-let a: Shape(Circle, Square)
+let a: Shape
 a = { radius: 2 }: Circle
     `)
 

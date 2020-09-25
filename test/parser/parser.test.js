@@ -428,11 +428,6 @@ with shape
       expect(node.name.type).to.eq('QUERY')
       expect(node.clauses.length).to.eq(3)
     })
-
-    it('can define an union-type variable', function () {
-      const node = parseOne('let a: Shape(Rectangle, Circle)')
-      expect(node.typehint.is('UNION')).to.eq(true)
-    })
   })
 
   describe('if statement', function () {
