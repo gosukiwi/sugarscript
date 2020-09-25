@@ -88,6 +88,9 @@ for i = 1 to 100 step 2
 # without step
 for i = 1 to 100
   do_something_with(i)
+
+# one-liner
+for i = i 1o 100 do something_with(i)
 ```
 
 # For..In Statement
@@ -95,6 +98,9 @@ for i = 1 to 100
 ```
 for num in [1, 2, 3]
   print("#{num}")
+
+# one-liner
+for num in [1, 2, 3] do print("#{num}")
 ```
 
 # Functions

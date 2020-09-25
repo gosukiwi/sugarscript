@@ -19,9 +19,8 @@ documentation](doc/syntax.md). Below is a quick cheatsheet:
 # assign
 let name = 'Duchess'
 let greeting = "Hello #{name}!" # string interpolation, only when using double-quoted strings
-
 # names are case-insensitive
-let greeting2 = GREETING # this works
+let greeting2 = GREETING
 
 # booleans
 if my_variable is true # `true` alias for 1, other aliases are `yes` and `on`

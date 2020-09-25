@@ -15,6 +15,14 @@ describe('codegen/generators/if', function () {
     expect(result).to.contain('endif')
   })
 
+  it('generates a single if (one-liner)', function () {
+    const result = generate('if 1 then let a = 1')
+    expect(result).to.contain('if 1')
+    expect(result).to.contain('a as integer')
+    expect(result).to.contain('a = 1')
+    expect(result).to.contain('endif')
+  })
+
   it('generates an if-else', function () {
     const result = generate(`
 let a:integer
