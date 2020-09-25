@@ -10,7 +10,7 @@ function check (input) {
 
 describe('type-checker/checkers/list-comprehension', function () {
   it('works', function () {
-    const definitions = check('let numbers = (ceil(i) for i in [1, 2, 3, 4] when i % 2 == 0)')
+    const definitions = check('let numbers = [ceil(i) for i in [1, 2, 3, 4] when i % 2 == 0]')
     expect(definitions.getVariable('numbers').type.is('ARRAY')).to.eq(true)
     expect(definitions.getVariable('numbers').type.value.is('INTEGER')).to.eq(true)
   })

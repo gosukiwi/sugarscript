@@ -880,7 +880,7 @@ foo(() ->
 
   describe('list comprehension', function () {
     it('works full', function () {
-      const result = parseOne('a = (print(i) for i in [1, 2, 3] when i % 2 == 0)').rhs
+      const result = parseOne('a = [print(i) for i in [1, 2, 3] when i % 2 == 0]').rhs
       expect(result.type).to.eq('LIST_COMPREHENSION')
     })
   })
