@@ -10,7 +10,7 @@ def area(shape: Shape): integer
       return 3.14 * circle.radius * circle.radius
     else
       return 0
-      
+
 let shape: Shape
 shape = { sides: 2 }: Square
 let file = OpenToWrite('output.txt', 0)
