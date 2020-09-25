@@ -17,4 +17,5 @@ with shape
         WriteString(file, "Invalid")
   else
     WriteString(file, "Invalid")
+
 CloseFile(file)
