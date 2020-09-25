@@ -5,8 +5,7 @@ type Polygon(Triangle, Square)
 type Shape(Circle, Polygon)
 
 let shape: Shape
-let triangle: Polygon
-triangle = { area: 3 }: Triangle
+let triangle: Polygon = { area: 3 }: Triangle
 shape = triangle
 let file = OpenToWrite('output.txt', 0)
 with shape
