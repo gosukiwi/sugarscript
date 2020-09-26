@@ -62,12 +62,8 @@ elif a == 1
 else
   another_function()
 
-# TODO
-# inline if
+# one-liner
 if true then foo()
-
-# inline if-else
-if true then foo() else bar()
 ```
 
 # While Statement
