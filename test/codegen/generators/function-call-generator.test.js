@@ -34,9 +34,7 @@ def greet(name: string)
 greet("Mike")
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\('Mike'\)/)
   })
 
   it('calls a function with an argument (sqstring)', function () {
@@ -56,9 +54,7 @@ def greet(name: string, age: integer)
 greet("Mike", 18)
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18\)/)
+    expect(result).to.match(/greet\('Mike', 18\)/)
   })
 
   it('calls a function with a default inline array', function () {
@@ -80,11 +76,7 @@ def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
 greet()
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\('Mike', 18, 'bar'\)/)
   })
 
   it('calls a function with many default parameters setting one', function () {
@@ -94,11 +86,7 @@ def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
 greet("fombo")
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'fombo'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\('fombo', 18, 'bar'\)/)
   })
 
   it('calls a function with overriding all default parameters', function () {
@@ -108,11 +96,7 @@ def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
 greet("fombo", 22, "potato")
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'fombo'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'potato'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, 22, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\('fombo', 22, 'potato'\)/)
   })
 
   it('calls a function with a non-default parameter many default parameters', function () {
@@ -122,13 +106,7 @@ def greet(gender: string, name: string = "Mike", age: integer = 18, foo: string 
 greet("fombo")
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'fombo'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'bar'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, __SSINTERNAL\d+, 18, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\('fombo', 'Mike', 18, 'bar'\)/)
   })
 
   it('adds a line comment', function () {

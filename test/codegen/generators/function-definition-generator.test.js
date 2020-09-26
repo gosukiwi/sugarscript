@@ -87,9 +87,7 @@ def greet(name: string = "Potatomike"): string
 greet()
     `)
 
-    expect(result).to.match(/SSINTERNAL\d+ as string/)
-    expect(result).to.match(/SSINTERNAL\d+ = 'Potatomike'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
+    expect(result).to.match(/greet\('Potatomike'\)/)
   })
 
   it('can use an array default parameters', function () {
@@ -111,9 +109,7 @@ def greet(name: string, age: integer = 18): string
 greet("Mike")
     `)
 
-    expect(result).to.match(/__SSINTERNAL\d+ as string/)
-    expect(result).to.match(/__SSINTERNAL\d+ = 'Mike'/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+, 18\)/)
+    expect(result).to.match(/greet\('Mike', 18\)/)
   })
 
   it('adds a line comment', function () {

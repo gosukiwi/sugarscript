@@ -256,11 +256,18 @@ def greet(person: integer = 1): Person
       expect(parseOne('a = -3.14').rhs.value).to.eq(-3.14)
     })
 
-    it('matches a string', function () {
+    it('matches a string as SQSTRING when not interpolating', function () {
       const node = parseOne('a = "potato"')
 
-      expect(node.rhs.type).to.eq('STRING')
+      expect(node.rhs.type).to.eq('SQSTRING')
       expect(node.rhs.value).to.eq('potato')
+    })
+
+    it('matches a string as STRING with interpolating', function () {
+      const node = parseOne('a = "potato #{1}"')
+
+      expect(node.rhs.type).to.eq('STRING')
+      expect(node.rhs.value).to.eq('potato $1')
     })
 
     it('interpolates a string', function () {

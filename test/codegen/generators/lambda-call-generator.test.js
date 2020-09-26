@@ -31,7 +31,7 @@ def greet_manager(greeter: integer, name: string): string
 let result = greet_manager((name: string): string -> "Hello #{name}!", "Mike")
     `)
 
-    expect(result).to.match(/result = greet_manager\(__SSINTERNAL\d+, __SSINTERNAL\d+\)/)
+    expect(result).to.match(/result = greet_manager\(__SSINTERNAL\d+, 'Mike'\)/)
   })
 
   it('works with default arguments', function () {
