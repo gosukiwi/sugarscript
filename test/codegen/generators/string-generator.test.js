@@ -7,6 +7,11 @@ function generate (sourcecode) {
 }
 
 describe('codegen/generators/string', function () {
+  it('can interpolate trivial', function () {
+    const result = generate('let a = "#{1}!"')
+    expect(result).to.match(/a = '' \+ __SSINTERNAL\d+ \+ '!'/)
+  })
+
   it('can interpolate simple', function () {
     const result = generate('let a = "foo #{2 + 2}!"')
     expect(result).to.match(/a = 'foo ' \+ __SSINTERNAL\d+ \+ '!'/)

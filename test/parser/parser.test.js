@@ -925,4 +925,12 @@ foo(() ->
       expect(result.alias.value).to.eq('Foo')
     })
   })
+
+  describe('halt', function () {
+    it('works', function () {
+      const result = parseOne('halt "no way jose"')
+      expect(result.type).to.eq('HALT')
+      expect(result.message.type).to.eq('SQSTRING')
+    })
+  })
 })
