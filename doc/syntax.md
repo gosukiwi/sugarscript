@@ -357,7 +357,7 @@ let doubles = [i * 2 for i in [0, 1, 2, 3, 4]]
 
 ```
 use SomePlugin as p
-p::someMethod()
+p::someMethod(): integer
 ```
 
 # Halt
