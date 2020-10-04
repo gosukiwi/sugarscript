@@ -1,4 +1,5 @@
 # Syntax
+Below is an exhaustive list of SugarScript's syntax.
 
 # Variables and Types
 

@@ -217,16 +217,17 @@ def greet(person: integer = 1): Person
 
   describe('plugin call', function () {
     it('parses a call with no parameters', function () {
-      const node = parseOne('p::foo()')
+      const node = parseOne('p::foo(): integer')
 
       expect(node.type).to.eq('PLUGIN_CALL')
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
+      expect(node.typehint.is('INTEGER')).to.eq(true)
       expect(node.args).to.eql([])
     })
 
     it('parses a call with a single argument', function () {
-      const node = parseOne('p::foo(bar)')
+      const node = parseOne('p::foo(bar): integer')
 
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
@@ -234,7 +235,7 @@ def greet(person: integer = 1): Person
     })
 
     it('parses a call with many arguments', function () {
-      const node = parseOne('p::foo(bar, baz)')
+      const node = parseOne('p::foo(bar, baz): integer')
 
       expect(node.plugin).to.eq('p')
       expect(node.func).to.eq('foo')
@@ -346,7 +347,7 @@ def greet(person: integer = 1): Person
     })
 
     it('matches other expressions', function () {
-      const node = parseOne('a = [foo(), bar(1), baz::taz(3, 4)]')
+      const node = parseOne('a = [foo(), bar(1), baz::taz(3, 4): integer]')
 
       expect(node.rhs.elements[0].type).to.eq('FUNCTION_CALL')
       expect(node.rhs.elements[1].type).to.eq('FUNCTION_CALL')
@@ -906,6 +907,22 @@ foo(() ->
     it('works full', function () {
       const result = parseOne('a = [print(i) for i in [1, 2, 3] when i % 2 == 0]').rhs
       expect(result.type).to.eq('LIST_COMPREHENSION')
+    })
+  })
+
+  describe('plugin import', function () {
+    it('works', function () {
+      const result = parseOne('import_plugin Foo as Bar')
+      expect(result.type).to.eq('PLUGIN_IMPORT')
+      expect(result.name.value).to.eq('Foo')
+      expect(result.alias.value).to.eq('Bar')
+    })
+
+    it('works without alias', function () {
+      const result = parseOne('import_plugin Foo')
+      expect(result.type).to.eq('PLUGIN_IMPORT')
+      expect(result.name.value).to.eq('Foo')
+      expect(result.alias.value).to.eq('Foo')
     })
   })
 })
