@@ -16,4 +16,9 @@ describe('codegen/generators/plugin-call', function () {
     const result = generate('import_plugin potato\nlet a = potato::foo(1, 2, 3): integer')
     expect(result).to.contain('potato.foo(1, 2, 3)')
   })
+
+  it('works with an alias', function () {
+    const result = generate('import_plugin potato as p\nlet a = p::foo(1, 2, 3): integer')
+    expect(result).to.contain('p.foo(1, 2, 3)')
+  })
 })

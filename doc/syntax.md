@@ -354,9 +354,14 @@ let doubles = [i * 2 for i in [0, 1, 2, 3, 4]]
 ```
 
 # Plugins
-Still in development
 
 ```
 use SomePlugin as p
 p::someMethod()
+```
+
+# Halt
+
+```
+halt "Something went extremely wrong, program execution stopped"
 ```
