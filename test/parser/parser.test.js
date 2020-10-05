@@ -289,7 +289,7 @@ def greet(person: integer = 1): Person
       const node = parseOne('let a: integer')
 
       expect(node.type).to.eq('LET')
-      expect(node.name).to.eq('a')
+      expect(node.name.value).to.eq('a')
       expect(node.typehint.is('INTEGER')).to.eq(true)
     })
 
@@ -297,7 +297,7 @@ def greet(person: integer = 1): Person
       const node = parseOne('let a: integer = 1')
 
       expect(node.type).to.eq('LET')
-      expect(node.name).to.eq('a')
+      expect(node.name.value).to.eq('a')
       expect(node.typehint.is('INTEGER')).to.eq(true)
       expect(node.value.type).to.eq('NUMBER')
     })
@@ -306,7 +306,7 @@ def greet(person: integer = 1): Person
       const node = parseOne('let a = 1')
 
       expect(node.type).to.eq('LET')
-      expect(node.name).to.eq('a')
+      expect(node.name.value).to.eq('a')
       expect(node.typehint).to.eq(null)
       expect(node.value.type).to.eq('NUMBER')
     })
@@ -315,7 +315,7 @@ def greet(person: integer = 1): Person
       const node = parseOne('let global a = 1')
 
       expect(node.type).to.eq('LET')
-      expect(node.name).to.eq('a')
+      expect(node.name.value).to.eq('a')
       expect(node.global).to.eq(true)
       expect(node.typehint).to.eq(null)
       expect(node.value.type).to.eq('NUMBER')
