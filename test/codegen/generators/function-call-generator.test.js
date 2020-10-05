@@ -119,26 +119,6 @@ greet("fombo")
     expect(result).to.contain('// in-memory://, line 3')
   })
 
-  describe('built-in', function () {
-    it('removes the underscores', function () {
-      const result = generate(`
-let id = load_image('foo')
-      `)
-
-      expect(result).to.contain("id = loadimage('foo')")
-    })
-
-    it('does not remove underscores for other functions', function () {
-      const result = generate(`
-def foo_bar(): integer
-  return 1
-let id = foo_bar()
-      `)
-
-      expect(result).to.contain('id = foo_bar()')
-    })
-  })
-
   describe('primitives', function () {
     it('works for array_length', function () {
       const result = generate(`

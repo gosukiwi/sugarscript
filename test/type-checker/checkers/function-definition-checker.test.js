@@ -209,13 +209,4 @@ def print(): integer
         `)
     }).to.throw(/already exists/)
   })
-
-  it('cannot re-define a built-in function using underscores', function () {
-    expect(() => {
-      check(`
-def load_image(): integer
-  return 1
-        `)
-    }).to.throw(/already exists/)
-  })
 })

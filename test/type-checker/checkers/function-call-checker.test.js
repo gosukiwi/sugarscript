@@ -57,21 +57,15 @@ foo(1)
     `)).not.to.throw()
   })
 
-  it('can use integers instead of floats', function () {
-    expect(() => check('ceil(2)')).not.to.throw()
+  it('can use built-in functions in a case-insensitive way', function () {
+    expect(check('let a = CreateSprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
+    expect(check('let a = createsprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
+    expect(() => check('let a = CREATESPRITE(1, 1)')).to.throw(/Cannot assign to void/)
+    expect(() => check('let a = CreateSprite("foo")')).to.throw(/Invalid arguments/)
   })
 
-  describe('built-in', function () {
-    it('can use built-in functions in a case-insensitive way', function () {
-      expect(check('let a = CreateSprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
-      expect(check('let a = createsprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
-      expect(() => check('let a = CREATESPRITE(1, 1)')).to.throw(/Cannot assign to void/)
-      expect(() => check('let a = CreateSprite("foo")')).to.throw(/Invalid arguments/)
-    })
-
-    it('can use optional underscores', function () {
-      expect(check('let a = create_sprite(1)').getVariable('a').type.is('INTEGER')).to.eq(true)
-    })
+  it('can use integers instead of floats', function () {
+    expect(() => check('ceil(2)')).not.to.throw()
   })
 
   describe('primitives', function () {
