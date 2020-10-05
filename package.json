@@ -1,21 +1,22 @@
 {
   "name": "sugarscript",
   "version": "0.0.0",
-  "description": "A lispy language which compiles to AppGameKit's Tier 1",
-  "main": "index.js",
+  "description": "A sweet Python-like programming language that compiles to AppGameKit's Tier 1",
+  "main": "lib/index",
   "scripts": {
     "test": "mocha --timeout 15000 --require test/mocha.env.js test/**/*.test.js",
     "watch": "mocha --timeout 15000 --require test/mocha.env.js --watch test/**/*.test.js",
     "integration": "mocha --require test/mocha.env.js test/integration/integration.js"
   },
   "keywords": [
-    "lisp",
+    "python",
+    "coffeescript",
     "agk",
     "appgamekit",
     "sugarscript"
   ],
   "author": "Federico Ramirez",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^7.7.0",
