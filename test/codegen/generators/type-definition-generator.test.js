@@ -28,7 +28,7 @@ let a = 1
 type Foo
   a: string
     `)
-    expect(result).to.contain('// in-memory://, line ~3')
+    expect(result).to.contain('// in-memory://, line 3')
   })
 
   it('adds a line comment when inline', function () {
@@ -39,6 +39,6 @@ type Foo(a: string)
 
 let b  = 2
     `)
-    expect(result).to.contain('// in-memory://, line ~4')
+    expect(result).to.contain('// in-memory://, line 2')
   })
 })

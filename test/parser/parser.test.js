@@ -374,7 +374,7 @@ def greet(person: integer = 1): Person
       const node = parseOne('type Person\n  name: string\n  age: integer')
 
       expect(node.type).to.eq('TYPE_DEFINITION')
-      expect(node.name).to.eq('Person')
+      expect(node.name.value).to.eq('Person')
       expect(node.fields[0].name).to.eq('name')
       expect(node.fields[0].typehint.is('STRING')).to.eq(true)
       expect(node.fields[1].name).to.eq('age')
@@ -385,7 +385,7 @@ def greet(person: integer = 1): Person
       const node = parseOne('type Person(name: string, age: integer)')
 
       expect(node.type).to.eq('TYPE_DEFINITION')
-      expect(node.name).to.eq('Person')
+      expect(node.name.value).to.eq('Person')
       expect(node.fields[0].name).to.eq('name')
       expect(node.fields[0].typehint.is('STRING')).to.eq(true)
       expect(node.fields[1].name).to.eq('age')
