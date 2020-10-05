@@ -35,8 +35,12 @@ def greet(name: string = 'Federico', age: integer, person: *Person) # pass Perso
   let result = age + 2
   return result
 
-# built-in functions, as usual
+# built-in functions
 let sprite = CreateSprite(LoadImage('hello.png'))
+# because names are case-insensitive, you can also use it like this
+let sprite = createsprite(loadimage('hello.png'))
+# built-in functions are special, because they allow optional underscores
+let sprite = create_sprite(load_image('hello.png'))
 
 # types
 type Person
