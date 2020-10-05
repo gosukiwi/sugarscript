@@ -87,13 +87,26 @@ def area(shape: Shape): float
 let pairs = [i for i in [0, 1, 2, 3, 4] when i % 2 is 0]
 let doubles = [i * 2 for i in [0, 1, 2, 3, 4]]
 ```
+# Install
+
+    $ npm install sugarscript
 
 # Usage
 
-    $ ssc main.ss -o main.agc
+```javascript
+const { Compiler } = require('sugarscript')
 
-That will generate a `main.agc` file as well as compile it using the privative
-compiler.
+const compiler = new Compiler()
+const options = { // default options
+  entry: 'main.ss',
+  output: 'main.agc',
+  compiler: 'C:\\Program Files\\Steam\\steamapps\\common\\App Game Kit 2\\Tier 1\\Compiler\\AGKCompiler.exe',
+  generateOnly: false,
+  compileAndRun: false,
+  x64: false
+}
+compiler.compile(options).then(() => console.log('Done!'))
+```
 
 # Why
 The AppGameKit platform is impressive. Write once, deploy everywhere, with
