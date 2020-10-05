@@ -18,7 +18,7 @@ while 1
     expect(definitions.variables.a.type.is('INTEGER')).to.eq(true)
   })
 
-  it.only('complains if the condition isnt integer', function () {
+  it('complains if the condition isnt integer', function () {
     expect(() => check(`
 while "yes"
   let a = 1
