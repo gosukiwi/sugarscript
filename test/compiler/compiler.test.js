@@ -42,7 +42,7 @@ describe('compiler/compiler', function () {
     expect(output).to.contain('function foo')
   })
 
-  it.only('can include remote files and those files can include other relative remote files', async function () {
+  it('can include remote files and those files can include other relative remote files', async function () {
     const compiler = new Compiler()
     await compiler.compile({
       entry: path.join(__dirname, '..', 'fixtures', 'remote-recursive.ss'),
