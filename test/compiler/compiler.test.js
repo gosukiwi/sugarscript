@@ -31,11 +31,21 @@ describe('compiler/compiler', function () {
     expect(output).to.contain('c()')
   })
 
-  it.only('can include remote files', async function () {
+  it('can include remote files', async function () {
     const compiler = new Compiler()
     await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'remote.ss') })
 
     const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
     expect(output).to.contain('function foo')
+  })
+
+  it.only('can include remote files and those files can include other relative remote files', async function () {
+    const compiler = new Compiler()
+    await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'remote-recursive.ss') })
+
+    const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
+    console.log(output)
+    expect(output).to.contain('function foo')
+    expect(output).to.contain('function another')
   })
 })
