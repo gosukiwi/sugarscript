@@ -32,7 +32,7 @@ describe('compiler/compiler', function () {
   })
 
   it('can include remote files', async function () {
-    const compiler = new Compiler()
+    const compiler = new Compiler({ clearRemoteCache: true })
     await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'remote.ss') })
 
     const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
@@ -40,7 +40,7 @@ describe('compiler/compiler', function () {
   })
 
   it.only('can include remote files and those files can include other relative remote files', async function () {
-    const compiler = new Compiler()
+    const compiler = new Compiler({ clearRemoteCache: true })
     await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'remote-recursive.ss') })
 
     const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
