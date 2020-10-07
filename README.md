@@ -1,15 +1,18 @@
 # SugarScript
-AppGameKit's Tier 1 on steroids, inspired by CoffeeScript and Python.
+[AppGameKit's](https://www.appgamekit.com/) Tier 1 on steroids, inspired by
+CoffeeScript and Python.
 
-SugarScript is a **functional**, statically typed language that compiles to
+SugarScript is a modern, functional, statically typed language that compiles to
 AppGameKit's Tier 1. It enables you to write games using AGK's interpreter, so
 they can run on any platform with minimal setup.
 
-Needless to say, you need to own AppGameKit Classic or Studio. Note that the
-compiler generates an `.agc` file, but to automatically compile it up for you,
-it needs  access to the compiler, which is only exposed in the Classic version.
-So Studio  users need to manually load up and compiler the generated `.agc`
-file.
+Needless to say, you need to own AppGameKit Classic or Studio (it goes on sale
+on
+[Steam](https://store.steampowered.com/app/325180/AppGameKit_Classic_Easy_Game_Development/)
+quite often!). Note that the compiler generates an `.agc` file, but to
+automatically compile it up for you, it needs  access to the compiler, which is
+only exposed in the **Classic** version. So Studio  users need to manually load
+up and compiler the generated `.agc` file.
 
 # Syntax
 For detailed information on SugarScript's syntax, check out [the syntax
@@ -19,10 +22,8 @@ documentation](doc/syntax.md). Below is a quick cheatsheet:
 # assign
 let name = 'Duchess'
 let greeting = "Hello #{name}!" # string interpolation, only when using double-quoted strings
-# names are case-insensitive
-let greeting2 = GREETING
 
-# booleans
+# conditional
 if my_variable is true # `true` alias for 1, other aliases are `yes` and `on`
   do_something()
 elif something_else() isnt "hello"
@@ -38,9 +39,10 @@ def greet(name: string = 'Federico', age: integer, person: *Person) # pass Perso
 # built-in functions, as usual
 let sprite = CreateSprite(LoadImage('hello.png'))
 
-# types
-type Person
-  name: string
+# arrays
+let my_array = [1, 2, 3]
+let empty_array = []: integer
+let nested_array = [[1], [2, 3], []: integer]
 
 # inline types
 type Person(name: string)
@@ -51,17 +53,6 @@ let greeter = (name: string): string ->
   return "Hello #{name}!"
 
 call(greeter, "Federico"): string
-
-def another_function(greeter: integer, name: string): string
-  return greeter(name): string
-
-# you can use `->` instead of `call` if preferred
-->(another_function, greeter, 'Marie'): string
-
-# arrays
-let my_array = [1, 2, 3]
-let empty_array = []: integer
-let nested_array = [[1], [2, 3], []: integer]
 
 # unions
 type Rectangle(x: float, y: float, width: float, height: float)
@@ -86,7 +77,12 @@ def area(shape: Shape): float
 # list comprehensions
 let pairs = [i for i in [0, 1, 2, 3, 4] when i % 2 is 0]
 let doubles = [i * 2 for i in [0, 1, 2, 3, 4]]
+
+# remote requires
+require 'a-local-file'
+require 'https://github.com/.../a-remote-file.ss'
 ```
+
 # Install
 
     $ npm install sugarscript
@@ -103,6 +99,7 @@ const options = { // default options
   compiler: 'C:\\Program Files\\Steam\\steamapps\\common\\App Game Kit 2\\Tier 1\\Compiler\\AGKCompiler.exe',
   generateOnly: false,
   compileAndRun: false,
+  clearRemoteCache: false,
   x64: false
 }
 compiler.compile(options).then(() => console.log('Done!'))

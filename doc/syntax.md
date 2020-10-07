@@ -315,6 +315,24 @@ with vehicle
     print("I haven't been initialized yet")
 ```
 
+# Require
+Require is simple, it requires one file, relative to the current file:
+
+```
+# ./foo.ss
+require 'bar' # this will require the file `./bar.ss`
+```
+
+## Remote Require
+Require can work with URLs, too:
+
+```
+require 'https://github.com/.../my-file.ss'
+```
+
+The code above will load the `my-file.ss` file, and if that file has other
+requires, it will recursively download them, and cache them for future use.
+
 # Numerical Bases
 You can use binary, octal and hexadecimal bases as such:
 
@@ -356,7 +374,7 @@ let doubles = [i * 2 for i in [0, 1, 2, 3, 4]]
 # Plugins
 
 ```
-use SomePlugin as p
+import_plugin SomePlugin as p
 p::someMethod(): integer
 ```
 
