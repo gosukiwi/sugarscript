@@ -42,7 +42,7 @@ describe('compiler/compiler', function () {
     expect(output).to.contain('function foo')
   })
 
-  it('can include remote files and those files can include other relative remote files', async function () {
+  it('can include remote files and those files can include other remote files', async function () {
     const compiler = new Compiler()
     await compiler.compile({
       entry: path.join(__dirname, '..', 'fixtures', 'remote-recursive.ss'),
@@ -52,5 +52,43 @@ describe('compiler/compiler', function () {
     const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
     expect(output).to.contain('function foo')
     expect(output).to.contain('function another')
+  })
+
+  it('can include remote files that include other relative files', async function () {
+    const compiler = new Compiler()
+    await compiler.compile({
+      entry: path.join(__dirname, '..', 'fixtures', 'remote-relative.ss'),
+      clearRemoteCache: true
+    })
+
+    const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
+    expect(output).to.contain('function bfunc')
+  })
+
+  it('can include remote files and then back to regular files', async function () {
+    const compiler = new Compiler()
+    await compiler.compile({
+      entry: path.join(__dirname, '..', 'fixtures', 'remote-and-local.ss'),
+      clearRemoteCache: true
+    })
+
+    const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
+    expect(output).to.contain('function bfunc')
+    expect(output).to.contain('function c')
+  })
+
+  it('can handle non-existant remote files', async function () {
+    const compiler = new Compiler()
+    let err = null
+    try {
+      await compiler.compile({
+        entry: path.join(__dirname, '..', 'fixtures', 'remote-non-existant.ss'),
+        clearRemoteCache: true
+      })
+    } catch (error) {
+      err = error
+    }
+
+    expect(err.message).to.contain('Could not find file: https://non-existant.com/fo/bar/baz')
   })
 })
