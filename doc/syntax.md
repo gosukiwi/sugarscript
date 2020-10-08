@@ -330,7 +330,7 @@ Require can work with URLs, too:
 require 'https://github.com/.../my-file.ss'
 ```
 
-The code above will load the `my-file.ss` file, and if that file has other
+The code above will download the `my-file.ss` file, and if that file has other
 requires, it will recursively download them, and cache them for future use.
 
 # Numerical Bases
