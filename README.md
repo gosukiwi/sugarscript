@@ -107,13 +107,13 @@ compiler.compile(options).then(() => console.log('Done!'))
 
 # Why
 The AppGameKit platform is impressive. Write once, deploy everywhere, with
-minimal  hassle. The API is powerful, supports 2D and 3D and has been worked on
+minimal hassle. The API is powerful, supports 2D and 3D and has been worked on
 for years, so it's quite mature.
 
 The downside is that the Tier 1 dialect of BASIC is quite limited. It lacks most
-feature modern developers expect in a programming language. There are
-alternative languages, particularly Tier 2, but by using C++ or any other
-alternative language, you lose the portability.
+of the features modern developers expect in a programming language. There are
+alternative languages (C++, Python, Java, etc) but by using any of those
+languages, you lose the portability.
 
 SugarScript is a _transpiler_. It compiles directly to Tier 1, and in turn, it
 can use AppGameKit's Classic compiler to generate bytecode, just like you'd
@@ -121,11 +121,12 @@ normally do with Tier 1. You can also load up and compile the generated `.agc`
 file in Studio yourself if you want.
 
 This allows developers to use a more powerful and overall _sweet_ programming
-language  without losing the flexibility of _write once, deploy everywhere_.
+language without losing _write once, deploy everywhere_.
 
-SugarScript is a functional language, using [lambdas](doc/syntax.md#lambdas) (a
-special kind of function pointers) you can write functions which receive
-functions, as well as returning functions.
+SugarScript is a modern, functional language, with features such as
+[lambdas](doc/syntax.md#lambdas), [unions](doc/syntax.md#unions), [list
+comprehensions](doc/syntax.md#list-comprehensions) and [remote
+requires](doc/syntax.md#remote-require).
 
 This opens up a whole new level of abstraction, much needed in Tier 1.
 
