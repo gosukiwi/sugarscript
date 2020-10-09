@@ -195,21 +195,21 @@ def greet(person: integer = 1): Person
       const node = parseOne('foo()')
 
       expect(node.type).to.eq('FUNCTION_CALL')
-      expect(node.name).to.eq('foo')
+      expect(node.name.value).to.eq('foo')
       expect(node.args).to.eql([])
     })
 
     it('parses a call with a single argument', function () {
       const node = parseOne('foo(bar)')
 
-      expect(node.name).to.eq('foo')
+      expect(node.name.value).to.eq('foo')
       expect(node.args[0].parts[0].value).to.eq('bar')
     })
 
     it('parses a call with many arguments', function () {
       const node = parseOne('foo(bar, baz)')
 
-      expect(node.name).to.eq('foo')
+      expect(node.name.value).to.eq('foo')
       expect(node.args[0].parts[0].value).to.eq('bar')
       expect(node.args[1].parts[0].value).to.eq('baz')
     })
