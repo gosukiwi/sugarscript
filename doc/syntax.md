@@ -65,6 +65,7 @@ else
 
 # one-liner
 if true then foo()
+unless is_jumping() then do_something()
 ```
 
 # While Statement
