@@ -450,7 +450,22 @@ if 1
       expect(node.body[0].type).to.eq('LET')
     })
 
-    it('parses a one-line if')
+    it('parses a one-line if', function () {
+      const node = parseOne('if 1 then let a = 1')
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.value).to.eq(1)
+      expect(node.body[0].type).to.eq('LET')
+    })
+
+    it('parses a one-line unless', function () {
+      const node = parseOne('unless 1 then let a = 1')
+
+      expect(node.type).to.eq('IF')
+      expect(node.condition.name).to.eq('NOT')
+      expect(node.condition.expression.value).to.eq(1)
+      expect(node.body[0].type).to.eq('LET')
+    })
 
     it('parses a if-else', function () {
       const node = parseOne(`
