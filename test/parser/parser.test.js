@@ -555,15 +555,28 @@ else
     })
   })
 
-  it('parses comments', function () {
-    const node = parseOne(`
+  describe('comments', function () {
+    it('parses comments', function () {
+      const node = parseOne(`
 # foo
 # bar
 let a = 1 # this is a comment
 # baz
-    `)
+      `)
 
-    expect(node.type).to.eq('LET')
+      expect(node.type).to.eq('LET')
+    })
+
+    it('parses with indent', function () {
+      expect(() => parse(`
+def tick(delta: float, paddle: *Rectangle, ball: *Ball)
+  paddle.y = clamp(GetRawMouseY() - paddle.height / 2, 0, 144 - paddle.height)
+  ball.position = vector_add(ball.position, vector_scalar_product(ball.direction, ball.speed * delta))
+
+# this comment breaks theengs
+let a = 1
+      `)).not.to.throw()
+    })
   })
 
   it('shows line info in errors', function () {
