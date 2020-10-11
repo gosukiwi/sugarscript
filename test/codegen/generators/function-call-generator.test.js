@@ -57,56 +57,70 @@ greet("Mike", 18)
     expect(result).to.match(/greet\('Mike', 18\)/)
   })
 
-  it('calls a function with a default inline array', function () {
-    const result = generate(`
+  describe('default parameters', function () {
+    it('calls a function with a default inline array', function () {
+      const result = generate(`
 def greet(people: string[])
   let a = 1
 greet(["Thomas O'Malley", "Duchess"])
-    `)
+      `)
 
-    expect(result).to.match(/__SSINTERNAL\d+\.insert\('Thomas O\\'Malley'\)/)
-    expect(result).to.match(/__SSINTERNAL\d+\.insert\('Duchess'\)/)
-    expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
-  })
+      expect(result).to.match(/__SSINTERNAL\d+\.insert\('Thomas O\\'Malley'\)/)
+      expect(result).to.match(/__SSINTERNAL\d+\.insert\('Duchess'\)/)
+      expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
+    })
 
-  it('calls a function with many default values', function () {
-    const result = generate(`
+    it('calls a function with many default values', function () {
+      const result = generate(`
 def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
   let a = 1
 greet()
-    `)
+      `)
 
-    expect(result).to.match(/greet\('Mike', 18, 'bar'\)/)
-  })
+      expect(result).to.match(/greet\('Mike', 18, 'bar'\)/)
+    })
 
-  it('calls a function with many default parameters setting one', function () {
-    const result = generate(`
+    it('calls a function with many default parameters setting one', function () {
+      const result = generate(`
 def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
   let a = 1
 greet("fombo")
-    `)
+      `)
 
-    expect(result).to.match(/greet\('fombo', 18, 'bar'\)/)
-  })
+      expect(result).to.match(/greet\('fombo', 18, 'bar'\)/)
+    })
 
-  it('calls a function with overriding all default parameters', function () {
-    const result = generate(`
+    it('calls a function with overriding all default parameters', function () {
+      const result = generate(`
 def greet(name: string = "Mike", age: integer = 18, foo: string = "bar")
   let a = 1
 greet("fombo", 22, "potato")
-    `)
+      `)
 
-    expect(result).to.match(/greet\('fombo', 22, 'potato'\)/)
-  })
+      expect(result).to.match(/greet\('fombo', 22, 'potato'\)/)
+    })
 
-  it('calls a function with a non-default parameter many default parameters', function () {
-    const result = generate(`
+    it('calls a function with a non-default parameter many default parameters', function () {
+      const result = generate(`
 def greet(gender: string, name: string = "Mike", age: integer = 18, foo: string = "bar")
   let a = 1
 greet("fombo")
-    `)
+      `)
 
-    expect(result).to.match(/greet\('fombo', 'Mike', 18, 'bar'\)/)
+      expect(result).to.match(/greet\('fombo', 'Mike', 18, 'bar'\)/)
+    })
+
+    it('can use inline types as defaults', function () {
+      const result = generate(`
+type Person(name: string)
+def greet(person: Person = { name: "Mike" }: Person): Person
+  return person
+greet()
+      `)
+
+      expect(result.indexOf('function greet(person as Person)')).to.be.below(result.indexOf(".name = 'Mike'"))
+      expect(result).to.match(/greet\(__SSINTERNAL\d+\)/)
+    })
   })
 
   it('adds a line comment', function () {
