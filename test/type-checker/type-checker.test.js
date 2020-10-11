@@ -17,12 +17,12 @@ describe('Typechecker', function () {
     })
 
     it('can pass to function', function () {
-      const definitions = check(`
+      expect(() => check(`
 def foo(arr: integer[])
   let a = 1
+
 foo([1, 2, 3])
-      `)
-      expect(definitions.calls.foo.args[0].is('ARRAY')).to.eq(true)
+      `)).not.to.throw()
     })
 
     it('can access', function () {

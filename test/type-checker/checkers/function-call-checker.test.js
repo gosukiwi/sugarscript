@@ -10,23 +10,19 @@ function check (input) {
 
 describe('type-checker/checkers/function-call', function () {
   it('calls a simple function', function () {
-    const definitions = check(`
+    expect(() => check(`
 def foo()
   let a = 1
 foo()
-    `)
-
-    expect(definitions.calls.foo.type.type).to.eq('VOID')
+    `)).not.to.throw()
   })
 
   it('knows the type', function () {
-    const definitions = check(`
+    expect(() => check(`
 def foo(): integer
   return 1
 foo()
-    `)
-
-    expect(definitions.calls.foo.type.type).to.eq('INTEGER')
+    `)).not.to.throw()
   })
 
   it('validates parameters when none is passed', function () {
