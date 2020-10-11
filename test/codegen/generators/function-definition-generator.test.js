@@ -52,7 +52,8 @@ def greet(): integer
   return 2
     `)
 
-    expect(result).to.contain('exitfunction 2')
+    expect(result).to.match(/__SSINTERNAL\d+ = 2/)
+    expect(result).to.match(/exitfunction __SSINTERNAL\d+/)
     expect(result).to.contain('endfunction 0')
   })
 
@@ -63,7 +64,8 @@ def greet(person: Person): Person
   return person
     `)
 
-    expect(result).to.contain('exitfunction person')
+    expect(result).to.match(/__SSINTERNAL\d+ = person/)
+    expect(result).to.match(/exitfunction __SSINTERNAL\d+/)
     expect(result).to.contain('SS_INTERNAL_UNREACHABLE_RETURN_VALUE as Person')
     expect(result).to.contain('endfunction SS_INTERNAL_UNREACHABLE_RETURN_VALUE')
   })
@@ -75,7 +77,8 @@ def greet(person: Person[]): Person[]
   return person
     `)
 
-    expect(result).to.contain('exitfunction person')
+    expect(result).to.match(/__SSINTERNAL\d+ = person/)
+    expect(result).to.match(/exitfunction __SSINTERNAL\d+/)
     expect(result).to.contain('SS_INTERNAL_UNREACHABLE_RETURN_VALUE as Person[-1]')
     expect(result).to.contain('endfunction SS_INTERNAL_UNREACHABLE_RETURN_VALUE')
   })
