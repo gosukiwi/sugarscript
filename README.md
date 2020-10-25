@@ -10,9 +10,9 @@ Needless to say, you need to own AppGameKit Classic or Studio (it goes on sale
 on
 [Steam](https://store.steampowered.com/app/325180/AppGameKit_Classic_Easy_Game_Development/)
 quite often!). Note that the compiler generates an `.agc` file, but to
-automatically compile it up for you, it needs  access to the compiler, which is
-only exposed in the **Classic** version. So Studio  users need to manually load
-up and compiler the generated `.agc` file.
+automatically compile it up for you, it needs  access to the privative
+AppGameKit compiler, which is only exposed in the **Classic** version. So Studio
+users need to manually load up and compiler the generated `.agc` file.
 
 # Syntax
 For detailed information on SugarScript's syntax, check out [the syntax
