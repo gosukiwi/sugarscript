@@ -15,6 +15,15 @@ describe('compiler/compiler', function () {
     expect(fs.existsSync(path.join(__dirname, '..', 'fixtures', 'media', 'bytecode.byc'))).to.eq(true)
   })
 
+  it('can include types', async function () {
+    const compiler = new Compiler()
+    await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'includes-udt.ss') })
+
+    const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
+    expect(output).to.contain('v as Vector')
+    expect(fs.existsSync(path.join(__dirname, '..', 'fixtures', 'media', 'bytecode.byc'))).to.eq(true)
+  })
+
   it('can handle circular dependencies', async function () {
     const compiler = new Compiler()
     await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'a.ss') })
