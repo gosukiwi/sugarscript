@@ -20,7 +20,7 @@ describe('compiler/compiler', function () {
     await compiler.compile({ entry: path.join(__dirname, '..', 'fixtures', 'includes-udt.ss') })
 
     const output = fs.readFileSync(path.join(__dirname, '..', 'fixtures', 'main.agc')).toString()
-    expect(output).to.contain('v as Vector')
+    expect(output).to.contain('type Foo')
     expect(fs.existsSync(path.join(__dirname, '..', 'fixtures', 'media', 'bytecode.byc'))).to.eq(true)
   })
 

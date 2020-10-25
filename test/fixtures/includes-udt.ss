@@ -1,3 +1,3 @@
 require 'vector'
 
-let v: Vector
+type Foo(v: Vector)
